@@ -1,0 +1,22 @@
+{
+    "name": "Vinum-dev",
+    "tree" : {
+      "$className": "DataModel",
+      "ReplicatedStorage" : {
+        "benchmarks" : {
+            "$path" : "benchmarks"
+        },
+        "tests" : {
+            "$path" : "tests"
+        },
+
+        "Vinum" : {
+            "$path" : "src"
+        }
+      },
+
+      "ServerScriptService" : {
+        "$path" : "code-runners"
+      }
+    }
+  }
