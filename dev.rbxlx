@@ -83,27 +83,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>0</X>
-					<Y>20</Y>
-					<Z>20</Z>
-					<R00>1</R00>
-					<R01>0</R01>
-					<R02>-0</R02>
-					<R10>-0</R10>
-					<R11>0.780868828</R11>
-					<R12>0.624695063</R12>
-					<R20>0</R20>
-					<R21>-0.624695063</R21>
-					<R22>0.780868828</R22>
+					<X>145.034439</X>
+					<Y>100.88372</Y>
+					<Z>-92.254715</Z>
+					<R00>-0.637430549</R00>
+					<R01>-0.415801436</R01>
+					<R02>0.648684382</R02>
+					<R10>-1.49011594e-08</R10>
+					<R11>0.841892004</R11>
+					<R12>0.539646029</R12>
+					<R20>-0.770507753</R20>
+					<R21>0.343986869</R21>
+					<R22>-0.536647737</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>0</X>
-					<Y>0</Y>
-					<Z>-5</Z>
+					<X>124.266373</X>
+					<Y>83.6065903</Y>
+					<Z>-75.0735779</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -877,19 +877,20 @@ return bootstrapper
 						<ProtectedString name="Source"><![CDATA[local function microOrMili(num)
 	local MiliVersion = num * 1_000
 
-	return if MiliVersion < 1 then tostring(num * 1_000_000).."us" else tostring(MiliVersion).."ms"
+	return if MiliVersion < 1 then tostring(num * 1_000_000) .. "us" else tostring(MiliVersion) .. "ms"
 end
 
 local function benchmark(calls: number, preRun: () -> (any), run: (any) -> (), postRun: () -> ())
 	local rawBenchmark = table.create(calls)
 
 	for _ = 1, calls do
-		local preParams = preRun()
+		local preParams = if not preRun then nil else preRun()
 		local timeStart = os.clock()
 		run(preParams)
 		local timeEnd = os.clock()
-		postRun()
-
+		if postRun then
+			postRun()
+		end
 		table.insert(rawBenchmark, timeEnd - timeStart)
 	end
 
@@ -1332,17 +1333,23 @@ end
 				<string name="Name">runner</string>
 				<token name="RunContext">0</token>
 				<string name="ScriptGuid">{7578A5A0-64BE-4899-9B14-56E17B7318D7}</string>
-				<ProtectedString name="Source"><![CDATA[
+				<ProtectedString name="Source"><![CDATA[local shouldBenchmark = true
 local shouldTest = true
 
 local Tester = require(script.Parent.Tester)
-
+local LuauBencher = require(script.Parent.LuauBencher)
 if shouldTest then
     Tester.bootstrapper:start({
         directories = {game.ReplicatedStorage.tests},
         options = {
             context = Tester
         }
+    })
+end
+
+if shouldBenchmark then
+    LuauBencher.bootstrapper.run({
+        directories = {game.ReplicatedStorage.benchmarks}
     })
 end]]></ProtectedString>
 				<int64 name="SourceAssetId">-1</int64>
@@ -1360,14 +1367,14 @@ end]]></ProtectedString>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">4e62a2301ac56a6503884be0000002f5</UniqueId>
 		</Properties>
-		<Item class="Folder" referent="RBXEE863FA119CE45B09C9882A02D82B562">
+		<Item class="Folder" referent="RBXBA3A64D198854E54A37EF290A9E9A7E5">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
 				<string name="Name">MacroXStorage</string>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
-				<UniqueId name="UniqueId">656cd41ba5439c8903892f1a00002788</UniqueId>
+				<UniqueId name="UniqueId">34e0901af81dfe52038962b900002768</UniqueId>
 			</Properties>
 		</Item>
 	</Item>
@@ -1389,6 +1396,136 @@ end]]></ProtectedString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">4e62a2301ac56a6503884be0000024f1</UniqueId>
 			</Properties>
+			<Item class="ModuleScript" referent="RBXBFDCD0E9A9F045D69088EF3D1847690A">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Hold.bench</string>
+					<string name="ScriptGuid">{155502A5-E35A-409E-89CC-1A43D49838F8}</string>
+					<ProtectedString name="Source"><![CDATA[local Vinum = require(game.ReplicatedStorage.Vinum)
+
+local Hold = Vinum.Hold
+return {
+	{
+		name = "Creating Holds",
+		calls = 2000,
+
+		run = function()
+			Hold(1, Vinum.JustOk)
+		end,
+	},
+	{
+		name = "set()'ing Holds",
+		calls = 2000,
+
+		preRun = function()
+			return Hold(100, Vinum.JustOk)
+		end,
+		run = function(holder)
+			holder:set(400)
+		end,
+	},
+	{
+		name = "get()'ing Holds value",
+		calls = 2000,
+
+		preRun = function()
+			return Hold(100, Vinum.JustOk)
+		end,
+		run = function(holder)
+			holder:get()
+		end,
+	},
+}
+]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">34e0901af81dfe52038962b9000027d1</UniqueId>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX47C2F721165D4A9B8B9DF23712C945D3">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">graph.bench</string>
+					<string name="ScriptGuid">{6C5395A4-A252-4477-815A-4D349D677EDA}</string>
+					<ProtectedString name="Source"><![CDATA[local graph = require(game.ReplicatedStorage.Vinum.utils.graph)
+
+
+
+local function update(a)
+    local x = 2 + 3
+
+    a._graph:update()
+    return true
+end
+
+return {
+    {
+        name = "updating empty tree",
+        calls = 2,
+
+        preRun = function()
+            return graph()
+        end,
+        run = function(graphObj)
+            graphObj:update()
+        end
+    },
+    {
+        name = "updating shallow tree",
+        calls = 2,
+        
+        preRun = function()
+            local root = graph()
+            root:addDependent({_dependencySet = {}, _dependentSet = {}, _update = update , _graph = graph()})
+            root:addDependent({_dependencySet = {}, _dependentSet = {}, _update = update , _graph = graph() })
+            root:addDependent({_dependencySet = {}, _dependentSet = {}, _update = update , _graph = graph() })
+            root:addDependent({_dependencySet = {}, _dependentSet = {}, _update = update , _graph = graph()})
+            return root
+        end,
+        run = function(graphObj)
+            graphObj:update()
+        end
+    },
+    {
+        name = "updating deep & complex tree",
+        calls = 2,
+
+        preRun = function()
+            local root = graph()
+
+            local A = {_dependencySet = {}, _dependentSet = {}, _update = update, _graph = graph()}
+            local B = {_dependencySet = {}, _dependentSet = {}, _update = update, _graph = graph()}
+            local C = {_dependencySet = {}, _dependentSet = {}, _update = update, _graph = graph()}
+            local D = {_dependencySet = {}, _dependentSet = {}, _update = update, _graph = graph()}
+
+            root:addDependent(A)
+            root:addDependent(B)
+            root:addDependent(C)
+            root:addDependent(D)
+
+            B._graph:addDependent(A)
+            C._graph:addDependent(D)
+
+            A._graph:addDependency(B)
+            D._graph:addDependent(C)
+
+            return root
+        end,
+
+        run = function(root)
+            root:update()
+        end
+    }
+}]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">34e0901af81dfe52038962b90000283b</UniqueId>
+				</Properties>
+			</Item>
 		</Item>
 		<Item class="Folder" referent="2">
 			<Properties>
@@ -1448,6 +1585,70 @@ return {
 					<UniqueId name="UniqueId">4e62a2301ac56a6503884be0000027f3</UniqueId>
 				</Properties>
 			</Item>
+			<Item class="ModuleScript" referent="RBX0BEEAD61193C4E90B9B99B48D2C179FB">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Observe.spec</string>
+					<string name="ScriptGuid">{3769365D-214D-4B98-9EBD-1D7BCBC3ACD2}</string>
+					<ProtectedString name="Source"><![CDATA[local Vinum = require(game.ReplicatedStorage.Vinum)
+
+return {
+	["Should construct a observe object"] = function(tester)
+		local expect = tester.expect
+
+		local holdState = Vinum.Hold(true, Vinum.JustOk)
+		local observeState = Vinum.Observe(holdState, function(newValue)
+			return true
+		end)
+
+		expect(observeState).to.be.a("table")
+		expect(observeState.type).to.equal("state")
+		expect(observeState.kind).to.equal("observe")
+	end,
+	["Should fire all connections with valid arguments"] = function(tester)
+		local expect = tester.expect
+
+		local holdState = Vinum.Hold(true, Vinum.JustOk)
+		local observeState = Vinum.Observe(holdState, function(newValue)
+			return true
+		end)
+
+		local flags = 0
+		local newValue
+		observeState:onChange(function(x)
+			flags += 1
+			newValue = x
+		end)
+
+		holdState:set(false)
+		expect(newValue).to.equal(false)
+		expect(flags).to.equal(1)
+	end,
+	["Should dismiss updates"] = function(tester)
+		local expect = tester.expect
+
+		local holdState = Vinum.Hold(true, Vinum.JustOk)
+		local observeState = Vinum.Observe(holdState, function(newValue)
+			return false
+		end)
+
+		local flags = 0
+
+		observeState:onChange(function()
+            flags += 1
+        end)
+
+        expect(flags).to.equal(0)
+	end,
+}
+]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">4404d323678dab9b03893ece000027d6</UniqueId>
+				</Properties>
+			</Item>
 		</Item>
 		<Item class="ModuleScript" referent="RBX20CD8C4F7696461B9D4CB3E6A04390F8">
 			<Properties>
@@ -1457,7 +1658,9 @@ return {
 				<string name="Name">Vinum</string>
 				<string name="ScriptGuid">{312559C2-E0CD-4A70-965C-241389F308CA}</string>
 				<ProtectedString name="Source"><![CDATA[return {
-    Hold = require(script.Hold)
+    Hold = require(script.Hold),
+    Observe = require(script.Observe),
+    JustOk = function() return true end
 }]]></ProtectedString>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
@@ -1501,14 +1704,14 @@ local class = {}
 local META = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
-function class:update()
+function class:update(newValue)
 
     -- update dependents
 
     for dependent, isActive in self._dependentSet do
         if not isActive then continue end
 
-        dependent:_update()
+        dependent:_update(newValue)
     end
 end
 
@@ -1551,7 +1754,7 @@ local meta = {__index = class}
 function class:_update(newValue)
     self._value = newValue
 
-    self._graph:update()
+    self._graph:update(newValue)
 end
 
 function class:get()
@@ -1589,7 +1792,42 @@ end]]></ProtectedString>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">Observe</string>
 					<string name="ScriptGuid">{176995DD-9FDD-48F5-88EA-38E6BB843798}</string>
-					<ProtectedString name="Source"></ProtectedString>
+					<ProtectedString name="Source"><![CDATA[local graph = require(script.Parent.utils.graph)
+local class = {}
+local meta = { __index = class }
+
+
+function class:_update(newValue)
+    if not self._updateProcessor(newValue) then return end
+
+	for connection in self._connections do
+		task.spawn(connection, newValue)
+	end
+end
+
+function class:onChange(funct)
+    self._connections[funct] = true
+
+    return function()
+        self._connections[funct] = nil
+    end
+end
+
+return function(state, updateProcessor)
+	local self = setmetatable({
+		type = "state",
+		kind = "observe",
+
+        _updateProcessor = updateProcessor,
+		_connections = {},
+		_graph = graph(),
+	}, meta)
+
+	self._graph:addDependency(state)
+	state._graph:addDependent(self)
+	return self
+end
+]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">656cd41ba5439c8903892f1a000028a5</UniqueId>

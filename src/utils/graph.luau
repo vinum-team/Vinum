@@ -8,9 +8,7 @@ local META = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 function class:update(newValue)
-
     -- update dependents
-
     for dependent, isActive in self._dependentSet do
         if not isActive then continue end
 

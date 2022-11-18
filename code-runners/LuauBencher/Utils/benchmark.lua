@@ -1,19 +1,20 @@
 local function microOrMili(num)
 	local MiliVersion = num * 1_000
 
-	return if MiliVersion < 1 then tostring(num * 1_000_000).."us" else tostring(MiliVersion).."ms"
+	return if MiliVersion < 1 then tostring(num * 1_000_000) .. "us" else tostring(MiliVersion) .. "ms"
 end
 
 local function benchmark(calls: number, preRun: () -> (any), run: (any) -> (), postRun: () -> ())
 	local rawBenchmark = table.create(calls)
 
 	for _ = 1, calls do
-		local preParams = preRun()
+		local preParams = if not preRun then nil else preRun()
 		local timeStart = os.clock()
 		run(preParams)
 		local timeEnd = os.clock()
-		postRun()
-
+		if postRun then
+			postRun()
+		end
 		table.insert(rawBenchmark, timeEnd - timeStart)
 	end
 
