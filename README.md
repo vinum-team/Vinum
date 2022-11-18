@@ -1,4 +1,4 @@
 # Vinum
-Vinum is a reactive and modern state management library that we use in every project we maintain, whether it is closed-source or an open-source project.
+Vinum is reactive state management library intended for powerful use and efficiency.
 
-The documentation is little to none due to it is limited audience.
+Vinum in it's current state not usable for any production-ready environment.

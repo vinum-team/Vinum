@@ -1,3 +1,5 @@
 return {
-    Holder = require(script.Holder)
+    Hold = require(script.Hold),
+    Observe = require(script.Observe),
+    JustOk = function() return true end
 }

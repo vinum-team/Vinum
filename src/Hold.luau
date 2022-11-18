@@ -1,14 +1,12 @@
+local graph = require(script.Parent.utils.graph)
+
 local class = {}
 local meta = {__index = class}
 
 function class:_update(newValue)
     self._value = newValue
 
-    for dependent, isActive in self._dependentSet do 
-        if not isActive then continue end
-
-        dependent:_update()
-    end
+    self._graph:update(newValue)
 end
 
 function class:get()
@@ -16,7 +14,7 @@ function class:get()
 end
 
 function class:set(newValue)
-    local shouldUpdate = self._updateProccessor(self._value, newValue)
+    local shouldUpdate = self._updateProcessor(self._value, newValue)
 
     if shouldUpdate then
         self:_update(newValue)
@@ -25,11 +23,12 @@ end
 
 return function(ogValue, updateProcessor)
     local self = setmetatable({
-        _value = ogValue,
-        _dependentSet = {},
-        _updateProccessor = updateProcessor
-    }, meta)
+        type = "state",
+        kind = "hold",
 
-    self:_update(ogValue)
+        _value = ogValue,
+        _updateProcessor = updateProcessor,
+        _graph = graph()
+    }, meta)
     return self
 end
