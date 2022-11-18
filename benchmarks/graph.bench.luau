@@ -41,7 +41,7 @@ return {
         end
     },
     {
-        name = "updating deep & complex tree - 10 total dependencies/dependents",
+        name = "updating deep & complex tree - 7 total dependencies/dependents",
         calls = 50000,
 
         preRun = function()
