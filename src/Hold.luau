@@ -30,7 +30,7 @@ return function(ogValue, updateProcessor)
 		_updateProcessor = updateProcessor,
 	}, meta)
 
-    self._graph = graph(self)
+	self._graph = graph(self)
 
 	return self
 end

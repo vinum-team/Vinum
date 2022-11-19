@@ -8,11 +8,11 @@ local none = { value = "none" }
 
 function class:_update()
 	self._graph:disactiviteAllDependenciesAndDependents()
-	
-    local oldValue = self._value
+
+	local oldValue = self._value
 	local newValue = self._calculator(self._useHelper)
-	
-    self._graph:simplifyDependencyTree()
+
+	self._graph:simplifyDependencyTree()
 
 	if self._updateProcessor(oldValue, newValue) then
 		self._value = newValue
