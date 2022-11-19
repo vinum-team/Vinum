@@ -1,6 +1,8 @@
 # Project place file
-dev.rbxlx
+/*.rbxlx
 /*.rbxmx
+/*.rbxl
+/*.rbxm
 
 sourcemap.json
 # Roblox Studio lock files
