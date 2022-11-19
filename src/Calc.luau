@@ -7,7 +7,7 @@ local meta = { __index = class }
 local none = { value = "none" }
 
 function class:_update()
-	self._graph:disactiviteAllDependenciesAndDependents()
+	self._graph:deactivateAllDependenciesAndDependents()
 
 	local oldValue = self._value
 	local newValue = self._calculator(self._useHelper)

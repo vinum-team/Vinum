@@ -37,7 +37,7 @@ function class:simplifyDependencyTree()
 	end
 end
 
-function class:disactiviteAllDependenciesAndDependents()
+function class:deactivateAllDependenciesAndDependents()
 	for dependency in self._dependencySet do
 		self._dependencySet[dependency] = false
 		dependency._graph._dependentSet[self._owner] = false
