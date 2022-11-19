@@ -48,4 +48,28 @@ return {
 
         expect(flags).to.equal(0)
 	end,
+	["Should be yield-safe"] = function(tester)
+		local expect = tester.expect
+
+		local holdState = Vinum.Hold(true, Vinum.JustOk)
+		local observeState = Vinum.Observe(holdState, function(newValue)
+			return true
+		end)
+		
+		local firstConnectionFlag = false
+		observeState:onChange(function()
+			task.wait(3)
+			firstConnectionFlag = true
+		end)
+
+		local secondConnectionFlag = false
+		observeState:onChange(function()
+			secondConnectionFlag = true
+		end)
+
+		holdState:set(123)
+		expect(secondConnectionFlag).to.equal(true)
+		task.wait(4)
+		expect(firstConnectionFlag).to.equal(true)
+	end
 }

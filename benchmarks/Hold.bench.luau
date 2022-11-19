@@ -4,7 +4,7 @@ local Hold = Vinum.Hold
 return {
 	{
 		name = "Creating Holds",
-		calls = 2000,
+		calls = 50000,
 
 		run = function()
 			Hold(1, Vinum.JustOk)
@@ -12,7 +12,7 @@ return {
 	},
 	{
 		name = "set()'ing Holds",
-		calls = 2000,
+		calls = 50000,
 
 		preRun = function()
 			return Hold(100, Vinum.JustOk)
@@ -23,7 +23,7 @@ return {
 	},
 	{
 		name = "get()'ing Holds value",
-		calls = 2000,
+		calls = 50000,
 
 		preRun = function()
 			return Hold(100, Vinum.JustOk)
