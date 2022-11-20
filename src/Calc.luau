@@ -32,6 +32,7 @@ return function(calculator, updateProcessor)
 		_calculator = calculator,
 		_value = none,
 		_updateProcessor = updateProcessor,
+		_graph = {}
 	}, meta)
 
 	self._graph = graph(self)

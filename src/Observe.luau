@@ -50,10 +50,12 @@ return function(state, updateProcessor)
 
 		_updateProcessor = updateProcessor,
 		_connections = {},
+		_graph = {}
 	}, meta)
 
 	self._graph = graph(self)
-	self._graph:addDependency(state)
-	state._graph:addDependent(self)
+
+	self._graph._dependencySet[state] = true
+	state._graph._dependentSet[self] = true
 	return self
 end
