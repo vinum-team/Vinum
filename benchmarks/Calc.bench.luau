@@ -44,7 +44,7 @@ return {
 				return useState(A) + useState(root)
 			end, JustOk)
 
-			return root
+			return B
 		end,
 
 		run = function(root)

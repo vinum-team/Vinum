@@ -6,19 +6,19 @@ local class = {}
 local meta = { __index = class }
 
 function class:_update()
-	self._graph:deactivateAllDependenciesAndDependents()
-	
+	local cases = self._cases
+	local chosenArm = cases[self._inputState._value] or cases["default"]
 	local graph = self._graph
 
 	local oldValue = self._value
 	self._value = Symbols.Pending
-	local newValue = self._calculator(self._useHelper)
+	local newArmValue = chosenArm(self._useHelper)
 
 	graph:simplifyDependencyTree()
 
-	if self._updateProcessor(oldValue, newValue) then
-		self._value = newValue
-		graph:update(newValue)
+	if self._updateProcessor(oldValue, newArmValue) then
+		self._value = newArmValue
+		graph:update(newArmValue)
 	else
 		self._value = oldValue
 	end
@@ -28,19 +28,20 @@ function class:get()
 	return self._value
 end
 
-return function(calculator, updateProcessor)
+return function(inputState, cases, updateProcessor)
 	local self = setmetatable({
 		type = "state",
-		kind = "calc",
+		kind = "match",
 
-		_calculator = calculator,
+		_cases = cases,
 		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
-		_graph = {}
+		_inputState = inputState,
 	}, meta)
 
-	self._graph = graph(self)
-	self._useHelper = useState(self)
+    self._graph = graph(self)
+    self._useHelper = useState(self)
+	self._inputState._graph._dependentSet[self] = true
 
 	self:_update()
 	return self

@@ -2,15 +2,18 @@ local graph = require(script.Parent.utils.graph)
 local class = {}
 local meta = { __index = class }
 
-local freeThread
+local freeThread -- Thread reusage
 
-local function functionPasser(fn, ...)
+local function Passer(fn, ...)
+	local acquiredThread = freeThread
+	freeThread = nil
 	fn(...)
+	freeThread = acquiredThread
 end
 
 local function yielder()
 	while true do
-		functionPasser(coroutine.yield())
+		Passer(coroutine.yield())
 	end
 end
 
@@ -19,10 +22,7 @@ local function SpawnWithReuse(fn, ...)
 		freeThread = coroutine.create(yielder)
 		coroutine.resume(freeThread)
 	end
-	local acquiredThread = freeThread
-	freeThread = nil
-	task.spawn(acquiredThread, fn, ...)
-	freeThread = acquiredThread
+	task.spawn(freeThread, fn, ...)
 end
 
 function class:_update(newValue)
