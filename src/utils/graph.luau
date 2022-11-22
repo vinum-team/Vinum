@@ -28,6 +28,8 @@ end
 
 function class:simplifyDependencyTree()
 	for dependency in self._dependencySet do
+		if not dependency._isSelfContained then continue end
+
 		for upperDependency in dependency._graph._dependencySet do
 			if self._dependencySet[upperDependency] then
 				self._dependencySet[upperDependency] = false
@@ -39,6 +41,7 @@ end
 
 function class:deactivateAllDependenciesAndDependents()
 	for dependency in self._dependencySet do
+		if not dependency._isSelfContained then continue end
 		self._dependencySet[dependency] = false
 		dependency._graph._dependentSet[self._owner] = false
 	end

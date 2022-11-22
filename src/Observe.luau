@@ -1,29 +1,8 @@
 local graph = require(script.Parent.utils.graph)
+local spawner = require(script.Parent.utils.spawner)
 local class = {}
 local meta = { __index = class }
 
-local freeThread -- Thread reusage
-
-local function Passer(fn, ...)
-	local acquiredThread = freeThread
-	freeThread = nil
-	fn(...)
-	freeThread = acquiredThread
-end
-
-local function yielder()
-	while true do
-		Passer(coroutine.yield())
-	end
-end
-
-local function SpawnWithReuse(fn, ...)
-	if not freeThread then
-		freeThread = coroutine.create(yielder)
-		coroutine.resume(freeThread)
-	end
-	task.spawn(freeThread, fn, ...)
-end
 
 function class:_update(newValue)
 	if not self._updateProcessor(newValue) then
@@ -31,7 +10,7 @@ function class:_update(newValue)
 	end
 
 	for connection in self._connections do
-		SpawnWithReuse(connection, newValue)
+		spawner(connection, newValue)
 	end
 end
 
@@ -48,6 +27,7 @@ return function(state, updateProcessor)
 		type = "state",
 		kind = "observe",
 
+		_isSelfContained = false,
 		_updateProcessor = updateProcessor,
 		_connections = {},
 		_graph = {}

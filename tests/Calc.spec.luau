@@ -60,5 +60,20 @@ return {
 
         root:set(20)
         expect(flags).to.equal(2)
+    end,
+	["Should work with groups"] = function(tester)
+        local expect = tester.expect
+
+		local root = Vinum.Group(Vinum.JustOk)
+
+		root:setKey("Hi", 200)
+		local obj = Vinum.Calc(function(_, useKey)
+			return useKey(root, "Hi") * 2
+		end, Vinum.JustOk)
+
+		expect(obj:get()).to.equal(400)
+
+		root:setKey("Hi", 100)
+		expect(obj:get()).to.equal(200)
     end
 }
