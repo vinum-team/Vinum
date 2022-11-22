@@ -6,9 +6,8 @@ local class = {}
 local meta = { __index = class }
 
 function class:_update()
-	self._graph:deactivateAllDependenciesAndDependents()
-	
 	local graph = self._graph
+	graph:deactivateAllDependenciesAndDependents()
 
 	local oldValue = self._value
 	self._value = Symbols.Pending
@@ -36,7 +35,7 @@ return function(calculator, updateProcessor)
 		_calculator = calculator,
 		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
-		_graph = {}
+		_graph = {},
 	}, meta)
 
 	self._graph = graph(self)
