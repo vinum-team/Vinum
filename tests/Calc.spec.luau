@@ -75,5 +75,27 @@ return {
 
 		root:setKey("Hi", 100)
 		expect(obj:get()).to.equal(200)
+    end,
+	["Should work with observes"] = function(tester)
+        local expect = tester.expect
+
+		local root = Vinum.Group(Vinum.JustOk)
+
+		root:setKey("Hi", 200)
+		local obj = Vinum.Calc(function(_, useKey)
+			return useKey(root, "Hi") * 2
+		end, Vinum.JustOk)
+
+		local flags = 0
+
+		local x
+		Vinum.Observe(obj, Vinum.JustOk):onChange(function(newValue)
+			flags += 1
+			x = newValue
+		end)
+
+		root:setKey("Hi", 2)
+		expect(x).to.equal(4)
+		expect(flags).to.equal(1)
     end
 }

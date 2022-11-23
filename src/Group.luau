@@ -3,6 +3,11 @@ local spawner = require(script.Parent.utils.spawner)
 local class = {}
 local meta = { __index = class }
 
+local selfContainedClass = {__index = {
+    get = function(self)
+        return self._graph._owner[self.name]
+    end
+}}
 function class:setKey(keyName, keyValue)
     if self._setProcessor(keyName, keyValue) then
         if self._values[keyName] then
@@ -21,6 +26,10 @@ end
 
 function class:getKey(keyName)
     return self._values[keyName]
+end
+
+function class:asState(KeyName)
+    return setmetatable({name = KeyName, _graph = self._graphs[KeyName]}, selfContainedClass)
 end
 
 function class:onChange(fn)

@@ -9,18 +9,17 @@ local meta = { __index = class }
 function class:_update()
 	local cases = self._cases
 	local chosenArm = cases[self._inputState._value] or cases["default"]
-	local graph = self._graph
-
+	
 	local oldValue = self._value
 	self._value = Symbols.Pending
 	local newArmValue = chosenArm(self._useHelper, self._useKeyHelper)
 
-	graph:simplifyDependencyTree()
-
 	if self._updateProcessor(oldValue, newArmValue) then
 		self._value = newArmValue
+		return newArmValue
 	else
 		self._value = oldValue
+		return nil
 	end
 end
 

@@ -7,19 +7,16 @@ local class = {}
 local meta = { __index = class }
 
 function class:_update()
-	local graph = self._graph
-	graph:deactivateAllDependenciesAndDependents()
-
 	local oldValue = self._value
 	self._value = Symbols.Pending
 	local newValue = self._calculator(self._useHelper, self._useKeyHelper)
 
-	graph:simplifyDependencyTree()
-
 	if self._updateProcessor(oldValue, newValue) then
 		self._value = newValue
+		return self._value
 	else
 		self._value = oldValue
+		return nil
 	end
 end
 
