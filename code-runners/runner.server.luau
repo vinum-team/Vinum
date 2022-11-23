@@ -1,6 +1,6 @@
 --!optimize 2
 local shouldBenchmark = true
-local shouldTest = true
+local shouldTest = false
 
 local Tester = require(script.Parent.Tester)
 local LuauBencher = require(script.Parent.LuauBencher)

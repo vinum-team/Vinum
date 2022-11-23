@@ -1,15 +1,9 @@
 local graph = require(game.ReplicatedStorage.Vinum.utils.graph)
 
 
-
-local function update(a)
-    a._graph:update()
-    return true
-end
-
 local function makeDependency(dependency, dependent)
-    dependency._graph:addDependent(dependent)
-    dependent._graph:addDependency(dependency)
+    dependency:addDependent(dependent)
+    dependent:addDependency(dependency)
 end
 
 return {
@@ -18,7 +12,7 @@ return {
         calls = 50000,
 
         preRun = function()
-            return graph()
+            return graph({})
         end,
         run = function(graphObj)
             graphObj:update()
@@ -29,11 +23,11 @@ return {
         calls = 50000,
         
         preRun = function()
-            local root = graph()
-            root:addDependent({_update = update , _graph = graph()})
-            root:addDependent({_update = update , _graph = graph() })
-            root:addDependent({_update = update , _graph = graph() })
-            root:addDependent({_update = update , _graph = graph()})
+            local root = graph({})
+            root:addDependent(graph({}))
+            root:addDependent(graph({}))
+            root:addDependent(graph({}))
+            root:addDependent(graph({}))
             return root
         end,
         run = function(graphObj)
@@ -45,12 +39,12 @@ return {
         calls = 50000,
 
         preRun = function()
-            local root = graph()
+            local root = graph({})
 
-            local A = {_update = update, _graph = graph()}
-            local B = {_update = update, _graph = graph()}
-            local C = {_update = update, _graph = graph()}
-            local D = {_update = update, _graph = graph()}
+            local A = graph({})
+            local B = graph({})
+            local C = graph({})
+            local D = graph({})
 
             --[[
                 root - > a = B/C => D
@@ -76,12 +70,12 @@ return {
         calls = 50000,
 
         preRun = function()
-            local root = graph()
+            local root = graph({})
 
-            local A = {_update = update, _graph = graph()}
-            local B = {_update = update, _graph = graph()}
-            local C = {_update = update, _graph = graph()}
-            local D = {_update = update, _graph = graph()}
+            local A = graph({})
+            local B = graph({})
+            local C = graph({})
+            local D = graph({})
 
             --[[
                 root - > a = B/C => D
@@ -99,7 +93,7 @@ return {
         end,
 
         run = function(d)
-            d._graph:simplifyDependencyTree()
+            d:simplifyDependencyTree()
         end
     }
 }

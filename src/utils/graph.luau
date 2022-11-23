@@ -8,13 +8,16 @@ local META = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 function class:update(newValue)
+	if self._owner._update then
+		newValue = self._owner:_update(newValue) or newValue
+	end
 	-- update dependents
 	for dependent, isActive in self._dependentSet do
 		if not isActive then
 			continue
 		end
 
-		dependent:_update(newValue)
+		dependent:update(newValue)
 	end
 end
 
@@ -28,12 +31,10 @@ end
 
 function class:simplifyDependencyTree()
 	for dependency in self._dependencySet do
-		if not dependency._isSelfContained then continue end
-
-		for upperDependency in dependency._graph._dependencySet do
+		for upperDependency in dependency._dependencySet do
 			if self._dependencySet[upperDependency] then
 				self._dependencySet[upperDependency] = false
-				upperDependency._graph[self._owner] = false
+				upperDependency[self] = false
 			end
 		end
 	end
@@ -43,11 +44,11 @@ function class:deactivateAllDependenciesAndDependents()
 	for dependency in self._dependencySet do
 		if not dependency._isSelfContained then continue end
 		self._dependencySet[dependency] = false
-		dependency._graph._dependentSet[self._owner] = false
+		dependency._dependentSet[self] = false
 	end
 
 	for dependent in self._dependentSet do
-		dependent._graph._dependencySet[self._owner] = false
+		dependent._dependencySet[self] = false
 		self._dependentSet[dependent] = false
 	end
 end

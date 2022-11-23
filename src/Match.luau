@@ -19,7 +19,6 @@ function class:_update()
 
 	if self._updateProcessor(oldValue, newArmValue) then
 		self._value = newArmValue
-		graph:update(newArmValue)
 	else
 		self._value = oldValue
 	end
@@ -44,8 +43,10 @@ return function(inputState, cases, updateProcessor)
     self._graph = graph(self)
     self._useHelper = useState(self)
 	self._useKeyHelper = useStateKey(self)
-	self._inputState._graph._dependentSet[self] = true
+	local myGraph = self._graph
 
-	self:_update()
+	inputState._graph._dependentSet[myGraph] = true
+
+	myGraph:update()
 	return self
 end

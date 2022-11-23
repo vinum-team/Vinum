@@ -18,7 +18,6 @@ function class:_update()
 
 	if self._updateProcessor(oldValue, newValue) then
 		self._value = newValue
-		graph:update(newValue)
 	else
 		self._value = oldValue
 	end
