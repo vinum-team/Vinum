@@ -9,3 +9,11 @@ An ultra-fast multi-paradigm and modern reactive state management library while 
 * **Balance In Strictness & Flexibility**: Every Vinum object you would use requires a function that allows you to drop updates or to allow them, and to do any middleware needed - although output alteration isn't allowed and will never be.
 * **Simple, and Declarative Gate**: State management in Vinum is beautifully simple and scalable - no boilerplate code for implementing a simple feature!
 * **Dependencies? Never heard of em**: You would never worry again about how managing dependencies - all of that is abstracted away!
+
+## Why Speed?
+
+Speed in state management should be optimal, and while other state management libraries often do a great job at maintaining optimal performance, top-tier performance isn't a concern to them.
+
+Vinum is built on the philosophy that user code should be the performance bottleneck so it is easier for them to optimize without forking the library.
+
+That's similar to a chain, the weakest part is what determines the strength of the whole body, however strengthening it is easier than strengthening a chain that is mostly made by weak parts.
