@@ -45,6 +45,7 @@ return function(setProcessor)
         type = "state",
 		kind = "group",
 
+		_isStaticDependency = false,
         _isSelfContained = false,
         _setProcessor = setProcessor,
         _values = {},

@@ -28,7 +28,8 @@ return function(calculator, updateProcessor)
 	local self = setmetatable({
 		type = "state",
 		kind = "calc",
-
+		
+		_isStaticDependency = false,
 		_isSelfContained = true,
 		_calculator = calculator,
 		_value = Symbols.None,

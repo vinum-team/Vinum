@@ -28,6 +28,7 @@ return function(state, updateProcessor)
 		kind = "observe",
 
 		_isSelfContained = false,
+		_isStaticDependency = true,
 		_updateProcessor = updateProcessor,
 		_connections = {},
 		_graph = {}

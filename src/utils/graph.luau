@@ -8,10 +8,17 @@ local META = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 function class:update(newValue)
-	if self._owner._update then
-		self:deactivateAllDependencies()
-		newValue = self._owner:_update(newValue) or newValue
-		self:simplifyDependencyTree()
+	local owner = self._owner
+	if owner and owner._update then
+		local isDynamic = owner._isStaticDependency == false
+
+		if isDynamic then
+			self:deactivateAllDependencies()
+			newValue = self._owner:_update(newValue) or newValue
+			self:simplifyDependencyTree() 
+		else
+			newValue = self._owner:_update(newValue) or newValue
+		end
 	end
 	-- update dependents
 	for dependent, isActive in self._dependentSet do
@@ -44,7 +51,9 @@ end
 
 function class:deactivateAllDependencies()
 	for dependency in self._dependencySet do
-		if not dependency._isSelfContained then continue end
+		if not dependency._isSelfContained then
+			continue
+		end
 		self._dependencySet[dependency] = false
 		dependency._dependentSet[self] = false
 	end

@@ -33,6 +33,7 @@ return function(inputState, cases, updateProcessor)
 		kind = "match",
 
 		_isSelfContained = true,
+		_isStaticDependency = false,
 		_cases = cases,
 		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
