@@ -9,7 +9,7 @@ local meta = { __index = class }
 function class:_update()
 	local cases = self._cases
 	local chosenArm = cases[self._inputState._value] or cases["default"]
-	
+
 	local oldValue = self._value
 	self._value = Symbols.Pending
 	local newArmValue = chosenArm(self._useHelper, self._useKeyHelper)
@@ -27,7 +27,11 @@ function class:get()
 	return self._value
 end
 
-return function(inputState, cases, updateProcessor)
+return function(
+	inputState,
+	cases: { [any]: (useState: (dependency: any) -> (any), useKey: (dependency: any) -> (any)) -> () },
+	updateProcessor: (oldValue: any, newValue: any) -> (boolean)
+)
 	local self = setmetatable({
 		type = "state",
 		kind = "match",
@@ -40,8 +44,8 @@ return function(inputState, cases, updateProcessor)
 		_inputState = inputState,
 	}, meta)
 
-    self._graph = graph(self)
-    self._useHelper = useState(self)
+	self._graph = graph(self)
+	self._useHelper = useState(self)
 	self._useKeyHelper = useStateKey(self)
 	local myGraph = self._graph
 

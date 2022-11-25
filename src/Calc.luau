@@ -2,7 +2,6 @@ local graph = require(script.Parent.utils.graph)
 local useState = require(script.Parent.utils.useState)
 local useKeyState = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
-
 local class = {}
 local meta = { __index = class }
 
@@ -24,17 +23,22 @@ function class:get()
 	return self._value
 end
 
-return function(calculator, updateProcessor)
+local function Calc<T>(
+	calculator: (useState: (dependency: any) -> (T), useKey: (dependency: any) -> (T)) -> (),
+	updateProcessor: (oldValue: T, newValue: T) -> (boolean)
+)
 	local self = setmetatable({
 		type = "state",
 		kind = "calc",
-		
+
 		_isStaticDependency = false,
 		_isSelfContained = true,
 		_calculator = calculator,
-		_value = Symbols.None,
+		_value = Symbols.None :: {type: string, value: string} | any,
 		_updateProcessor = updateProcessor,
-		_graph = {},
+		_graph = {} :: typeof(graph()),
+		_useHelper = {} :: typeof(useState()),
+		_useKeyHelper = {} :: typeof(useKeyState())
 	}, meta)
 
 	self._graph = graph(self)
@@ -44,3 +48,5 @@ return function(calculator, updateProcessor)
 	self:_update()
 	return self
 end
+
+return Calc

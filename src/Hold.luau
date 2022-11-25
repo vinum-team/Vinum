@@ -1,5 +1,4 @@
 local graph = require(script.Parent.utils.graph)
-
 local class = {}
 local meta = { __index = class }
 
@@ -17,7 +16,7 @@ function class:set(newValue)
 	end
 end
 
-return function(ogValue, updateProcessor)
+local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))
 	local self = setmetatable({
 		type = "state",
 		kind = "hold",
@@ -31,3 +30,5 @@ return function(ogValue, updateProcessor)
 
 	return self
 end
+
+return Hold

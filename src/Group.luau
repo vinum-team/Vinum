@@ -8,7 +8,7 @@ local selfContainedClass = {__index = {
         return self._graph._owner[self.name]
     end
 }}
-function class:setKey(keyName, keyValue)
+function class:setKey(keyName: string, keyValue: unknown)
     if self._setProcessor(keyName, keyValue) then
         if self._values[keyName] then
             self._values[keyName] = keyValue
@@ -24,11 +24,11 @@ function class:setKey(keyName, keyValue)
     end
 end
 
-function class:getKey(keyName)
+function class:getKey(keyName: string)
     return self._values[keyName]
 end
 
-function class:asState(KeyName)
+function class:asState(KeyName: string)
     return setmetatable({name = KeyName, _graph = self._graphs[KeyName]}, selfContainedClass)
 end
 
@@ -40,7 +40,7 @@ function class:onChange(fn)
     end
 end
 
-return function(setProcessor)
+local function Group(setProcessor: (keyName: string, keyValue: unknown) -> (boolean))
     local self = setmetatable({
         type = "state",
 		kind = "group",
@@ -52,6 +52,8 @@ return function(setProcessor)
         _graphs = {},
         _connections = {}
     }, meta)
-
     return self
 end
+
+
+return Group

@@ -22,7 +22,7 @@ function class:onChange(funct)
 	end
 end
 
-return function(state, updateProcessor)
+return function(state, updateProcessor: (newValue: any) -> (boolean))
 	local self = setmetatable({
 		type = "state",
 		kind = "observe",
