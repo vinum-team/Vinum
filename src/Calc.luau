@@ -45,7 +45,7 @@ local function Calc<T>(
 	self._useHelper = useState(self)
 	self._useKeyHelper = useKeyState(self)
 
-	self:_update()
+	self._graph:update()
 	return self
 end
 
