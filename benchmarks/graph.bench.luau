@@ -1,6 +1,5 @@
 local graph = require(game.ReplicatedStorage.Vinum.utils.graph)
 
-
 local function makeDependency(dependency, dependent)
     dependency:addDependent(dependent)
     dependent:addDependency(dependency)
