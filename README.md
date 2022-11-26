@@ -1,7 +1,7 @@
 <img align = "left" width = 350 src="gh-assets/Banner@svg.svg">
 
 
-<br><br><br><br>
+<br><br><br><br><br>
 An ultra-fast, multi-paradigm and modern reactive state management library intended for performance-critical systems - while also providing a simple and declarative API.
 ___
 
