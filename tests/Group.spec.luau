@@ -25,5 +25,15 @@ return {
 
         obj:setKey("hi", false)
         expect(obj:getKey("hi")).to.be.a("nil")
-    end
+    end,
+    ["Should be able to transform Keys into emulated Self-Containing States"] = function(tester)
+        local expect = tester.expect
+
+        local obj = Vinum.Group(Vinum.JustOk)
+
+        obj:setKey("hi", 123)
+        local selfObj = obj:asState("hi")
+
+        expect(selfObj:get()).to.equal(obj:getKey("hi"))
+    end,
 }

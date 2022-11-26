@@ -49,6 +49,5 @@ return {
 		expect(obj:get()).to.equal(40000)
         another:set(1)
         expect(obj:get()).to.equal(200)
-
     end,
 }
