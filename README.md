@@ -3,6 +3,8 @@
 
 <br><br><br><br><br>
 An ultra-fast, multi-paradigm and modern reactive state management library intended for performance-critical systems - while also providing a simple and declarative API.
+
+Check the [docs](https://plothan.github.io/Vinum/) here.
 ___
 
 ## Features
