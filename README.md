@@ -1,4 +1,4 @@
-<img align = "left" width = 350 src="gh-assets/advertise-banner@svg.svg">
+<img align = "left" src="gh-assets/advertise-banner@svg.svg">
 
 
 <br><br><br>
