@@ -1,5 +1,5 @@
 :root > * {
-    --md-primary-fg-color:               hsl(0, 0%, 84%);
+    --md-primary-fg-color:               hsl(0, 0%, 91%);
     --md-primary-fg-color--light:        rgb(152, 151, 151);
     --md-primary-fg-color--dark:         rgb(64, 64, 64);
     --md-primary-bg-color:               rgb(0, 0, 0);
@@ -11,7 +11,7 @@
     --md-default-fg-color--lighter:      hsl(0, 0%, 0%);
     --md-default-fg-color--lightest:     hsl(0, 0%, 80%);
     --md-default-bg-color:               hsl(0, 0%, 100%);
-    --md-default-bg-color--light:        hsla(0, 0%, 100%, 0.7WS);
+    --md-default-bg-color--light:        hsl(0, 0%, 100%);
     --md-default-bg-color--lighter:      hsl(0, 0%, 100%);
     --md-default-bg-color--lightest:     hsla(0, 0%, 100%, 0.12);
 
