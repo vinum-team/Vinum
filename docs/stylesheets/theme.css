@@ -1,0 +1,40 @@
+:root > * {
+    --md-primary-fg-color:               hsl(0, 0%, 100%);
+    --md-primary-fg-color--light:        rgb(152, 151, 151);
+    --md-primary-fg-color--dark:         rgb(64, 64, 64);
+    --md-primary-bg-color:               rgb(0, 0, 0);
+    --md-primary-bg-color--light:        hsla(0, 0%, 0%, 0.7);
+  
+
+    --md-default-fg-color:               hsl(0, 0%, 0%);
+    --md-default-fg-color--light:        hwb(0 0% 100%);
+    --md-default-fg-color--lighter:      hsl(0, 0%, 0%);
+    --md-default-fg-color--lightest:     hsl(0, 0%, 100%);
+    --md-default-bg-color:               hsl(0, 0%, 100%);
+    --md-default-bg-color--light:        hsla(0, 0%, 100%, 0.7);
+    --md-default-bg-color--lighter:      hsla(0, 0%, 100%, 0.3);
+    --md-default-bg-color--lightest:     hsla(0, 0%, 100%, 0.12);
+
+    --md-footer-fg-color:                rgb(0, 0, 0);
+    --md-footer-fg-color--light:         hsl(0, 2%, 12%);
+    --md-footer-fg-color--lighter:       hsl(0, 0%, 20%);
+    --md-footer-bg-color:                hsl(0, 0%, 100%);
+    --md-footer-bg-color--dark:          hsl(0, 0%, 100%);
+
+    
+}
+  
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+	font-weight: 600;
+	color: var(--md-default-fg-color);
+}
+
+.md-header__title {
+	font-weight: 600;
+}
+
+.md-source__repository {
+	font-weight: 600;
+}
