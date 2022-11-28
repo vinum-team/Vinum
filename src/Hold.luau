@@ -1,6 +1,17 @@
 local graph = require(script.Parent.utils.graph)
-local class = {}
+local class = { type = "state", kind = "hold" }
 local meta = { __index = class }
+
+export type Hold<T> = {
+	type: "state",
+	kind: "hold",
+
+	_value: T,
+	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
+	_graph: typeof(graph()),
+	get: (self: Hold<T>) -> (T),
+	set: (self: Hold<T>, newValue: T) -> (),
+}
 
 function class:get()
 	return self._value
@@ -18,17 +29,14 @@ end
 
 local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))
 	local self = setmetatable({
-		type = "state",
-		kind = "hold",
-
 		_value = ogValue,
 		_updateProcessor = updateProcessor,
-		_graph = {}
+		_graph = {},
 	}, meta)
 
 	self._graph = graph(self)
 
-	return self
+	return self :: Hold<T>
 end
 
 return Hold

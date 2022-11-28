@@ -2,8 +2,28 @@ local graph = require(script.Parent.utils.graph)
 local useState = require(script.Parent.utils.useState)
 local useKeyState = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
-local class = {}
+local class = { type = "state", kind = "calc" }
 local meta = { __index = class }
+
+type useStateType = typeof(useState())
+type useKeyStateType = typeof(useKeyState())
+
+export type Calc<T> = {
+	type: "state",
+	kind: "calc",
+
+	_isStaticDependency: false,
+	_isSelfContained: true,
+	_calculator: (useState: useStateType, useKeyState: useKeyStateType) -> (T),
+	_value: { type: "Symbol", value: "None"} | T,
+	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
+	_graph: typeof(graph()),
+	_useHelper: useStateType,
+	_useKeyHelper: useKeyStateType,
+	_update: (self: Calc<T>) -> (T | nil),
+	get: (self: Calc<T>) -> (T)
+}
+
 
 function class:_update()
 	local oldValue = self._value
@@ -28,17 +48,14 @@ local function Calc<T>(
 	updateProcessor: (oldValue: T, newValue: T) -> (boolean)
 )
 	local self = setmetatable({
-		type = "state",
-		kind = "calc",
-
 		_isStaticDependency = false,
 		_isSelfContained = true,
 		_calculator = calculator,
-		_value = Symbols.None :: {type: string, value: string} | any,
+		_value = Symbols.None :: { type: string, value: string } | any,
 		_updateProcessor = updateProcessor,
 		_graph = {} :: typeof(graph()),
 		_useHelper = {} :: typeof(useState()),
-		_useKeyHelper = {} :: typeof(useKeyState())
+		_useKeyHelper = {} :: typeof(useKeyState()),
 	}, meta)
 
 	self._graph = graph(self)

@@ -1,6 +1,7 @@
 local graph = require(script.Parent.utils.graph)
 local spawner = require(script.Parent.utils.spawner)
-local class = {}
+local Symbols = require(script.Parent.utils.Symbols)
+local class = { type = "state", kind = "group" }
 local meta = { __index = class }
 
 local selfContainedClass = { __index = {
@@ -9,12 +10,13 @@ local selfContainedClass = { __index = {
 	end,
 } }
 function class:setKey(keyName: string, keyValue: unknown)
-	if self._setProcessor(keyName, keyValue) then
-		if self._values[keyName] then
-			self._values[keyName] = keyValue
+	local values = self._values
+	if self._setProcessor(keyName, values[keyName] or Symbols.None, keyValue) then
+		if values[keyName] then
+			values[keyName] = keyValue
 			self._graphs[keyName]:update(keyValue)
 		else
-			self._values[keyName] = keyValue
+			values[keyName] = keyValue
 			self._graphs[keyName] = graph(self)
 		end
 
@@ -40,11 +42,8 @@ function class:onChange(fn)
 	end
 end
 
-local function Group(setProcessor: (keyName: string, keyValue: unknown) -> (boolean))
+local function Group(setProcessor: (keyName: string, oldKeyValue: unknown, keyValue: unknown) -> (boolean))
 	local self = setmetatable({
-		type = "state",
-		kind = "group",
-
 		_isStaticDependency = false,
 		_isSelfContained = false,
 		_setProcessor = setProcessor,

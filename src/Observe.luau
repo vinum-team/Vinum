@@ -1,8 +1,7 @@
 local graph = require(script.Parent.utils.graph)
 local spawner = require(script.Parent.utils.spawner)
-local class = {}
+local class = { type = "state", kind = "observe" }
 local meta = { __index = class }
-
 
 function class:_update(newValue)
 	if not self._updateProcessor(newValue) then
@@ -14,7 +13,7 @@ function class:_update(newValue)
 	end
 end
 
-function class:onChange(funct)
+function class:onChange(funct: (newValue: any) -> ())
 	self._connections[funct] = true
 
 	return function()
@@ -24,14 +23,11 @@ end
 
 return function(state, updateProcessor: (newValue: any) -> (boolean))
 	local self = setmetatable({
-		type = "state",
-		kind = "observe",
-
 		_isSelfContained = false,
 		_isStaticDependency = true,
 		_updateProcessor = updateProcessor,
 		_connections = {},
-		_graph = {}
+		_graph = {},
 	}, meta)
 
 	self._graph = graph(self)

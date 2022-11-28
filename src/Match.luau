@@ -3,7 +3,7 @@ local useState = require(script.Parent.utils.useState)
 local useStateKey = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
 
-local class = {}
+local class = { type = "state", kind = "match" }
 local meta = { __index = class }
 
 function class:_update()
@@ -33,9 +33,6 @@ return function(
 	updateProcessor: (oldValue: any, newValue: any) -> (boolean)
 )
 	local self = setmetatable({
-		type = "state",
-		kind = "match",
-
 		_isSelfContained = true,
 		_isStaticDependency = false,
 		_cases = cases,
