@@ -4,11 +4,15 @@ repo_url: https://github.com/Plothan/Vinum
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   features:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
+  icon:
+    repo: fontawesome/brands/github
 extra_css:
   - stylesheets/theme.css
 nav:
@@ -16,13 +20,21 @@ nav:
   - Tutorials:
     - Get Started: Tutorials/index.md
     - Fundamental:
-      - State Holding: Tutorials/fundamental/hold.md
-      - State Observing: Tutorials/fundamental/observe.md
-      - State Calculating: Tutorials/fundamental/calc.md
+      - Holding State: Tutorials/fundamental/hold.md
+      - Observing State: Tutorials/fundamental/observe.md
+      - Calculating State: Tutorials/fundamental/calc.md
       - Processors: Tutorials/fundamental/proc.md
     - Advanced:
-      - State Matching: Tutorials/advanced/match.md
-      - State Grouping: Tutorials/advanced/group.md
+      - Matching State: Tutorials/advanced/match.md
+      - Grouping State: Tutorials/advanced/group.md
+  - API Reference:
+    - API Center: API/index.md
+    - Calc: API/Calc.md
+    - Group: API/Group.md
+    - Hold: API/Hold.md
+    - Match: API/Match.md
+    - Observe: API/Observe.md
+    - Processors: API/Processors.md
 markdown_extensions:
   - admonition
   - pymdownx.details

@@ -1,4 +1,4 @@
-# State Matching
+# Matching State
 In this tutorial, you will be introduced to a new object that is `Match`. This object allows you to perform multiple computation depending on an InputState.
 
 We first need to import the constructor:
@@ -24,7 +24,7 @@ local tag = Match(level, {
 end)
 ```
 ??? Warning "Processor"
-    Just like Calc, `oldValue` is `{type = "Symbol", value "None"}`provided on Match creation.
+    Just like Calc, Match's creation uses the same pipeline when updating them, as such, your updateProcessor will get invoked during creation. This means you have to account for that. Vinum helps you by setting `oldValue` as `{type = "Symbol", value = "None}` on creation.
 
 
 As you can see, We can perform computations similar to `Calc`, in fact, `Match` act as a multi-arm calc, where it manages "multiple calcs" at the same, and optimize them.

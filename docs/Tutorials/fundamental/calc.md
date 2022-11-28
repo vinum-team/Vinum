@@ -1,5 +1,5 @@
-# State Calculating
-In this tutorial, you will be introduced to a new object that will allow for efficient derived values, that is `Calc`!
+# Calculating State
+In this tutorial, you will be introduced to a new object that allows for efficient derived values, that is `Calc`!
 
 We first need to import its constructor:
 

@@ -1,6 +1,6 @@
-# State Observing
+# Observing State
 
-Just like `State Holding`, the object being introduced mught be a word that is derived from the last part and you are right. Say hi to `Observe`!
+We often want to listen to changes on our state, which we can use `Observe` for that.
 
 `Observe` is an object that allows you to run code in response to a change in another state object.
 

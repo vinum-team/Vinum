@@ -9,9 +9,10 @@ local selfContainedClass = { __index = {
 		return self._graph._owner._values[self.name]
 	end,
 } }
-function class:setKey(keyName: string, keyValue: unknown)
+function class:setKey(keyName: string, keyValue: any)
 	local values = self._values
-	if self._setProcessor(keyName, values[keyName] or Symbols.None, keyValue) then
+	local oldValue = values[keyName]  or Symbols.None
+	if self._setProcessor(keyName, oldValue, keyValue) then
 		if values[keyName] then
 			values[keyName] = keyValue
 			self._graphs[keyName]:update(keyValue)
@@ -21,7 +22,7 @@ function class:setKey(keyName: string, keyValue: unknown)
 		end
 
 		for connection in self._connections do
-			spawner(connection, keyName, keyValue)
+			spawner(connection, keyName, oldValue , keyValue)
 		end
 	end
 end

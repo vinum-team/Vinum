@@ -1,5 +1,5 @@
 --!optimize 2
-local shouldBenchmark = true
+local shouldBenchmark = false
 local shouldTest = true
 
 local Tester = require(script.Parent.Tester)

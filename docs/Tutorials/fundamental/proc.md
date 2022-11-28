@@ -4,12 +4,29 @@ Processors in Vinum are pure functions that give you control whether you want up
 
 ## *Stateful* State Objects VS *Stateless* State Objects
 
-In Vinum, there are two section of state objects, one that is `Stateful` and the other one is `Stateless`, and you already got introduced to most of them. `Stateful` state objects are objects that quite simply, manage and contain their own state such as `Hold` and `Calc`, while `Stateless` state objects are objects that simply don't have their "own" state, such as `Observe`.
+In Vinum, there are two types of "state objects" in - one is *Stateful* and the other one is *Stateless*. It can be quite ironic that some "state objects" are stateless, however this separation helps us understand what exactly to put in Processors.
 
-*Stateful* state objects have totally different "best practices" for their processors since they are the ones that are the managers of their own state after all.
+### Stateful
+*Stateful* State objects have the ability to have their own state attached to them, examples of these are `Hold`, `Calc`, and both `Match` & `Groups` *(You will be introduced to them at a later point)*.
 
-The general rule of thumb for stateful state objects' processors is that you should use them for the management of the said object's state, such as dismissing updates when `newValue` is the same as `oldValue`.
+These objects always have a method that is used for reading their values, and sometimes a method for value mutation. Due to this ability, Processors that are used with this objects should be used to manage how their respective objects should signal out updates- i.e Processors that dismiss updates if produce the same value.
 
-The "standard" processors for *stateful* state objects are `Vinum.RefuseIfSimilar`. It is a processor that will dismiss any update that doesn't result in a different value, and accounts for Calc's creation. Additionally, a "general" processor is `Vinum.JustOk`, which is just a processor that accepts every update.
+tl;dr Processors for *Stateful* objects are the best when writing middleware that acts as **Should I signal this update**.
 
-Unlike *stateful* state object processors, *stateless* processors aren't tied to a standard, as they normally depend on your codebase foundation.
+**Standard Processors**:
+
+1. `Vinum.RefuseIfSimilar` - This dismisses updates if they produce the same value. Doesn't work for groups.
+2. `Vinum.RefuseIfSimilarAndCleanup` - This dismisses updates they produce the same value, otherwise, it accepts them and attempt to cleanup the old value. Doesn't work for groups.
+    * Supported cleanup types: Instances, RBXScriptConnections, function, custom objects that have d/Destroy methods, or arrays that contain supported types
+3. `Vinum.RefuseIfSimilarInGroup` - Same as #1, but instead only works for groups
+4. `Vinum.RefuseIfSimilarAndCleanupInGroup` - same as #2, but instead only works for groups.
+5. `Vinum.JustOk` - This accepts any update.
+
+### Stateless
+"Stateless" State objects don't have the ability to have their own state attached to them, the only example if them is `Observe`, which doesn't hold any state to itself.
+
+Processors for these objects should be used as a way for filtering updates from their respective objects. This is more of a **Should I receive this update**. 
+
+**Standard Processors**
+
+1. `Vinum.JustOk` - This accepts any update.

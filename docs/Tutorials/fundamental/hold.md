@@ -1,6 +1,6 @@
-# State Holding
+# Holding State
 
-You might be scared from the name "State Holding", however, it is really simple! In Vinum, "State Holding" is just saving data into the object `Hold`! But what are `Hold`s? 
+You might be scared from the name "Holding State", however, it is really simple! In Vinum, "Holding State" is just saving data into the object `Hold`! But what are `Hold`s? 
 
 They are objects that we can use to store data into, and then read from and write to.
 
