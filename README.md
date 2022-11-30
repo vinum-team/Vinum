@@ -6,7 +6,6 @@ An ultra-fast, multi-paradigm and modern reactive state management library inten
 
 Check the [docs](https://plothan.github.io/Vinum/) here.
 ___
-
 ## Features
 
 * **Centralized or Self-Contained** - Vinum doesn't "force" you into either centralized or self-contained paradigms, in fact, it allows for powerful integration between the two to leverage the best of the two worlds.

@@ -6,6 +6,7 @@ local Vinum =  {
 	Calc = require(script.Calc),
 	Match = require(script.Match),
 	Group = require(script.Group),
+	Mirror = require(script.Mirror),
 	JustOk = function()
 		return true
 	end,
