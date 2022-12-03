@@ -1,6 +1,6 @@
 local internalCleaner = require(script.internalCleaner)
 
-local Vinum =  {
+local Vinum = {
 	Hold = require(script.Hold),
 	Observe = require(script.Observe),
 	Calc = require(script.Calc),
@@ -8,6 +8,7 @@ local Vinum =  {
 	Group = require(script.Group),
 	Mirror = require(script.Mirror),
 	Wrap = require(script.Wrap),
+	Reflect = require(script.Reflect),
 	AlwaysTrue = function()
 		return true
 	end,
@@ -28,10 +29,9 @@ local Vinum =  {
 			return false
 		end
 	end,
-
 }
 
-Vinum.RefuseIfSimilarInGroups = function(_,oldValue, newValue)
+Vinum.RefuseIfSimilarInGroups = function(_, oldValue, newValue)
 	return Vinum.RefuseIfSimilar(oldValue, newValue)
 end
 Vinum.RefuseIfSimilarAndCleanupInGroup = function(_, oldValue, newValue)
