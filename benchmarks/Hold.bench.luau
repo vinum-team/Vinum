@@ -7,7 +7,7 @@ return {
 		calls = 50000,
 
 		run = function()
-			Hold(1, Vinum.JustOk)
+			Hold(1, Vinum.AlwaysTrue)
 		end,
 	},
 	{
@@ -15,7 +15,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, Vinum.JustOk)
+			return Hold(100, Vinum.AlwaysTrue)
 		end,
 		run = function(holder)
 			holder:set(400)
@@ -26,7 +26,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, Vinum.JustOk)
+			return Hold(100, Vinum.AlwaysTrue)
 		end,
 		run = function(holder)
 			holder:get()

@@ -2,7 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Calc = Vinum.Calc
-local JustOk = Vinum.JustOk
+local AlwaysTrue = Vinum.AlwaysTrue
 
 return {
 	{
@@ -12,7 +12,7 @@ return {
 		run = function()
 			Calc(function()
 				return true
-			end, JustOk)
+			end, AlwaysTrue)
 		end,
 	},
 	{
@@ -22,7 +22,7 @@ return {
 		preRun = function()
 			return Calc(function()
 				return true
-			end, JustOk)
+			end, AlwaysTrue)
 		end,
 
 		run = function(calc)
@@ -36,13 +36,13 @@ return {
 		preRun = function()
 			local root = Calc(function()
 				return 1
-			end, JustOk)
+			end, AlwaysTrue)
 			local A = Calc(function(useState)
 				return useState(root) + 1
-			end, JustOk)
+			end, AlwaysTrue)
 			local B = Calc(function(useState)
 				return useState(A) + useState(root)
-			end, JustOk)
+			end, AlwaysTrue)
 
 			return B
 		end,

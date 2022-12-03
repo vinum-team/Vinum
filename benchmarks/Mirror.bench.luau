@@ -2,7 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold 
 local Mirror = Vinum.Mirror 
-local JustOk = Vinum.JustOk 
+local AlwaysTrue = Vinum.AlwaysTrue 
 
 return {
     {
@@ -10,7 +10,7 @@ return {
         calls = 50000,
 
         preRun = function()
-            return Hold(true, JustOk), Hold(false, JustOk)
+            return Hold(true, AlwaysTrue), Hold(false, AlwaysTrue)
         end,
 
         run = function(x, y)
@@ -25,14 +25,14 @@ return {
 
         
         preRun = function()
-            local x = Hold(true, JustOk)
-            local y = Hold(false, JustOk)
+            local x = Hold(true, AlwaysTrue)
+            local y = Hold(false, AlwaysTrue)
 
             local miObj = Mirror(x, {
                 ["default"] = y
             })
 
-            miObj._currentCaseDependency = Hold("hi", JustOk)
+            miObj._currentCaseDependency = Hold("hi", AlwaysTrue)
             return miObj
         end,
 

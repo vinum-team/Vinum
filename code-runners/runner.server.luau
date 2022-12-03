@@ -6,7 +6,7 @@ local Tester = require(script.Parent.Tester)
 local LuauBencher = require(script.Parent.LuauBencher)
 if shouldBenchmark then
     print("Benchmarking...")
-    task.wait(11)
+    task.wait(5)
     LuauBencher.bootstrapper.run({
         directories = {game.ReplicatedStorage.benchmarks}
     })

@@ -6,7 +6,7 @@ return {
 
 		local calc = Vinum.Calc(function()
 			return true
-		end, Vinum.JustOk)
+		end, Vinum.AlwaysTrue)
 
 		expect(calc).to.be.a("table")
 		expect(calc.type).to.equal("state")
@@ -15,10 +15,10 @@ return {
 	["Should recompute once a dependency value changes"] = function(tester)
 		local expect = tester.expect
 
-		local hold = Vinum.Hold(100, Vinum.JustOk)
+		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
 		local calc = Vinum.Calc(function(useState)
 			return useState(hold) + 100
-		end, Vinum.JustOk)
+		end, Vinum.AlwaysTrue)
 
 		expect(calc:get()).to.equal(200)
 		hold:set(50)
@@ -28,7 +28,7 @@ return {
 		local expect = tester.expect
 		local flag = false
 
-		local hold = Vinum.Hold(100, Vinum.JustOk)
+		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
 		local calc = Vinum.Calc(function(useState)
 			return useState(hold) + 100
 		end, function()
@@ -47,16 +47,16 @@ return {
     ["Should simplify dependency trees"] = function(tester)
         local expect = tester.expect
 
-        local root = Vinum.Hold(100, Vinum.JustOk)
+        local root = Vinum.Hold(100, Vinum.AlwaysTrue)
         local b = Vinum.Calc(function(useState)
             return useState(root) + 2
-        end, Vinum.JustOk)
+        end, Vinum.AlwaysTrue)
 
         local flags = 0
         local _ = Vinum.Calc(function(useState) 
             flags += 1
             return useState(root) + useState(b)
-        end, Vinum.JustOk)
+        end, Vinum.AlwaysTrue)
 
         root:set(20)
         expect(flags).to.equal(2)
@@ -64,12 +64,12 @@ return {
 	["Should work with groups"] = function(tester)
         local expect = tester.expect
 
-		local root = Vinum.Group(Vinum.JustOk)
+		local root = Vinum.Group(Vinum.AlwaysTrue)
 
 		root:setKey("Hi", 200)
 		local obj = Vinum.Calc(function(_, useKey)
 			return useKey(root, "Hi") * 2
-		end, Vinum.JustOk)
+		end, Vinum.AlwaysTrue)
 
 		expect(obj:get()).to.equal(400)
 
@@ -79,17 +79,17 @@ return {
 	["Should work with observes"] = function(tester)
         local expect = tester.expect
 
-		local root = Vinum.Group(Vinum.JustOk)
+		local root = Vinum.Group(Vinum.AlwaysTrue)
 
 		root:setKey("Hi", 200)
 		local obj = Vinum.Calc(function(_, useKey)
 			return useKey(root, "Hi") * 2
-		end, Vinum.JustOk)
+		end, Vinum.AlwaysTrue)
 
 		local flags = 0
 
 		local x
-		Vinum.Observe(obj, Vinum.JustOk):onChange(function(newValue)
+		Vinum.Observe(obj, Vinum.AlwaysTrue):onChange(function(newValue)
 			flags += 1
 			x = newValue
 		end)

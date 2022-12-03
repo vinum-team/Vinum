@@ -2,7 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Group = Vinum.Group
 local Calc = Vinum.Calc
-local JustOk = Vinum.JustOk
+local AlwaysTrue = Vinum.AlwaysTrue
 
 
 return {
@@ -11,7 +11,7 @@ return {
         calls = 50000,
 
         run = function()
-            Group(JustOk)
+            Group(AlwaysTrue)
         end
     },
     {
@@ -19,7 +19,7 @@ return {
         calls = 50000,
 
         preRun = function()
-            local root = Group(JustOk)
+            local root = Group(AlwaysTrue)
             root:setKey("x", true)
 
             return root
@@ -33,7 +33,7 @@ return {
         calls = 50000,
 
         preRun = function()
-            return Group(JustOk)
+            return Group(AlwaysTrue)
         end,
 
         run = function(r)

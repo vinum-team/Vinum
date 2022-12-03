@@ -7,7 +7,8 @@ local Vinum =  {
 	Match = require(script.Match),
 	Group = require(script.Group),
 	Mirror = require(script.Mirror),
-	JustOk = function()
+	Wrap = require(script.Wrap),
+	AlwaysTrue = function()
 		return true
 	end,
 	RefuseIfSimilar = function(oldValue, newValue)

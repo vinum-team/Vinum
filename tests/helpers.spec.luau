@@ -1,10 +1,10 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 return {
-    ["Vinum.JustOk should allow return true"] = function(tester)
+    ["Vinum.AlwaysTrue should allow return true"] = function(tester)
         local expect = tester.expect
 
-        expect(Vinum.JustOk()).to.equal(true)
+        expect(Vinum.AlwaysTrue()).to.equal(true)
     end,
     ["Vinum.RefuseIfSimilar should dismiss updates when similar"] = function(tester)
         local expect = tester.expect
