@@ -9,6 +9,7 @@ local Vinum = {
 	Mirror = require(script.Mirror),
 	Wrap = require(script.Wrap),
 	Reflect = require(script.Reflect),
+	Record = require(script.Record),
 	AlwaysTrue = function()
 		return true
 	end,
