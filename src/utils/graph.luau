@@ -10,14 +10,12 @@ local WEAK_KEYS_METATABLE = { __mode = "k" }
 function class:update(newValue)
 	local owner = self._owner
 	if owner and owner._update then
-		local isDynamic = owner._isStaticDependency == false
-
-		if isDynamic then
+		if owner._isStaticDependency then
+			newValue = self._owner:_update(newValue) or newValue
+		else
 			self:deactivateAllDependencies()
 			newValue = self._owner:_update(newValue) or newValue
 			self:simplifyDependencyTree() 
-		else
-			newValue = self._owner:_update(newValue) or newValue
 		end
 	end
 	-- update dependents
@@ -28,18 +26,6 @@ function class:update(newValue)
 
 		dependent:update(newValue)
 	end
-end
-
---[[
-	Both addX methods are considered technical dept and will be removed once
-	it is proved these methods aren't used anymore in Vinum's codebase.
-]]
-function class:addDependent(dependent)
-	self._dependentSet[dependent] = true
-end
-
-function class:addDependency(dependency)
-	self._dependencySet[dependency] = true
 end
 
 --[[
