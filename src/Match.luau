@@ -8,7 +8,7 @@ local meta = { __index = class }
 
 function class:_update()
 	local cases = self._cases
-	local chosenArm = cases[self._inputState._value] or cases["default"]
+	local chosenArm = cases[self._inputState:get()] or cases["default"]
 
 	local oldValue = self._value
 	self._value = Symbols.Pending

@@ -20,7 +20,7 @@ export type Mirror<T, U> = {
 
 function class:_update()
 	local cases = self._cases
-	local chosenArm = cases[self._inputState._value] or cases["default"]
+	local chosenArm = cases[self._inputState:get()] or cases["default"]
 	local currentCaseDependency = self._currentCaseDependency
 
 	if currentCaseDependency ~= chosenArm then

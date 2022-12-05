@@ -1,7 +1,7 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 return {
-    ["Vinum.AlwaysTrue should allow return true"] = function(tester)
+    ["Vinum.AlwaysTrue should pass updates"] = function(tester)
         local expect = tester.expect
 
         expect(Vinum.AlwaysTrue()).to.equal(true)

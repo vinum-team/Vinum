@@ -11,7 +11,7 @@ export type Reflect<T> = {
 }
 
 function class:get()
-	return self._owner._value
+	return self._owner:get()
 end
 
 local function Reflect<T>(state: { _value: T, [any]: any })
