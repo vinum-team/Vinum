@@ -1,10 +1,11 @@
 return function(self)
+	local selfGraph = self._graph
 	return function(state, keyName)
-        local keyGraph = state._graphs[keyName]
-        keyGraph._dependentSet[self._graph] = true
-    
-        self._graph._dependencySet[keyGraph] = true
+		local keyGraph = state._graphs[keyName]
+		keyGraph._dependentSet[self._graph] = true
 
-        return state:getKey(keyName)
+		selfGraph._dependencySet[keyGraph] = true
+		selfGraph._currentCounter += 1
+		return state:getKey(keyName)
 	end
 end

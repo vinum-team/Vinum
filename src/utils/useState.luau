@@ -1,7 +1,9 @@
 return function(self)
+	local selfGraph = self._graph
 	return function(state)
-		state._graph._dependentSet[self._graph] = true
-		self._graph._dependencySet[state._graph] = true
+		local stateGraph = state._graph
+		stateGraph._dependentSet[selfGraph] = true
+		selfGraph._dependencySet[stateGraph] = true
 		return state:get()
 	end
 end

@@ -41,6 +41,8 @@ function class:simplifyDependencyTree()
 			if self._dependencySet[upperDependency] then
 				self._dependencySet[upperDependency] = false
 				upperDependency._dependentSet[self] = false
+
+				self._unUsedDependencyPool[upperDependency] = true
 			end
 		end
 	end
@@ -63,6 +65,19 @@ function class:deactivateAllDependencies()
 	end
 end
 
+--[[
+	Both addX methods are considered technical dept and will be removed once
+	it is proved these methods aren't used anymore in Vinum's codebase.
+]]
+function class:addDependent(dependent)
+	self._dependentSet[dependent] = true
+end
+
+function class:addDependency(dependency)
+	self._dependencySet[dependency] = true
+end
+
+
 return function(owner)
 	local self = setmetatable({
 		type = "internalUtils",
@@ -71,6 +86,9 @@ return function(owner)
 		_owner = owner,
 		_dependencySet = {},
 		_dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		_lastCounter = 0,
+		_currentCounter = 0,
+		_unUsedDependencyPool = {}
 	}, META)
 	return self
 end
