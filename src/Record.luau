@@ -26,19 +26,21 @@ function class:get()
 end
 
 function class:desync()
-	local owner = self._owner
+	local ownerGraph = self._owner
+	local selfGraph = self._graph
 	self._isSynced = false
-	self._graph._dependencySet[owner._graph] = self._isSynced
-	owner._graph._dependentSet[self._graph] = self._isSynced
+
+	selfGraph._dependencySet[ownerGraph] = false
+	ownerGraph._dependentSet[self._graph] = false
 end
 
 function class:sync()
-	local stateGraph = self._owner._graph
+	local ownerGraph = self._owner
 	local selfGraph = self._graph
-	local isSynced = true
+	self._isSynced = true
 
-	selfGraph._dependencySet[stateGraph] = isSynced
-	stateGraph._dependentSet[selfGraph] = isSynced
+	selfGraph._dependencySet[ownerGraph] = true
+	ownerGraph._dependentSet[self._graph] = true
 end
 
 local function Record<T>(state, isInitiallySynced: boolean)
