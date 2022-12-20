@@ -3,6 +3,18 @@ local useState = require(script.Parent.utils.useState)
 local useStateKey = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
 
+--[=[
+	@class Match
+
+	```lua
+	function(
+		inputState, -- The object that Mirror will base off objects
+		cases: { [any]: (useState, useKeyState) -> () }, -- A map of objects being linked to a specific value.
+		updateProcessor: (oldValue: any, newValue: any) -> (boolean) -- a function that Match uses to determine whether to let updates pass or not
+	)
+	```
+	Constructs a Match object, which is used for mirroring certain computations based on an object's value.
+]=]
 local class = { type = "state", kind = "match" }
 local meta = { __index = class }
 
@@ -23,6 +35,30 @@ function class:_update()
 	end
 end
 
+--[=[
+	Returns the current value.
+
+	```lua
+	local Root = Hold(100, Vinum.AlwaysTrue)
+	local Dependency = Hold(200, Vinum.AlwaysTrue)
+	local MatchState = Match(Root, {
+		[100] = function(useState, useKeyState)
+			return string.format("My level is %s", useState(Dependency))
+		end,
+		["default"] = function(_, _)
+			return "not found"
+		end
+	}, Vinum.AlwaysTrue)
+
+
+	print(MatchState:get()) -- My level is 200
+	Root:set(4)
+	print(MatchState:get()) -- not found
+	```
+
+	@return any -- The cached value
+	@within Match
+]=]
 function class:get()
 	return self._value
 end

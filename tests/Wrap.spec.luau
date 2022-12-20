@@ -27,7 +27,6 @@ return {
         local expect = tester.expect
 
         local wrapState = Vinum.Wrap(game.AncestryChanged, 1, 123, 334, 45)
-        print(wrapState)
         expect(wrapState:get()).to.equal(123)
     end,
     ["Should change as the given event fires"] = function(tester)

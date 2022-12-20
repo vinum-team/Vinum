@@ -41,8 +41,6 @@ function class:simplifyDependencyTree()
 			if self._dependencySet[upperDependency] then
 				self._dependencySet[upperDependency] = false
 				upperDependency._dependentSet[self] = false
-
-				self._unUsedDependencyPool[upperDependency] = true
 			end
 		end
 	end
@@ -85,10 +83,7 @@ return function(owner)
 
 		_owner = owner,
 		_dependencySet = {},
-		_dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_lastCounter = 0,
-		_currentCounter = 0,
-		_unUsedDependencyPool = {}
+		_dependentSet = {},
 	}, META)
 	return self
 end

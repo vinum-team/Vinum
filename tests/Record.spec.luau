@@ -25,6 +25,24 @@ return {
         recorder:desync()
         recorded:set(5)
         expect(recorder:get()).to.never.equal(recorded:get())
+    end,
+    ["Should resync"] = function(tester)
+        local expect = tester.expect
+        local recorded = makeHold(200)
+        local recorder = Vinum.Record(recorded, false)
 
+        local flag = 0
+        local newValuex = 0
+        Vinum.Observe(recorder, Vinum.AlwaysTrue):onChange(function(newValue)
+            flag += 1
+            newValuex = newValue
+        end)
+        recorded:set(50)
+        expect(flag).to.equal(0)
+        expect(newValuex).to.equal(0)
+        recorder:sync()
+        recorder:desync()
+        expect(flag).to.equal(1)
+        expect(newValuex).to.equal(50)
     end
 }

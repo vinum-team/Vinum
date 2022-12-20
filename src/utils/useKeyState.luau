@@ -5,7 +5,6 @@ return function(self)
 		keyGraph._dependentSet[self._graph] = true
 
 		selfGraph._dependencySet[keyGraph] = true
-		selfGraph._currentCounter += 1
 		return state:getKey(keyName)
 	end
 end

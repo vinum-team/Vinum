@@ -2,6 +2,18 @@ local graph = require(script.Parent.utils.graph)
 local useState = require(script.Parent.utils.useState)
 local useKeyState = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
+
+--[=[
+	@class Calc
+
+	```lua
+	function Calc<T>(
+		calculator: (useState, useKeyState) -> (T), -- The function that Calc will use to perform calculations
+		updateProcessor: (T, T) -> (boolean) -- The function that Calc will use to determine whether to let updates pass or not
+	)
+	```
+	Constructs a new Calc object, which is used for deriving values from dependencies.
+]=]
 local class = { type = "state", kind = "calc" }
 local meta = { __index = class }
 
@@ -39,6 +51,19 @@ function class:_update()
 	end
 end
 
+--[=[
+	Returns the current value from the cache
+	
+	```lua
+	local CalcState = Calc(function(useState, useKeyState)
+		return true
+	end, Vinum.AlwaysTrue)
+
+	print(CalcState:get())
+	```
+	@within Calc
+	@return any -- The cached value
+]=]
 function class:get()
 	return self._value
 end
@@ -56,6 +81,7 @@ local function Calc<T>(
 		_graph = {} :: typeof(graph()),
 		_useHelper = {} :: typeof(useState()),
 		_useKeyHelper = {} :: typeof(useKeyState()),
+		_onInit = true,
 	}, meta)
 
 	self._graph = graph(self)

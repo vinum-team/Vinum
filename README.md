@@ -1,4 +1,4 @@
-<img align = "left" width = 350 src="gh-assets/Banner.svg">
+<img align = "left" src="gh-assets/Banner.svg">
 
 
 <br><br><br><br><br>
@@ -17,4 +17,4 @@ ___
 
 ## Contributing
 
-If you ever want to contribute for the Vinum project, please refer to [this](CONTRIBUTING.MD)
+If you ever want to contribute for the Vinum project, please refer to 
