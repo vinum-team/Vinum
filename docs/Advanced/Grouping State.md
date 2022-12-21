@@ -39,13 +39,21 @@ local yourKey = props:asState("yourKey")
 print(yourKey:get())
 ```
 _____
-## Injector: useKeyState
+## Why Centralization?
+State Centralization is a very respectable state management paradigm as it avoids state being duplicated in multiple DataModels.
 
-In the Calc/Match docs, you saw a weird injector that goes by the name of `useKeyState`. This injector is simply a function that allows you to depend on specific keys within a group, like this:
+Unlike Rodux- which follows State centralization very strictly, Vinum rather gives you the tools to manage centralized state, but doesn't mostly care about how you approach it.
+
+Outside of this complex state management world, you have actually used state centralization in your games in a form of another - for example, using Roblox Attributes to centralize custom state about an object that is readable/writable by other pieces of code.
+
+State centralization also means that we have a single source of truth for ***something***, not necessarily the whole Application's state, but rather a part of it. SSOT is important as it guarantees that we don't have multiple places that have duplicated state, such as a players health - additionally, it is better for memory-wise as well.
+
+## Injectors: useKeyState
+In the Calc/Match docs, you saw a weird injector that goes by the name of useKeyState. This injector is simply a function that allows you to depend on specific keys within a group, like this:
+
 ```lua
 local CalcObj = Calc(function(_, useKeyState)
     return useKeyState(groupHere, "anyKey")
 end, AlwaysTrue)
 ```
-
-This now will trigger an update whenever `anyKey` is changed.
+This now will trigger an update whenever anyKey is changed.
