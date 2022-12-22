@@ -92,7 +92,7 @@ return function(state, updateProcessor: (newValue: any) -> (boolean))
 		_updateProcessor = updateProcessor,
 		_connections = {},
 		_graph = {},
-		_state = state
+		_state = state,
 	}, meta)
 
 	self._graph = graph(self)

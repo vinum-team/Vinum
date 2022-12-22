@@ -21,29 +21,28 @@ return {
 			}, AlwaysTrue)
 		end,
 	},
-    {
-        name = "updating a Match with a semi-complex dependency tree", 
-        calls = 50000,
-        preRun = function()
-            local i = Hold(100, AlwaysTrue)
+	{
+		name = "updating a Match with a semi-complex dependency tree",
+		calls = 50000,
+		preRun = function()
+			local i = Hold(100, AlwaysTrue)
 
-            
-            local root = Calc(function(useState)
-                return 3
-            end, AlwaysTrue)
+			local root = Calc(function(useState)
+				return 3
+			end, AlwaysTrue)
 
-            local d = Calc(function(useState)
-                return useState(root) * 2
-            end, AlwaysTrue)
+			local d = Calc(function(useState)
+				return useState(root) * 2
+			end, AlwaysTrue)
 
-            return  Match(i, {
+			return Match(i, {
 				["default"] = function(useState)
 					return useState(root) * useState(d)
 				end,
 			}, AlwaysTrue)
-        end,
-        run = function(i)
-            i:_update()
-        end
-    }
+		end,
+		run = function(i)
+			i:_update()
+		end,
+	},
 }

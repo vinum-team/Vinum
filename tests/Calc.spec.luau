@@ -32,37 +32,37 @@ return {
 		local calc = Vinum.Calc(function(useState)
 			return useState(hold) + 100
 		end, function()
-            if flag then
-                return false
-            else
-                flag = true
-                return true
-            end
+			if flag then
+				return false
+			else
+				flag = true
+				return true
+			end
 		end)
 
-        expect(calc:get()).to.equal(200)
-        hold:set(0)
-        expect(calc:get()).to.equal(200)
+		expect(calc:get()).to.equal(200)
+		hold:set(0)
+		expect(calc:get()).to.equal(200)
 	end,
-    ["Should simplify dependency trees"] = function(tester)
-        local expect = tester.expect
+	["Should simplify dependency trees"] = function(tester)
+		local expect = tester.expect
 
-        local root = Vinum.Hold(100, Vinum.AlwaysTrue)
-        local b = Vinum.Calc(function(useState)
-            return useState(root) + 2
-        end, Vinum.AlwaysTrue)
+		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local b = Vinum.Calc(function(useState)
+			return useState(root) + 2
+		end, Vinum.AlwaysTrue)
 
-        local flags = 0
-        local _ = Vinum.Calc(function(useState) 
-            flags += 1
-            return useState(root) + useState(b)
-        end, Vinum.AlwaysTrue)
+		local flags = 0
+		local _ = Vinum.Calc(function(useState)
+			flags += 1
+			return useState(root) + useState(b)
+		end, Vinum.AlwaysTrue)
 
-        root:set(20)
-        expect(flags).to.equal(2)
-    end,
+		root:set(20)
+		expect(flags).to.equal(2)
+	end,
 	["Should work with groups"] = function(tester)
-        local expect = tester.expect
+		local expect = tester.expect
 
 		local root = Vinum.Group(Vinum.AlwaysTrue)
 
@@ -75,9 +75,9 @@ return {
 
 		root:setKey("Hi", 100)
 		expect(obj:get()).to.equal(200)
-    end,
+	end,
 	["Should work with observes"] = function(tester)
-        local expect = tester.expect
+		local expect = tester.expect
 
 		local root = Vinum.Group(Vinum.AlwaysTrue)
 
@@ -97,5 +97,5 @@ return {
 		root:setKey("Hi", 2)
 		expect(x).to.equal(4)
 		expect(flags).to.equal(1)
-    end
+	end,
 }

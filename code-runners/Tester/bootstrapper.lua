@@ -90,7 +90,7 @@ end
 
 local bootstrapper = {}
 
-function bootstrapper:start(configuration: { directories: {Instance}, options: options })
+function bootstrapper:start(configuration: { directories: { Instance }, options: options })
 	local testResults = {}
 
 	for _, directory in configuration.directories do

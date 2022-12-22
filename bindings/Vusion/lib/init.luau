@@ -40,7 +40,7 @@ return function(Fusion, Vinum)
 					applyTo[propName] = stateObj
 				end
 			end
-		end
+		end,
 	}
 
 	return Vusion

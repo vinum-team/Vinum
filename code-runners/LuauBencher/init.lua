@@ -1,3 +1,3 @@
 return {
-    bootstrapper = require(script.bootstrapper)
+	bootstrapper = require(script.bootstrapper),
 }

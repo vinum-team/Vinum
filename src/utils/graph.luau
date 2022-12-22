@@ -15,7 +15,7 @@ function class:update(newValue)
 		else
 			self:deactivateAllDependencies()
 			newValue = self._owner:_update(newValue) or newValue
-			self:simplifyDependencyTree() 
+			self:simplifyDependencyTree()
 		end
 	end
 	-- update dependents
@@ -74,7 +74,6 @@ end
 function class:addDependency(dependency)
 	self._dependencySet[dependency] = true
 end
-
 
 return function(owner)
 	local self = setmetatable({

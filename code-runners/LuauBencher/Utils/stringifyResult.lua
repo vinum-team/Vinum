@@ -1,19 +1,19 @@
 local function stringifyResult(benchmarkDir: {}, space)
-    local finalString = ""
+	local finalString = ""
 
-    for name, content in benchmarkDir do
-        local partString = "\n"..space.."[+] "..name
+	for name, content in benchmarkDir do
+		local partString = "\n" .. space .. "[+] " .. name
 
-        if content._50PERCENTILE then
-            partString ..= ("."):rep(30 - #name).." "..content._50PERCENTILE
-        else
-            partString ..= stringifyResult(content, space.." ")
-        end
+		if content._50PERCENTILE then
+			partString ..= ("."):rep(30 - #name) .. " " .. content._50PERCENTILE
+		else
+			partString ..= stringifyResult(content, space .. " ")
+		end
 
-        finalString ..= partString
-    end
+		finalString ..= partString
+	end
 
-    return finalString
+	return finalString
 end
 
 return stringifyResult

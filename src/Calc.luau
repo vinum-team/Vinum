@@ -27,15 +27,14 @@ export type Calc<T> = {
 	_isStaticDependency: false,
 	_isSelfContained: true,
 	_calculator: (useState: useStateType, useKeyState: useKeyStateType) -> (T),
-	_value: { type: "Symbol", value: "None"} | T,
+	_value: { type: "Symbol", value: "None" } | T,
 	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
 	_graph: typeof(graph()),
 	_useHelper: useStateType,
 	_useKeyHelper: useKeyStateType,
 	_update: (self: Calc<T>) -> (T | nil),
-	get: (self: Calc<T>) -> (T)
+	get: (self: Calc<T>) -> (T),
 }
-
 
 function class:_update()
 	local oldValue = self._value

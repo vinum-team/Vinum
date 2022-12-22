@@ -49,6 +49,6 @@ return {
 
 		run = function(root)
 			root:_update()
-		end
+		end,
 	},
 }

@@ -54,7 +54,7 @@ Vinum.Mirror = require(script.Mirror)
 
 	Wrap's constructor.
 ]=]
-Vinum.Wrap = require(script.Wrap) 
+Vinum.Wrap = require(script.Wrap)
 --[=[
 	@prop Reflect () -> (Reflect)
 	@within Vinum
@@ -140,7 +140,7 @@ end
 Vinum.Version = {
 	Major = 0,
 	Minor = 2,
-	Patch = 0
+	Patch = 0,
 }
 --[=[
 	@prop Destroy (stateObj) -> ()

@@ -17,8 +17,8 @@ export type Reflect<T> = {
 	type: "state",
 	kind: "reflect",
 	_owner: { _value: T, [any]: any },
-    _graph: typeof(graph()),
-    get: (self: Reflect<T>) -> (T)
+	_graph: typeof(graph()),
+	get: (self: Reflect<T>) -> (T),
 }
 
 --[=[

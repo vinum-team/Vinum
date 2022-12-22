@@ -43,10 +43,10 @@ return {
 		local flags = 0
 
 		observeState:onChange(function()
-            flags += 1
-        end)
+			flags += 1
+		end)
 
-        expect(flags).to.equal(0)
+		expect(flags).to.equal(0)
 	end,
 	["Should be yield-safe"] = function(tester)
 		local expect = tester.expect
@@ -55,7 +55,7 @@ return {
 		local observeState = Vinum.Observe(holdState, function(newValue)
 			return true
 		end)
-		
+
 		local firstConnectionFlag = false
 		observeState:onChange(function()
 			task.wait(3)
@@ -71,5 +71,5 @@ return {
 		expect(secondConnectionFlag).to.equal(true)
 		task.wait(4)
 		expect(firstConnectionFlag).to.equal(true)
-	end
+	end,
 }

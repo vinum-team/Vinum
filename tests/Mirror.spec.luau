@@ -29,19 +29,18 @@ return {
 		root:set(false)
 		expect(miObj:get()).to.equal("doesn'tExist")
 	end,
-    ["Should change once a Case Object changes"] = function(tester)    
-        local expect = tester.expect
+	["Should change once a Case Object changes"] = function(tester)
+		local expect = tester.expect
 
 		local root = Hold(true, AlwaysTrue)
-        local trueCase = Hold(20, AlwaysTrue)
+		local trueCase = Hold(20, AlwaysTrue)
 		local miObj = Mirror(root, {
 			[true] = trueCase,
 			["default"] = Hold("doesn'tExist", AlwaysTrue),
 		})
 
-        expect(miObj:get()).to.equal(20)
-        trueCase:set(30)
-        expect(miObj:get()).to.equal(30)
-
-    end
+		expect(miObj:get()).to.equal(20)
+		trueCase:set(30)
+		expect(miObj:get()).to.equal(30)
+	end,
 }

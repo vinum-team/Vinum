@@ -1,6 +1,5 @@
 local graph = require(script.Parent.utils.graph)
 
-
 --[=[
 	@class Hold
 
@@ -33,7 +32,6 @@ export type Hold<T> = {
 	get: (self: Hold<T>) -> (T),
 	set: (self: Hold<T>, newValue: T) -> (),
 }
-
 
 --[=[
 	Returns the current value from the cache

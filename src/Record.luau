@@ -68,7 +68,7 @@ end
 ]=]
 function class:desync()
 	if self._isSynced == false then
-		return 
+		return
 	end
 
 	local ownerGraph = self._owner._graph
@@ -86,7 +86,7 @@ end
 ]=]
 function class:sync()
 	if self._isSynced == true then
-		return 
+		return
 	end
 
 	local ownerGraph = self._owner._graph
