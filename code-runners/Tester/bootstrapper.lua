@@ -14,7 +14,7 @@ local function testDirectory(dir: set<ModuleScript>, options: options)
 			dirResults[child.Name] = {}
 
 			local currentTestCase = dirResults[child.Name]
-
+			
 			for caseName, caseFunction in module do
 				local ok, err = pcall(caseFunction, options.context)
 
@@ -59,7 +59,7 @@ local function readiyDirectory(dir, spaceStr)
 			finalString ..= spaceStr .. string.format("[%s] ", marker)
 			finalString ..= name
 		else
-			local wins, fails = isSuccessful(value)
+			local _, fails = isSuccessful(value)
 			local marker = fails > 0 and "-" or "+"
 			finalString ..= "\n"
 			finalString ..= spaceStr .. string.format("[%s] ", marker)

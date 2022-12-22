@@ -64,7 +64,7 @@ return {
 	["Should work with groups"] = function(tester)
 		local expect = tester.expect
 
-		local root = Vinum.Group(Vinum.AlwaysTrue)
+		local root = Vinum.Group({}, Vinum.AlwaysTrue)
 
 		root:setKey("Hi", 200)
 		local obj = Vinum.Calc(function(_, useKey)
@@ -79,7 +79,7 @@ return {
 	["Should work with observes"] = function(tester)
 		local expect = tester.expect
 
-		local root = Vinum.Group(Vinum.AlwaysTrue)
+		local root = Vinum.Group({}, Vinum.AlwaysTrue)
 
 		root:setKey("Hi", 200)
 		local obj = Vinum.Calc(function(_, useKey)

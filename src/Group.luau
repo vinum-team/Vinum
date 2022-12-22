@@ -122,15 +122,20 @@ function class:onChange(fn)
 	end
 end
 
-local function Group(setProcessor: (keyName: string, oldKeyValue: unknown, keyValue: unknown) -> (boolean))
+local function Group(initalState,setProcessor: (keyName: string, oldKeyValue: unknown, keyValue: unknown) -> (boolean))
 	local self = setmetatable({
 		_isStaticDependency = false,
 		_isSelfContained = false,
 		_setProcessor = setProcessor,
-		_values = {},
+		_values = initalState or {},
 		_graphs = {},
 		_connections = {},
 	}, meta)
+
+	for key in initalState do
+		self._graphs[key] = graph(self)
+	end
+
 	return self
 end
 

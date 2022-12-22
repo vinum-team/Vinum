@@ -26,7 +26,7 @@ return {
 			.throw()
 	end,
 	["Groups should work"] = function(tester)
-		local group = Vinum.Group(Vinum.AlwaysTrue)
+		local group = Vinum.Group({}, Vinum.AlwaysTrue)
 
 		group:setKey("h", 2)
 		local gonnaBeDestroyed = Vinum.Observe(group:asState("h"))

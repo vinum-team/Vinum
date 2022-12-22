@@ -1,16 +1,15 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Group = Vinum.Group
-local Calc = Vinum.Calc
 local AlwaysTrue = Vinum.AlwaysTrue
-
+local emptyInitalState = {}
 return {
 	{
 		name = "creating a group object",
 		calls = 50000,
 
 		run = function()
-			Group(AlwaysTrue)
+			Group(emptyInitalState, AlwaysTrue)
 		end,
 	},
 	{
@@ -18,9 +17,9 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			local root = Group(AlwaysTrue)
-			root:setKey("x", true)
-
+			local root = Group({
+				x = true
+			}, AlwaysTrue)
 			return root
 		end,
 		run = function(root)
@@ -32,7 +31,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Group(AlwaysTrue)
+			return Group(emptyInitalState, AlwaysTrue)
 		end,
 
 		run = function(r)
