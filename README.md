@@ -25,4 +25,4 @@ ____
 
 ## license
 
-The Vinum Library, alongside it is associated assets (documentation, the unit testing framework, the benchmarking tool, official bindings) are licensed with MIT.
+The Vinum Library, alongside its associated assets (documentation, the unit testing framework, the benchmarking tool, official bindings) are licensed with MIT.
