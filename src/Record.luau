@@ -1,4 +1,5 @@
 local graph = require(script.Parent.utils.graph)
+local read = require(script.Parent.utils.read)
 
 --[=[
 	@class Record
@@ -27,29 +28,7 @@ export type Record<T> = {
 }
 
 function class:_update()
-	self._value = self._owner:get()
-	return self._value
-end
-
---[=[
-	Returns the current saved value in the Record
-
-	:::caution
-	If the Record isn't synced, the value that will be returned by this method might not
-	be equal to the recorded object's current value.
-	:::
-
-	```lua
-	local holdState = Hold(100, Vinum.AlwaysTrue)
-	local RecordState = Record(holdState, true)
-
-	holdState:set(40)
-	print(holdState:get() == RecordState:get()) -- true
-	```
-	@return any -- The value in the cache
-	@within Record
-]=]
-function class:get()
+	self._value = read(self._owner)
 	return self._value
 end
 
@@ -96,9 +75,13 @@ function class:sync()
 	selfGraph._dependencySet[ownerGraph] = true
 	ownerGraph._dependentSet[selfGraph] = true
 
-	if self._owner:get() ~= self._value then
+	if read(self._owner) ~= self._value then
 		selfGraph:update()
 	end
+end
+
+function class:_getValue()
+	return self._value
 end
 
 local function Record<T>(state, isInitiallySynced: boolean)
@@ -106,7 +89,7 @@ local function Record<T>(state, isInitiallySynced: boolean)
 		_isSelfContained = true,
 		_isStaticDependency = true,
 		_owner = state,
-		_value = state:get(),
+		_value = read(state),
 		_isSynced = isInitiallySynced or false,
 		_graph = {},
 	}, meta)

@@ -1,3 +1,5 @@
+local read = require(script.Parent.read)
+
 return function(self)
 	local selfGraph = self._graph
 	return function(state, keyName)
@@ -5,6 +7,6 @@ return function(self)
 		keyGraph._dependentSet[self._graph] = true
 
 		selfGraph._dependencySet[keyGraph] = true
-		return state:getKey(keyName)
+		return read(state, keyName)
 	end
 end

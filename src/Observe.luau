@@ -1,5 +1,6 @@
 local graph = require(script.Parent.utils.graph)
 local spawner = require(script.Parent.utils.spawner)
+local read = require(script.Parent.utils.read)
 
 --[=[
 	@class Observe
@@ -80,7 +81,7 @@ end
 	@within Observe
 ]=]
 function class:onBind(funct: (newValue: any) -> ())
-	funct(self._state:get())
+	funct(read(self._state))
 
 	return self:onChange(funct)
 end

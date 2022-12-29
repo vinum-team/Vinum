@@ -1,6 +1,8 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
+local read = Vinum.read
+
 return {
 	{
 		name = "Creating Holds",
@@ -29,7 +31,7 @@ return {
 			return Hold(100, Vinum.AlwaysTrue)
 		end,
 		run = function(holder)
-			holder:get()
+			read(holder)
 		end,
 	},
 }

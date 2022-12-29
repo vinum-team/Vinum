@@ -3,7 +3,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 local Hold = Vinum.Hold
 local Calc = Vinum.Calc
 local AlwaysTrue = Vinum.AlwaysTrue
-
+local read = Vinum.read
 return {
 	{
 		name = "creating a calc object",
@@ -26,7 +26,7 @@ return {
 		end,
 
 		run = function(calc)
-			calc:get()
+			read(calc)
 		end,
 	},
 	{

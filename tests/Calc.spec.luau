@@ -1,4 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
+local read = Vinum.read
 
 return {
 	["Should create a calc object"] = function(tester)
@@ -20,9 +21,9 @@ return {
 			return useState(hold) + 100
 		end, Vinum.AlwaysTrue)
 
-		expect(calc:get()).to.equal(200)
+		expect(read(calc)).to.equal(200)
 		hold:set(50)
-		expect(calc:get()).to.equal(150)
+		expect(read(calc)).to.equal(150)
 	end,
 	["Should dismiss an update"] = function(tester)
 		local expect = tester.expect
@@ -40,9 +41,9 @@ return {
 			end
 		end)
 
-		expect(calc:get()).to.equal(200)
+		expect(read(calc)).to.equal(200)
 		hold:set(0)
-		expect(calc:get()).to.equal(200)
+		expect(read(calc)).to.equal(200)
 	end,
 	["Should simplify dependency trees"] = function(tester)
 		local expect = tester.expect
@@ -71,10 +72,10 @@ return {
 			return useKey(root, "Hi") * 2
 		end, Vinum.AlwaysTrue)
 
-		expect(obj:get()).to.equal(400)
+		expect(read(obj)).to.equal(400)
 
 		root:setKey("Hi", 100)
-		expect(obj:get()).to.equal(200)
+		expect(read(obj)).to.equal(200)
 	end,
 	["Should work with observes"] = function(tester)
 		local expect = tester.expect

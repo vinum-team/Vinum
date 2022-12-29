@@ -33,18 +33,7 @@ export type Hold<T> = {
 	set: (self: Hold<T>, newValue: T) -> (),
 }
 
---[=[
-	Returns the current value from the cache
-	
-	```lua
-	local holdState = Hold(100, Vinum.AlwaysTrue)
-
-	print(holdState:get())
-	```
-	@within Hold
-	@return any -- The cached value
-]=]
-function class:get()
+function class:_getValue()
 	return self._value
 end
 

@@ -1,4 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
+local read = Vinum.read
 
 local function makeHold(value)
 	return Vinum.Hold(value, Vinum.AlwaysTrue)
@@ -20,9 +21,9 @@ return {
 		local reflected = makeHold(200)
 		local reflector = Vinum.Reflect(reflected)
 
-		expect(reflected:get()).to.equal(reflector:get())
+		expect(read(reflected)).to.equal(read(reflector))
 
 		reflected:set(10)
-		expect(reflected:get()).to.equal(reflector:get())
+		expect(read(reflected)).to.equal(read(reflector))
 	end,
 }

@@ -2,6 +2,7 @@ local graph = require(script.Parent.utils.graph)
 local useState = require(script.Parent.utils.useState)
 local useStateKey = require(script.Parent.utils.useKeyState)
 local Symbols = require(script.Parent.utils.Symbols)
+local read = require(script.Parent.utils.read)
 
 --[=[
 	@class Match
@@ -20,7 +21,7 @@ local meta = { __index = class }
 
 function class:_update()
 	local cases = self._cases
-	local chosenArm = cases[self._inputState:get()] or cases["default"]
+	local chosenArm = cases[read(self._inputState)] or cases["default"]
 
 	local oldValue = self._value
 	self._value = Symbols.Pending
@@ -35,31 +36,7 @@ function class:_update()
 	end
 end
 
---[=[
-	Returns the current value.
-
-	```lua
-	local Root = Hold(100, Vinum.AlwaysTrue)
-	local Dependency = Hold(200, Vinum.AlwaysTrue)
-	local MatchState = Match(Root, {
-		[100] = function(useState, useKeyState)
-			return string.format("My level is %s", useState(Dependency))
-		end,
-		["default"] = function(_, _)
-			return "not found"
-		end
-	}, Vinum.AlwaysTrue)
-
-
-	print(MatchState:get()) -- My level is 200
-	Root:set(4)
-	print(MatchState:get()) -- not found
-	```
-
-	@return any -- The cached value
-	@within Match
-]=]
-function class:get()
+function class:_getValue()
 	return self._value
 end
 

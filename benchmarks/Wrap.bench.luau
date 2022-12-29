@@ -1,6 +1,8 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Wrap = Vinum.Wrap
+local read = Vinum.read
+
 return {
 	{
 		name = "creating wraps over luau-signal",

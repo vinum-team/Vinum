@@ -3,6 +3,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 local Mirror = Vinum.Mirror
 local Hold = Vinum.Hold
 local AlwaysTrue = Vinum.AlwaysTrue
+local read = Vinum.read
 
 return {
 	["Should construct a Mirror object"] = function(tester)
@@ -25,9 +26,9 @@ return {
 			["default"] = Hold("doesn'tExist", AlwaysTrue),
 		})
 
-		expect(miObj:get()).to.equal(20)
+		expect(read(miObj)).to.equal(20)
 		root:set(false)
-		expect(miObj:get()).to.equal("doesn'tExist")
+		expect(read(miObj)).to.equal("doesn'tExist")
 	end,
 	["Should change once a Case Object changes"] = function(tester)
 		local expect = tester.expect
@@ -39,8 +40,8 @@ return {
 			["default"] = Hold("doesn'tExist", AlwaysTrue),
 		})
 
-		expect(miObj:get()).to.equal(20)
+		expect(read(miObj)).to.equal(20)
 		trueCase:set(30)
-		expect(miObj:get()).to.equal(30)
+		expect(read(miObj)).to.equal(30)
 	end,
 }

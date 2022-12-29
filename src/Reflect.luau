@@ -1,5 +1,5 @@
 local graph = require(script.Parent.utils.graph)
-
+local read = require(script.Parent.utils.read)
 --[=[
 	@class Reflect
 
@@ -34,8 +34,9 @@ export type Reflect<T> = {
 	@return any -- The value that `state` has.
 	@within Reflect
 ]=]
-function class:get()
-	return self._owner:get()
+
+function class:_getValue()
+	return read(self._owner)
 end
 
 local function Reflect<T>(state: { _value: T, [any]: any })

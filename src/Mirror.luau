@@ -1,5 +1,6 @@
 local graph = require(script.Parent.utils.graph)
 local Symbols = require(script.Parent.utils.Symbols)
+local read = require(script.Parent.utils.read)
 
 --[=[
 	@class Mirror
@@ -32,7 +33,7 @@ export type Mirror<T, U> = {
 
 function class:_update()
 	local cases = self._cases
-	local chosenArm = cases[self._inputState:get()] or cases["default"]
+	local chosenArm = cases[read(self._inputState)] or cases["default"]
 	local currentCaseDependency = self._currentCaseDependency
 
 	if currentCaseDependency ~= chosenArm then
@@ -55,32 +56,7 @@ function class:_update()
 	return self._value
 end
 
---[=[
-	Returns the current value.
-
-	```lua
-	local root = Hold(100, Vinum.AlwaysTrue)
-	local mirrorObject = Mirror(root, {
-		[100] = Hold("I am level 100", Vinum.AlwaysTrue),
-		[200] = Hold("I am level 200", Vinum.AlwaysTrue),
-		["default"] = Hold("My level isn't listed here", function() 
-			return false 
-		end)
-	})
-
-	print(mirrorObject:get()) -- "I am level 100"
-	root:set(200)
-	print(mirrorObject:get()) -- "I am level 200"
-	```
-
-	:::danger
-	Omitting the "default" key can cause errors, since if Mirror doesn't find an object that its case key isn't
-	equal to the new value of inputState, it will default to `default`- expecting it to exist.
-	:::
-	@return any -- The cached value
-	@within Mirror
-]=]
-function class:get()
+function class:_getValue()
 	return self._value
 end
 

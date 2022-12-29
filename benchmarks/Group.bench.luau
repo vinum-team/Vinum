@@ -3,6 +3,8 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 local Group = Vinum.Group
 local AlwaysTrue = Vinum.AlwaysTrue
 local emptyInitalState = {}
+local read = Vinum.read
+
 return {
 	{
 		name = "creating a group object",
@@ -23,7 +25,8 @@ return {
 			return root
 		end,
 		run = function(root)
-			root:getKey("x")
+			read(root, "x")
+
 		end,
 	},
 	{

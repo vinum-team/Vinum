@@ -1,4 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
+local read = Vinum.read
 
 return {
 	["Should construct a observe object"] = function(tester)

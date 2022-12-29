@@ -71,14 +71,6 @@ Vinum.Reflect = require(script.Reflect)
 Vinum.Record = require(script.Record)
 
 --[=[
-	@prop Writable () -> (Writable)
-	@within Vinum
-
-	Writable's constructor.
-]=]
-Vinum.Writable = require(script.Writable)
-
---[=[
 	@prop AlwaysTrue (oldValue: T, newVallue: T) -> (true)
 	@within Vinum
 
@@ -157,5 +149,7 @@ Vinum.Version = {
 	Destroys the given state object.
 ]=]
 Vinum.Destroy = require(script.utils.deconstruct)
+
+Vinum.read = require(script.utils.read)
 
 return Vinum

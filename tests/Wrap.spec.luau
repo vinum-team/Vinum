@@ -1,4 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
+local read = Vinum.read
 
 local throwawaySignal = {
 	_connections = {},
@@ -27,7 +28,7 @@ return {
 		local expect = tester.expect
 
 		local wrapState = Vinum.Wrap(game.AncestryChanged, 1, 123, 334, 45)
-		expect(wrapState:get()).to.equal(123)
+		expect(read(wrapState)).to.equal(123)
 	end,
 	["Should change as the given event fires"] = function(tester)
 		local expect = tester.expect
@@ -35,7 +36,7 @@ return {
 		local wrapState1, wrapState2 = Vinum.Wrap(throwawaySignal, 2, 123, 4)
 
 		throwawaySignal:fire(2, 3)
-		expect(wrapState1:get()).to.equal(2)
-		expect(wrapState2:get()).to.equal(3)
+		expect(read(wrapState1)).to.equal(2)
+		expect(read(wrapState2)).to.equal(3)
 	end,
 }

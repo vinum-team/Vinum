@@ -1,4 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
+local read = Vinum.read
 
 return {
 	["should construct a Match object"] = function(tester)
@@ -43,8 +44,8 @@ return {
 			["default"] = function() end,
 		}, Vinum.AlwaysTrue)
 
-		expect(obj:get()).to.equal(40000)
+		expect(read(obj)).to.equal(40000)
 		another:set(1)
-		expect(obj:get()).to.equal(200)
+		expect(read(obj)).to.equal(200)
 	end,
 }

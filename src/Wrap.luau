@@ -22,23 +22,6 @@ local meta = { __index = class }
 local Symbols = require(script.Parent.utils.Symbols)
 
 --[=[
-	Returns the current value from the cache
-	
-	```lua
-	local wrapState1, wrapState2 = Wrap(AnySignal, 2, 100, 200)
-
-	print(wrapState1:get(), wrapState2:get()) -- 100, 200
-	```
-	@within Wrap
-	@return any -- The cached value
-]=]
-function class:get()
-	if self._disconnected == true then
-		error("[Vinum] Trying to read a disconnected Wrap object's value.", 2)
-	end
-	return self._value
-end
---[=[
 	Disconncts the connection that Wrap uses to automatically update your wrapped object.
 	
 	```lua
@@ -52,6 +35,10 @@ end
 function class:disconnect()
 	self._disconnected = true
 	self._internalConnection:Disconnect()
+end
+
+function class:_getValue()
+	return self._value
 end
 
 local function Wrap(

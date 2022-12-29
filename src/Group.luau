@@ -30,6 +30,9 @@ local selfContainedClass = { __index = {
 	get = function(self)
 		return self._graph._owner._values[self.name]
 	end,
+	_getValue = function(self)
+		return self._graph._owner._values[self.name]
+	end
 } }
 
 --[=[
@@ -63,20 +66,7 @@ function class:setKey(keyName: string, keyValue: any)
 	end
 end
 
---[=[
-	Returns the current value that is saved at the provided key.
-
-	```lua
-	local centerState = Group(Vinum.AlwaysTrue)
-	centerState:setKey("health", 100)
-
-	print(centerState:getKey("health"))
-	```
-	@param keyName string? -- The key that Group will use to locate the value. Can be nil
-	@return keyValue any
-	@within Group
-]=]
-function class:getKey(keyName: string)
+function class:_getValue(keyName)
 	return self._values[keyName]
 end
 

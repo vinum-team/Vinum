@@ -50,20 +50,7 @@ function class:_update()
 	end
 end
 
---[=[
-	Returns the current value from the cache
-	
-	```lua
-	local CalcState = Calc(function(useState, useKeyState)
-		return true
-	end, Vinum.AlwaysTrue)
-
-	print(CalcState:get())
-	```
-	@within Calc
-	@return any -- The cached value
-]=]
-function class:get()
+function class:_getValue()
 	return self._value
 end
 

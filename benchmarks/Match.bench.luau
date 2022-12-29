@@ -4,6 +4,7 @@ local Hold = Vinum.Hold
 local Match = Vinum.Match
 local Calc = Vinum.Calc
 local AlwaysTrue = Vinum.AlwaysTrue
+local read = Vinum.read
 
 return {
 	{

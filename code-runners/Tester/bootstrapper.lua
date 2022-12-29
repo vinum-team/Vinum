@@ -116,7 +116,7 @@ function bootstrapper:start(configuration: { directories: { Instance }, options:
 	end
 
 	if #errMessage > 2 then
-		error(errMessage, 0)
+		error(errMessage, 1)
 	end
 end
 return bootstrapper
