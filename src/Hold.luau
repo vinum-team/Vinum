@@ -70,6 +70,10 @@ function class:set(newValue)
 	end
 end
 
+function class:update(updater)
+	class:set(updater(self._value))
+end
+
 local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))
 	local self = setmetatable({
 		_isSelfContained = true,

@@ -4,5 +4,6 @@ version = "0.2.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A multi-paradigm, fast and modern reactive state management library."
+include = ["src", "default.project.json"]
 
 [dependencies]
