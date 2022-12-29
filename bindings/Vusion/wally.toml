@@ -1,0 +1,9 @@
+[package]
+name = "sinlerdev/vusion"
+version = "0.2.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+Vinum = "sinlerdev/vinum@0.2.0"
+Fusion = "mattschrubb/fusion@1.2.4"

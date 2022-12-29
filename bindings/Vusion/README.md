@@ -1,4 +1,4 @@
-# Vusion: [0.2=0.2]: V0.1
+# Vusion: [0.2=0.2]: V0.2
 
 Vusion is an ergonomic and efficient binding between Fusion, a UI library, and Vinum, a state management library.
 
@@ -45,3 +45,7 @@ Additionally, transforming Fusion observers isn't supported as it doesn't make s
 ## VSpring and VTween
 
 VSpring and VTween are simply functions that call `toVinum` on a newly created spring/tween object- and the API is identical to the standard Fusion's spring/tween implementation- as such, referring to the Fusion's V0.2 documentation is preferred.
+
+# Notice
+
+This current version of Vusion is depending on a third-party wally package of Fusion- so expect some outdated code in Fusion. This will be fixed once Fusion has an up to date Fusion wally package.

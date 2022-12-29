@@ -26,14 +26,13 @@ local meta = { __index = class }
 	@within Group
 ]=]
 
-local selfContainedClass = { __index = {
-	get = function(self)
-		return self._graph._owner._values[self.name]
-	end,
-	_getValue = function(self)
-		return self._graph._owner._values[self.name]
-	end
-} }
+local selfContainedClass = {
+	__index = {
+		_getValue = function(self)
+			return self._graph._owner._values[self.name]
+		end,
+	},
+}
 
 --[=[
 	A method to set a key's value to a new one. Fires the `setProcessor` that was definied on Groups' construction.
@@ -62,6 +61,24 @@ function class:setKey(keyName: string, keyValue: any)
 
 		for connection in self._connections do
 			spawner(connection, keyName, oldValue, keyValue)
+		end
+	end
+end
+
+function class:_setValue(keyName, value)
+	local values = self._values
+	local oldValue = values[keyName] or Symbols.None
+	if self._setProcessor(keyName, oldValue, value) then
+		if values[keyName] then
+			values[keyName] = value
+			self._graphs[keyName]:update(value)
+		else
+			values[keyName] = value
+			self._graphs[keyName] = graph(self)
+		end
+
+		for connection in self._connections do
+			spawner(connection, keyName, oldValue, value)
 		end
 	end
 end
@@ -112,7 +129,7 @@ function class:onChange(fn)
 	end
 end
 
-local function Group(initalState,setProcessor: (keyName: string, oldKeyValue: unknown, keyValue: unknown) -> (boolean))
+local function Group(initalState, setProcessor: (keyName: string, oldKeyValue: unknown, keyValue: unknown) -> (boolean))
 	local self = setmetatable({
 		_isStaticDependency = false,
 		_isSelfContained = false,

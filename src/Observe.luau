@@ -17,7 +17,8 @@ local read = require(script.Parent.utils.read)
 local class = { type = "state", kind = "observe" }
 local meta = { __index = class }
 
-function class:_update(newValue)
+function class:_update()
+	local newValue = read(self._state)
 	if not self._updateProcessor(newValue) then
 		return
 	end

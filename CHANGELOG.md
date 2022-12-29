@@ -1,7 +1,10 @@
 # Changelogs
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
-
+## V0.3
+* Standardized Reading
+* initial state for groups
+* unified injector
 ## V0.2
 * `Vinum.JustOk` was renamed to `Vinum.AlwaysTrue` for a more descriptive API for begineers
 * `Observe:onBind`, which fires the provided function, and then returns a connection disconnector.

@@ -1,4 +1,7 @@
-return function(Fusion, Vinum)
+local Fusion = require(script.Parent.Fusion)
+local Vinum = require(script.Parent.Vinum)
+
+return function()
 	local Vusion = {}
 
 	function Vusion.toVinum(fusionObj, writable: boolean)

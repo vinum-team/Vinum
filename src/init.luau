@@ -150,6 +150,20 @@ Vinum.Version = {
 ]=]
 Vinum.Destroy = require(script.utils.deconstruct)
 
+--[=[
+	@prop read (stateObj, keyName: string?) -> (any)
+	@within Vinum
+
+	A way for standardized reading across state objects.
+]=]
 Vinum.read = require(script.utils.read)
+
+--[=[
+	@prop write (state, firstArg: string | any, secondArg: any) -> ()
+	@within Vinum
+
+	A standardized way of writing across state objects
+]=]
+Vinum.write = require(script.utils.write)
 
 return Vinum

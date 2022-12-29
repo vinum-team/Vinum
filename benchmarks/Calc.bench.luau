@@ -1,6 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
-local Hold = Vinum.Hold
 local Calc = Vinum.Calc
 local AlwaysTrue = Vinum.AlwaysTrue
 local read = Vinum.read

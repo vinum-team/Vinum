@@ -33,7 +33,7 @@ return {
 		local expect = tester.expect
 
 		local obj = Vinum.Group({
-			hi = 123
+			hi = 123,
 		}, Vinum.AlwaysTrue)
 
 		local selfObj = obj:asState("hi")

@@ -20,13 +20,12 @@ return {
 
 		preRun = function()
 			local root = Group({
-				x = true
+				x = true,
 			}, AlwaysTrue)
 			return root
 		end,
 		run = function(root)
 			read(root, "x")
-
 		end,
 	},
 	{

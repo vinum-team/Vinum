@@ -55,7 +55,17 @@ function class:set(newValue)
 	if shouldUpdate then
 		self._value = newValue
 
-		self._graph:update(newValue)
+		self._graph:update()
+	end
+end
+
+function class:_setValue(newValue)
+	local shouldUpdate = self._updateProcessor(self._value, newValue)
+
+	if shouldUpdate then
+		self._value = newValue
+
+		self._graph:update()
 	end
 end
 

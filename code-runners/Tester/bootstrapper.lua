@@ -14,7 +14,7 @@ local function testDirectory(dir: set<ModuleScript>, options: options)
 			dirResults[child.Name] = {}
 
 			local currentTestCase = dirResults[child.Name]
-			
+
 			for caseName, caseFunction in module do
 				local ok, err = pcall(caseFunction, options.context)
 
