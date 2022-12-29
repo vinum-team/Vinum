@@ -157,4 +157,5 @@ Vinum.Version = {
 	Destroys the given state object.
 ]=]
 Vinum.Destroy = require(script.utils.deconstruct)
+
 return Vinum
