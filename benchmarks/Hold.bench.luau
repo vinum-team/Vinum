@@ -2,6 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local read = Vinum.read
+local write = Vinum.write
 
 return {
 	{
@@ -20,7 +21,7 @@ return {
 			return Hold(100, Vinum.AlwaysTrue)
 		end,
 		run = function(holder)
-			holder:set(400)
+			write(holder, 400)
 		end,
 	},
 	{

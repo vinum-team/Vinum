@@ -1,5 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-
+local write = Vinum.write
+local read = Vinum.read
 return {
 	["Dependencies should not notify destroyed state objects"] = function(tester)
 		local dependency = Vinum.Hold(100, Vinum.AlwaysTrue)
@@ -11,7 +12,7 @@ return {
 		end)
 
 		Vinum.Destroy(destroyed)
-		dependency:set(23)
+		write(dependency, 23)
 		tester.expect(flag).to.equal(0)
 	end,
 	["Dependents should be destroyed"] = function(tester)
@@ -21,14 +22,15 @@ return {
 		Vinum.Destroy(dependency)
 		tester
 			.expect(function()
-				dependent:get()
+				read(dependent)
 			end).to
 			.throw()
 	end,
 	["Groups should work"] = function(tester)
-		local group = Vinum.Group({}, Vinum.AlwaysTrue)
+		local group = Vinum.Group({
+			h = 2
+		}, Vinum.AlwaysTrue)
 
-		group:setKey("h", 2)
 		local gonnaBeDestroyed = Vinum.Observe(group:asState("h"))
 		Vinum.Destroy(group)
 		tester
@@ -39,7 +41,7 @@ return {
 
 		tester
 			.expect(function()
-				group:getKey("h")
+				read(group, "h")
 			end).to
 			.throw()
 	end,

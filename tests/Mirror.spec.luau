@@ -4,7 +4,7 @@ local Mirror = Vinum.Mirror
 local Hold = Vinum.Hold
 local AlwaysTrue = Vinum.AlwaysTrue
 local read = Vinum.read
-
+local write = Vinum.write
 return {
 	["Should construct a Mirror object"] = function(tester)
 		local expect = tester.expect
@@ -27,7 +27,7 @@ return {
 		})
 
 		expect(read(miObj)).to.equal(20)
-		root:set(false)
+		write(root, false)
 		expect(read(miObj)).to.equal("doesn'tExist")
 	end,
 	["Should change once a Case Object changes"] = function(tester)
@@ -41,7 +41,7 @@ return {
 		})
 
 		expect(read(miObj)).to.equal(20)
-		trueCase:set(30)
+		write(trueCase, 30)
 		expect(read(miObj)).to.equal(30)
 	end,
 }

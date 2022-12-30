@@ -34,37 +34,6 @@ local selfContainedClass = {
 	},
 }
 
---[=[
-	A method to set a key's value to a new one. Fires the `setProcessor` that was definied on Groups' construction.
-
-	```lua
-	local centerState = Group(Vinum.AlwaysTrue)
-
-	centerState:setKey("health", 100)
-	```
-	@param keyName string -- The key that the new value will be set at
-	@param keyValue any -- The value that will be set.
-
-	@within Group
-]=]
-function class:setKey(keyName: string, keyValue: any)
-	local values = self._values
-	local oldValue = values[keyName] or Symbols.None
-	if self._setProcessor(keyName, oldValue, keyValue) then
-		if values[keyName] then
-			values[keyName] = keyValue
-			self._graphs[keyName]:update(keyValue)
-		else
-			values[keyName] = keyValue
-			self._graphs[keyName] = graph(self)
-		end
-
-		for connection in self._connections do
-			spawner(connection, keyName, oldValue, keyValue)
-		end
-	end
-end
-
 function class:_setValue(keyName, value)
 	local values = self._values
 	local oldValue = values[keyName] or Symbols.None

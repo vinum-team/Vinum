@@ -1,5 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local read = Vinum.read
+local write = Vinum.write
 
 local function makeHold(value)
 	return Vinum.Hold(value, Vinum.AlwaysTrue)
@@ -20,11 +21,11 @@ return {
 		local recorder = Vinum.Record(recorded, true)
 
 		expect(read(recorder)).to.equal(read(recorded))
-		recorded:set(4)
+		write(recorded, 4)
 		expect(read(recorder)).to.equal(read(recorded))
 
 		recorder:desync()
-		recorded:set(5)
+		write(recorded, 5)
 		expect(read(recorder)).to.never.equal(read(recorded))
 	end,
 	["Should resync"] = function(tester)
@@ -38,7 +39,7 @@ return {
 			flag += 1
 			newValuex = newValue
 		end)
-		recorded:set(50)
+		write(recorded, 50)
 		expect(flag).to.equal(0)
 		expect(newValuex).to.equal(0)
 		recorder:sync()

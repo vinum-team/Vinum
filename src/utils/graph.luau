@@ -5,8 +5,16 @@
 
 local class = {}
 local META = { __index = class }
-local WEAK_KEYS_METATABLE = { __mode = "k" }
 
+function class:updateDependents()
+	for dependent, isActive in self._dependentSet do
+		if not isActive then
+			continue
+		end
+
+		dependent:update()
+	end
+end
 function class:update(newValue)
 	local owner = self._owner
 	if owner and owner._update then
@@ -18,14 +26,9 @@ function class:update(newValue)
 			self:simplifyDependencyTree()
 		end
 	end
-	-- update dependents
-	for dependent, isActive in self._dependentSet do
-		if not isActive then
-			continue
-		end
 
-		dependent:update(newValue)
-	end
+	self:updateDependents()
+	
 end
 
 --[[

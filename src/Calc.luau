@@ -50,6 +50,15 @@ function class:_update()
 	end
 end
 
+function class:_setValue(newValue: any)
+	if not self._updateProcessor(self._value, newValue) then 
+		return 
+	end
+
+	self._value = newValue
+	self._graph:updateDependents()
+end
+
 function class:_getValue()
 	return self._value
 end

@@ -41,6 +41,11 @@ function class:_getValue()
 	return self._value
 end
 
+function class:_setValue(newValue: any)
+	self._value = newValue
+	self._graph:updateDependents()
+end
+
 local function Wrap(
 	Signal: RBXScriptSignal | {
 		Connect: (fn: (...any) -> ()) -> (any),

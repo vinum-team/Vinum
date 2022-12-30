@@ -1,5 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local read = Vinum.read
+local write = Vinum.write
 
 return {
 	["Should construct a hold object"] = function(tester)
@@ -21,7 +22,7 @@ return {
 		end)
 
 		expect(read(state)).to.equal(100)
-		state:set(50)
+		write(state, 50)
 		expect(read(state)).to.equal(50)
 	end,
 	["Should dismiss an update"] = function(tester)
@@ -31,9 +32,7 @@ return {
 			return false
 		end)
 
-		state:set(50)
-		expect(read(state)).to.equal(30)
-		state:set(70)
+		write(state, 50)
 		expect(read(state)).to.equal(30)
 	end,
 }

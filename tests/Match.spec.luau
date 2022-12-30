@@ -1,5 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local read = Vinum.read
+local write = Vinum.write
 
 return {
 	["should construct a Match object"] = function(tester)
@@ -30,7 +31,7 @@ return {
 			["default"] = function() end,
 		}, Vinum.AlwaysTrue)
 
-		root:set(200)
+		write(root, 200)
 		expect(flag).to.equal(1)
 	end,
 	["should recompute once a dependency changes"] = function(tester)
@@ -45,7 +46,7 @@ return {
 		}, Vinum.AlwaysTrue)
 
 		expect(read(obj)).to.equal(40000)
-		another:set(1)
+		write(another, 1)
 		expect(read(obj)).to.equal(200)
 	end,
 }

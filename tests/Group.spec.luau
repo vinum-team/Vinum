@@ -1,5 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local read = Vinum.read
+local write = Vinum.write
 
 return {
 	["Should create a Group object"] = function(tester)
@@ -16,7 +17,7 @@ return {
 
 		local obj = Vinum.Group({}, Vinum.AlwaysTrue)
 
-		obj:setKey("hi", 12)
+		write(obj, "hi", 12)
 		expect(read(obj, "hi")).to.equal(12)
 	end,
 	["should dismiss an update"] = function(tester)
@@ -26,7 +27,7 @@ return {
 			return false
 		end)
 
-		obj:setKey("hi", false)
+		write(obj,"hi", false)
 		expect(read(obj, "hi")).to.be.a("nil")
 	end,
 	["Should be able to transform Keys into emulated Self-Containing States"] = function(tester)

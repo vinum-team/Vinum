@@ -49,28 +49,18 @@ end
 	@within Hold
 ]=]
 
-function class:set(newValue)
-	local shouldUpdate = self._updateProcessor(self._value, newValue)
-
-	if shouldUpdate then
-		self._value = newValue
-
-		self._graph:update()
-	end
-end
-
 function class:_setValue(newValue)
-	local shouldUpdate = self._updateProcessor(self._value, newValue)
-
-	if shouldUpdate then
-		self._value = newValue
-
-		self._graph:update()
+	if not self._updateProcessor(self._value, newValue) then
+		return
 	end
+
+	self._value = newValue
+
+	self._graph:updateDependents()
 end
 
 function class:update(updater)
-	class:set(updater(self._value))
+	class:_setValue(updater(self._value))
 end
 
 local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))

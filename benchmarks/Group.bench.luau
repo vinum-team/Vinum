@@ -4,6 +4,7 @@ local Group = Vinum.Group
 local AlwaysTrue = Vinum.AlwaysTrue
 local emptyInitalState = {}
 local read = Vinum.read
+local write = Vinum.write
 
 return {
 	{
@@ -15,7 +16,7 @@ return {
 		end,
 	},
 	{
-		name = "getting a value",
+		name = "reading operation",
 		calls = 50000,
 
 		preRun = function()
@@ -29,7 +30,7 @@ return {
 		end,
 	},
 	{
-		name = "setting groups",
+		name = "writing operation",
 		calls = 50000,
 
 		preRun = function()
@@ -37,7 +38,7 @@ return {
 		end,
 
 		run = function(r)
-			r:setKey("j", true)
+			write(r, "j", true)
 		end,
 	},
 }

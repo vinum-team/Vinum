@@ -39,6 +39,7 @@ function class:_getValue()
 	return read(self._owner)
 end
 
+
 local function Reflect<T>(state: { _value: T, [any]: any })
 	local self = setmetatable({
 		_isSelfContained = true,

@@ -1,6 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local read = Vinum.read
-
+local write = Vinum.write
 return {
 	["Should construct a observe object"] = function(tester)
 		local expect = tester.expect
@@ -29,7 +28,7 @@ return {
 			newValue = x
 		end)
 
-		holdState:set(false)
+		write(holdState, false)
 		expect(newValue).to.equal(false)
 		expect(flags).to.equal(1)
 	end,
@@ -68,7 +67,7 @@ return {
 			secondConnectionFlag = true
 		end)
 
-		holdState:set(123)
+		write(holdState, 123)
 		expect(secondConnectionFlag).to.equal(true)
 		task.wait(4)
 		expect(firstConnectionFlag).to.equal(true)
