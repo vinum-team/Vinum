@@ -57,8 +57,8 @@ function class:_update()
 end
 
 function class:_setValue(newValue: any)
-	if not self._updateProcessor(self._value, newValue) then 
-		return 
+	if not self._updateProcessor(self._value, newValue) then
+		return
 	end
 
 	self._value = newValue

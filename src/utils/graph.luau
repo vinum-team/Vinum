@@ -28,7 +28,6 @@ function class:update(newValue)
 	end
 
 	self:updateDependents()
-	
 end
 
 --[[

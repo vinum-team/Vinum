@@ -1,6 +1,5 @@
 local graph = require(script.Parent.utils.graph)
-local useState = require(script.Parent.utils.useState)
-local useKeyState = require(script.Parent.utils.useKeyState)
+local use = require(script.Parent.utils.use)
 local Symbols = require(script.Parent.utils.Symbols)
 
 --[=[
@@ -17,21 +16,17 @@ local Symbols = require(script.Parent.utils.Symbols)
 local class = { type = "state", kind = "calc" }
 local meta = { __index = class }
 
-type useStateType = typeof(useState())
-type useKeyStateType = typeof(useKeyState())
-
+type Tuse = typeof(use())
 export type Calc<T> = {
 	type: "state",
 	kind: "calc",
 
 	_isStaticDependency: false,
 	_isSelfContained: true,
-	_calculator: (useState: useStateType, useKeyState: useKeyStateType) -> (T),
+	_calculator: (use: Tuse) -> (T),
 	_value: { type: "Symbol", value: "None" } | T,
 	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
 	_graph: typeof(graph()),
-	_useHelper: useStateType,
-	_useKeyHelper: useKeyStateType,
 	_update: (self: Calc<T>) -> (T | nil),
 	get: (self: Calc<T>) -> (T),
 }
@@ -39,7 +34,7 @@ export type Calc<T> = {
 function class:_update()
 	local oldValue = self._value
 	self._value = Symbols.Pending
-	local newValue = self._calculator(self._useHelper, self._useKeyHelper)
+	local newValue = self._calculator(self._use)
 
 	if self._updateProcessor(oldValue, newValue) then
 		self._value = newValue
@@ -51,8 +46,8 @@ function class:_update()
 end
 
 function class:_setValue(newValue: any)
-	if not self._updateProcessor(self._value, newValue) then 
-		return 
+	if not self._updateProcessor(self._value, newValue) then
+		return
 	end
 
 	self._value = newValue
@@ -74,14 +69,11 @@ local function Calc<T>(
 		_value = Symbols.None :: { type: string, value: string } | any,
 		_updateProcessor = updateProcessor,
 		_graph = {} :: typeof(graph()),
-		_useHelper = {} :: typeof(useState()),
-		_useKeyHelper = {} :: typeof(useKeyState()),
 		_onInit = true,
 	}, meta)
 
 	self._graph = graph(self)
-	self._useHelper = useState(self)
-	self._useKeyHelper = useKeyState(self)
+	self._use = use(self)
 
 	self._graph:update()
 	return self

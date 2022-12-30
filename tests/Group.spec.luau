@@ -27,7 +27,7 @@ return {
 			return false
 		end)
 
-		write(obj,"hi", false)
+		write(obj, "hi", false)
 		expect(read(obj, "hi")).to.be.a("nil")
 	end,
 	["Should be able to transform Keys into emulated Self-Containing States"] = function(tester)

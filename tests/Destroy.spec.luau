@@ -28,7 +28,7 @@ return {
 	end,
 	["Groups should work"] = function(tester)
 		local group = Vinum.Group({
-			h = 2
+			h = 2,
 		}, Vinum.AlwaysTrue)
 
 		local gonnaBeDestroyed = Vinum.Observe(group:asState("h"))

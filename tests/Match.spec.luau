@@ -23,7 +23,7 @@ return {
 
 		local flag = 0
 
-		local obj = Vinum.Match(root, {
+		Vinum.Match(root, {
 			[200] = function()
 				flag += 1
 				return true
@@ -39,8 +39,8 @@ return {
 		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
 		local another = Vinum.Hold(200, Vinum.AlwaysTrue)
 		local obj = Vinum.Match(root, {
-			[100] = function(useState)
-				return useState(another) * 200
+			[100] = function(use)
+				return use(another) * 200
 			end,
 			["default"] = function() end,
 		}, Vinum.AlwaysTrue)

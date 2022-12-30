@@ -18,8 +18,8 @@ return {
 		local expect = tester.expect
 
 		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
-		local calc = Vinum.Calc(function(useState)
-			return useState(hold) + 100
+		local calc = Vinum.Calc(function(use)
+			return use(hold) + 100
 		end, Vinum.AlwaysTrue)
 
 		expect(read(calc)).to.equal(200)
@@ -31,8 +31,8 @@ return {
 		local flag = false
 
 		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
-		local calc = Vinum.Calc(function(useState)
-			return useState(hold) + 100
+		local calc = Vinum.Calc(function(use)
+			return use(hold) + 100
 		end, function()
 			if flag then
 				return false
@@ -50,14 +50,14 @@ return {
 		local expect = tester.expect
 
 		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
-		local b = Vinum.Calc(function(useState)
-			return useState(root) + 2
+		local b = Vinum.Calc(function(use)
+			return use(root) + 2
 		end, Vinum.AlwaysTrue)
 
 		local flags = 0
-		local _ = Vinum.Calc(function(useState)
+		local _ = Vinum.Calc(function(use)
 			flags += 1
-			return useState(root) + useState(b)
+			return use(root) + use(b)
 		end, Vinum.AlwaysTrue)
 
 		write(root, 20)
@@ -67,11 +67,11 @@ return {
 		local expect = tester.expect
 
 		local root = Vinum.Group({
-			Hi = 200
+			Hi = 200,
 		}, Vinum.AlwaysTrue)
 
-		local obj = Vinum.Calc(function(_, useKey)
-			return useKey(root, "Hi") * 2
+		local obj = Vinum.Calc(function(use)
+			return use(root, "Hi") * 2
 		end, Vinum.AlwaysTrue)
 
 		expect(read(obj)).to.equal(400)
@@ -83,11 +83,11 @@ return {
 		local expect = tester.expect
 
 		local root = Vinum.Group({
-			Hi = 200
+			Hi = 200,
 		}, Vinum.AlwaysTrue)
 
-		local obj = Vinum.Calc(function(_, useKey)
-			return useKey(root, "Hi") * 2
+		local obj = Vinum.Calc(function(use)
+			return use(root, "Hi") * 2
 		end, Vinum.AlwaysTrue)
 
 		local flags = 0
