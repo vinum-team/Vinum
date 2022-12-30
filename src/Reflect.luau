@@ -1,5 +1,6 @@
 local graph = require(script.Parent.utils.graph)
 local read = require(script.Parent.utils.read)
+local write = require(script.Parent.utils.write)
 --[=[
 	@class Reflect
 
@@ -21,24 +22,13 @@ export type Reflect<T> = {
 	get: (self: Reflect<T>) -> (T),
 }
 
---[=[
-	Returns the current value that is stored in Reflect's Reflected object. Keep in mind that the returned value is the same
-	as the reflected's value.
-
-	```lua
-	local holdState = Hold({23}, Vinum.AlwaysTrue)
-	local reflectState = Reflect(holdState)
-
-	print(holdState:get() == reflectState:get()) -- true
-	```
-	@return any -- The value that `state` has.
-	@within Reflect
-]=]
-
 function class:_getValue()
 	return read(self._owner)
 end
 
+function class:_setValue(newValue)
+	return write(self._owner, newValue)
+end
 
 local function Reflect<T>(state: { _value: T, [any]: any })
 	local self = setmetatable({

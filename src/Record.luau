@@ -76,7 +76,7 @@ function class:sync()
 	ownerGraph._dependentSet[selfGraph] = true
 
 	if read(self._owner) ~= self._value then
-		selfGraph:update()
+		selfGraph:updateDependents()
 	end
 end
 
