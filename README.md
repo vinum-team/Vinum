@@ -5,7 +5,7 @@
 An ultra-fast, multi-paradigm and modern reactive state management library intended for performance-critical systems - while also providing a simple and declarative API.
 
 Check the [docs](https://plothan.github.io/Vinum/) here.
-___
+
 ## Features
 * **Multi-Paradigm** - Vinum offers state centralization and self-containment, alongside powerful integration between the two.
 
@@ -15,13 +15,11 @@ ___
 
 * **Declarative Syntax** - State management is dead simple- no need to manually manage dependencies!
 
-___
 
 ## Contributing
 
 If you ever want to contribute for the Vinum project, please refer to [this](CONTRIBUTING.MD)
 
-____
 
 ## license
 
