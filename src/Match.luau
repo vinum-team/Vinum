@@ -36,7 +36,7 @@ function class:_update()
 end
 
 function class:_setValue(newValue: any)
-	if not self._updateProcessor(self._value, newValue) then
+	if not self._isWritable or not self._updateProcessor(self._value, newValue) then
 		return
 	end
 
@@ -60,6 +60,7 @@ return function(
 		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
 		_inputState = inputState,
+		_isWritable = false
 	}, meta)
 
 	self._graph = graph(self)

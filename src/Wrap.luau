@@ -42,6 +42,10 @@ function class:_getValue()
 end
 
 function class:_setValue(newValue: any)
+	if self._isWritable == false then
+		return
+	end
+
 	self._value = newValue
 	self._graph:updateDependents()
 end
@@ -62,6 +66,7 @@ local function Wrap(
 			_isStaticDependency = true,
 			_value = select(i, ...) or Symbols.None,
 			_graph = {},
+			_isWritable = false
 		}, meta)
 
 		self._graph = graph(self)

@@ -27,6 +27,10 @@ function class:_getValue()
 end
 
 function class:_setValue(newValue)
+	if self._isWritable == false then
+		return
+	end
+
 	return write(self._owner, newValue)
 end
 
@@ -35,6 +39,7 @@ local function Reflect<T>(state: { _value: T, [any]: any })
 		_isSelfContained = true,
 		_owner = state,
 		_graph = state._graph,
+		_isWritable = false
 	}, meta)
 	return self :: Reflect<T>
 end

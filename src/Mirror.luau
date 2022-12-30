@@ -57,7 +57,7 @@ function class:_update()
 end
 
 function class:_setValue(newValue: any)
-	if not self._updateProcessor(self._value, newValue) then
+	if not self._isWritable or not self._updateProcessor(self._value, newValue) then
 		return
 	end
 
@@ -77,6 +77,8 @@ local function Mirror<T, U>(inputState: { _value: T, [any]: any }, cases: { [T |
 		_value = Symbols.None,
 		_inputState = inputState,
 		_currentCaseDependency = false,
+		_isWritable = false
+
 	}, meta)
 
 	self._graph = graph(self)

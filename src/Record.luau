@@ -76,11 +76,15 @@ function class:sync()
 	ownerGraph._dependentSet[selfGraph] = true
 
 	if read(self._owner) ~= self._value then
-		selfGraph:updateDependents()
+		selfGraph:update()
 	end
 end
 
 function class:_setValue(newValue: any)
+	if self._isWritable == false then
+		return
+	end
+
 	self._value = newValue
 	self._graph:updateDependents()
 end
@@ -97,6 +101,7 @@ local function Record<T>(state, isInitiallySynced: boolean)
 		_value = read(state),
 		_isSynced = isInitiallySynced or false,
 		_graph = {},
+		_isWritable = false
 	}, meta)
 
 	self._graph = graph(self)
