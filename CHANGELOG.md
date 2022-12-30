@@ -2,7 +2,7 @@
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
 ## V0.3
-* Standardized Reading
+* Standardized Reading and Writing
 * initial state for groups
 * unified injector
 ## V0.2
