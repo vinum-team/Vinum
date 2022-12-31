@@ -6,6 +6,7 @@ Any changes that hold a value should be listed here under the Version that they 
 * initial state for groups
 * unified injector
 * Added `Writable`- which modifies a state object to allow direct value modification.
+* Refine Processors
 ## V0.2
 * `Vinum.JustOk` was renamed to `Vinum.AlwaysTrue` for a more descriptive API for begineers
 * `Observe:onBind`, which fires the provided function, and then returns a connection disconnector.

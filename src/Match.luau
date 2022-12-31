@@ -60,7 +60,7 @@ return function(
 		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
 		_inputState = inputState,
-		_isWritable = false
+		_isWritable = false,
 	}, meta)
 
 	self._graph = graph(self)

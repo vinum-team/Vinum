@@ -101,7 +101,7 @@ local function Record<T>(state, isInitiallySynced: boolean)
 		_value = read(state),
 		_isSynced = isInitiallySynced or false,
 		_graph = {},
-		_isWritable = false
+		_isWritable = false,
 	}, meta)
 
 	self._graph = graph(self)

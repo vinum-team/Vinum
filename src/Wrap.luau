@@ -66,7 +66,7 @@ local function Wrap(
 			_isStaticDependency = true,
 			_value = select(i, ...) or Symbols.None,
 			_graph = {},
-			_isWritable = false
+			_isWritable = false,
 		}, meta)
 
 		self._graph = graph(self)
