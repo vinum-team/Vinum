@@ -4,7 +4,7 @@ Please refer to this [page](https://plothan.github.io/Vinum/Contributing) for a 
 ## External & Internal Tooling
 The Vinum Project makes use of internal tooling, embodied in the form of frameworks such as the unit testing and the benchmarking ones; these are placed in the `code-runners` directory.
 
-As for external tooling, the Vinum Project makes use of Rojo, Wally, Selene, Stylua, and luau-lsp. The specifications for these tools (alongside their versions) cam be found in [aftman.toml](aftman.toml).
+As for external tooling, the Vinum Project makes use of Rojo, Wally, Selene, Stylua, and luau-lsp. The specifications for these tools (alongside their versions) can be found in [aftman.toml](aftman.toml).
 
 ## DevProject Structure
 
