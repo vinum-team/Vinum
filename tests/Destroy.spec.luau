@@ -3,8 +3,8 @@ local write = Vinum.write
 local read = Vinum.read
 return {
 	["Dependencies should not notify destroyed state objects"] = function(tester)
-		local dependency = Vinum.Hold(100, Vinum.AlwaysTrue)
-		local destroyed = Vinum.Observe(dependency, Vinum.AlwaysTrue)
+		local dependency = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
+		local destroyed = Vinum.Observe(dependency, Vinum.Processors.AlwaysTrue)
 
 		local flag = 0
 		destroyed:onChange(function()
@@ -16,7 +16,7 @@ return {
 		tester.expect(flag).to.equal(0)
 	end,
 	["Dependents should be destroyed"] = function(tester)
-		local dependency = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local dependency = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local dependent = Vinum.Record(dependency, true)
 
 		Vinum.Destroy(dependency)
@@ -29,7 +29,7 @@ return {
 	["Groups should work"] = function(tester)
 		local group = Vinum.Group({
 			h = 2,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		local gonnaBeDestroyed = Vinum.Observe(group:asState("h"))
 		Vinum.Destroy(group)

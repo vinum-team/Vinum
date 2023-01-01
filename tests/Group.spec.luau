@@ -6,7 +6,7 @@ return {
 	["Should create a Group object"] = function(tester)
 		local expect = tester.expect
 
-		local obj = Vinum.Group({}, Vinum.AlwaysTrue)
+		local obj = Vinum.Group({}, Vinum.Processors.AlwaysTrue)
 
 		expect(obj).to.be.a("table")
 		expect(obj.kind).to.equal("group")
@@ -15,7 +15,7 @@ return {
 	["Should change"] = function(tester)
 		local expect = tester.expect
 
-		local obj = Vinum.Group({}, Vinum.AlwaysTrue)
+		local obj = Vinum.Group({}, Vinum.Processors.AlwaysTrue)
 
 		write(obj, "hi", 12)
 		expect(read(obj, "hi")).to.equal(12)
@@ -35,7 +35,7 @@ return {
 
 		local obj = Vinum.Group({
 			hi = 123,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		local selfObj = obj:asState("hi")
 

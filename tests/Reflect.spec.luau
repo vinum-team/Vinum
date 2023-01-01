@@ -3,7 +3,7 @@ local read = Vinum.read
 local write = Vinum.write
 
 local function makeHold(value)
-	return Vinum.Hold(value, Vinum.AlwaysTrue)
+	return Vinum.Hold(value, Vinum.Processors.AlwaysTrue)
 end
 
 return {

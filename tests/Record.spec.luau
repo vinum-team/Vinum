@@ -3,7 +3,7 @@ local read = Vinum.read
 local write = Vinum.write
 
 local function makeHold(value)
-	return Vinum.Hold(value, Vinum.AlwaysTrue)
+	return Vinum.Hold(value, Vinum.Processors.AlwaysTrue)
 end
 
 return {
@@ -35,7 +35,7 @@ return {
 
 		local flag = 0
 		local newValuex = 0
-		Vinum.Observe(recorder, Vinum.AlwaysTrue):onChange(function(newValue)
+		Vinum.Observe(recorder, Vinum.Processors.AlwaysTrue):onChange(function(newValue)
 			flag += 1
 			newValuex = newValue
 		end)

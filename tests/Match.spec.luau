@@ -5,13 +5,13 @@ local write = Vinum.write
 return {
 	["should construct a Match object"] = function(tester)
 		local expect = tester.expect
-		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local root = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local obj = Vinum.Match(root, {
 			[100] = function()
 				return true
 			end,
 			["default"] = function() end,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		expect(obj).to.be.a("table")
 		expect(obj.type).to.equal("state")
@@ -19,7 +19,7 @@ return {
 	end,
 	["should recompute once the InputState changes"] = function(tester)
 		local expect = tester.expect
-		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local root = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 
 		local flag = 0
 
@@ -29,21 +29,21 @@ return {
 				return true
 			end,
 			["default"] = function() end,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		write(root, 200)
 		expect(flag).to.equal(1)
 	end,
 	["should recompute once a dependency changes"] = function(tester)
 		local expect = tester.expect
-		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
-		local another = Vinum.Hold(200, Vinum.AlwaysTrue)
+		local root = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
+		local another = Vinum.Hold(200, Vinum.Processors.AlwaysTrue)
 		local obj = Vinum.Match(root, {
 			[100] = function(use)
 				return use(another) * 200
 			end,
 			["default"] = function() end,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		expect(read(obj)).to.equal(40000)
 		write(another, 1)

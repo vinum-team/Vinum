@@ -8,7 +8,7 @@ return {
 
 		local calc = Vinum.Calc(function()
 			return true
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		expect(calc).to.be.a("table")
 		expect(calc.type).to.equal("state")
@@ -17,10 +17,10 @@ return {
 	["Should recompute once a dependency value changes"] = function(tester)
 		local expect = tester.expect
 
-		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local hold = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local calc = Vinum.Calc(function(use)
 			return use(hold) + 100
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		expect(read(calc)).to.equal(200)
 		write(hold, 50)
@@ -30,7 +30,7 @@ return {
 		local expect = tester.expect
 		local flag = false
 
-		local hold = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local hold = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local calc = Vinum.Calc(function(use)
 			return use(hold) + 100
 		end, function()
@@ -49,16 +49,16 @@ return {
 	["Should simplify dependency trees"] = function(tester)
 		local expect = tester.expect
 
-		local root = Vinum.Hold(100, Vinum.AlwaysTrue)
+		local root = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local b = Vinum.Calc(function(use)
 			return use(root) + 2
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		local flags = 0
 		local _ = Vinum.Calc(function(use)
 			flags += 1
 			return use(root) + use(b)
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		write(root, 20)
 		expect(flags).to.equal(2)
@@ -68,11 +68,11 @@ return {
 
 		local root = Vinum.Group({
 			Hi = 200,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		local obj = Vinum.Calc(function(use)
 			return use(root, "Hi") * 2
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		expect(read(obj)).to.equal(400)
 
@@ -84,16 +84,16 @@ return {
 
 		local root = Vinum.Group({
 			Hi = 200,
-		}, Vinum.AlwaysTrue)
+		}, Vinum.Processors.AlwaysTrue)
 
 		local obj = Vinum.Calc(function(use)
 			return use(root, "Hi") * 2
-		end, Vinum.AlwaysTrue)
+		end, Vinum.Processors.AlwaysTrue)
 
 		local flags = 0
 
 		local x
-		Vinum.Observe(obj, Vinum.AlwaysTrue):onChange(function(newValue)
+		Vinum.Observe(obj, Vinum.Processors.AlwaysTrue):onChange(function(newValue)
 			flags += 1
 			x = newValue
 		end)

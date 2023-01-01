@@ -45,6 +45,6 @@ return function()
 			end
 		end,
 	}
-
+	
 	return Vusion
 end

@@ -2,7 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Observe = Vinum.Observe
-local AlwaysTrue = Vinum.AlwaysTrue
+local AlwaysTrue = Vinum.Processors.AlwaysTrue
 
 return {
 	{

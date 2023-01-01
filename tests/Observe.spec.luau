@@ -4,7 +4,7 @@ return {
 	["Should construct a observe object"] = function(tester)
 		local expect = tester.expect
 
-		local holdState = Vinum.Hold(true, Vinum.AlwaysTrue)
+		local holdState = Vinum.Hold(true, Vinum.Processors.AlwaysTrue)
 		local observeState = Vinum.Observe(holdState, function(newValue)
 			return true
 		end)
@@ -16,7 +16,7 @@ return {
 	["Should fire all connections with valid arguments"] = function(tester)
 		local expect = tester.expect
 
-		local holdState = Vinum.Hold(true, Vinum.AlwaysTrue)
+		local holdState = Vinum.Hold(true, Vinum.Processors.AlwaysTrue)
 		local observeState = Vinum.Observe(holdState, function(newValue)
 			return true
 		end)
@@ -35,7 +35,7 @@ return {
 	["Should dismiss updates"] = function(tester)
 		local expect = tester.expect
 
-		local holdState = Vinum.Hold(true, Vinum.AlwaysTrue)
+		local holdState = Vinum.Hold(true, Vinum.Processors.AlwaysTrue)
 		local observeState = Vinum.Observe(holdState, function(newValue)
 			return false
 		end)
@@ -51,7 +51,7 @@ return {
 	["Should be yield-safe"] = function(tester)
 		local expect = tester.expect
 
-		local holdState = Vinum.Hold(true, Vinum.AlwaysTrue)
+		local holdState = Vinum.Hold(true, Vinum.Processors.AlwaysTrue)
 		local observeState = Vinum.Observe(holdState, function(newValue)
 			return true
 		end)

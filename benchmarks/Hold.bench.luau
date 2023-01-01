@@ -10,7 +10,7 @@ return {
 		calls = 50000,
 
 		run = function()
-			Hold(1, Vinum.AlwaysTrue)
+			Hold(1, Vinum.Processors.AlwaysTrue)
 		end,
 	},
 	{
@@ -18,7 +18,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, Vinum.AlwaysTrue)
+			return Hold(100, Vinum.Processors.AlwaysTrue)
 		end,
 		run = function(holder)
 			write(holder, 400)
@@ -29,7 +29,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, Vinum.AlwaysTrue)
+			return Hold(100, Vinum.Processors.AlwaysTrue)
 		end,
 		run = function(holder)
 			read(holder)

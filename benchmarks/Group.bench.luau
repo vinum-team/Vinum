@@ -1,7 +1,7 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Group = Vinum.Group
-local AlwaysTrue = Vinum.AlwaysTrue
+local AlwaysTrue = Vinum.Processors.AlwaysTrue
 local emptyInitalState = {}
 local read = Vinum.read
 local write = Vinum.write

@@ -5,4 +5,4 @@ registry = "test"
 [[package]]
 name = "sinlerdev/vinum"
 version = "0.2.0"
-dependencies = [["goui", "qvgk/goui@0.1.1"]]
+dependencies = []

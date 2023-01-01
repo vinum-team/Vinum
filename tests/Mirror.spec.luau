@@ -2,7 +2,7 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Mirror = Vinum.Mirror
 local Hold = Vinum.Hold
-local AlwaysTrue = Vinum.AlwaysTrue
+local AlwaysTrue = Vinum.Processors.AlwaysTrue
 local read = Vinum.read
 local write = Vinum.write
 return {

@@ -1,7 +1,7 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Calc = Vinum.Calc
-local AlwaysTrue = Vinum.AlwaysTrue
+local AlwaysTrue = Vinum.Processors.AlwaysTrue
 local read = Vinum.read
 return {
 	{
