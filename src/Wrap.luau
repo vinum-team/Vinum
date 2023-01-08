@@ -62,7 +62,6 @@ local function Wrap(
 	for i = 1, numOfArguments do
 		local self = setmetatable({
 			_disconnected = false,
-			_isSelfContained = true,
 			_isStaticDependency = true,
 			_value = select(i, ...) or Symbols.None,
 			_graph = {},

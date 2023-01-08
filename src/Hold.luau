@@ -61,6 +61,7 @@ end
 
 function class:update(updater)
 	class:_setValue(updater(self._value))
+	return true
 end
 
 local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))

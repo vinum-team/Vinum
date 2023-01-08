@@ -14,6 +14,7 @@ function bootstrapper.run(options: configuration)
 	for _, directory: Instance in options.directories do
 		finalString ..= "\n[>] " .. directory.Name
 		finalString ..= stringifyResult(readDir(directory), "    ")
+		task.wait()
 	end
 
 	print(finalString)

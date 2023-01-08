@@ -6,7 +6,6 @@ return function(self)
 		-- if the dependency is a group and the keyName argument is provided
 		if dependency.kind == "group" and keyName then
 			local keyGraph = dependency._graphs[keyName]
-
 			keyGraph._dependentSet[self._graph] = true
 			selfGraph._dependencySet[keyGraph] = true
 

@@ -6,6 +6,8 @@ local function cleanup(keyName, oldValue, newValue)
 	else
 		internalCleaner(keyName) -- in this case, keyName is the oldValue
 	end
+
+	return true
 end
 
 return cleanup

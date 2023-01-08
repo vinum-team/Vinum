@@ -2,13 +2,12 @@
     A class for managing reactive graphs to enable multi-graph 
 	objects, Groups are an example of a multi-graph object.
 ]]
-
 local class = {}
 local META = { __index = class }
 
 function class:updateDependents()
-	for dependent, isActive in self._dependentSet do
-		if not isActive then
+	for dependent, state in self._dependentSet do
+		if state ~= true then
 			continue
 		end
 
@@ -17,17 +16,23 @@ function class:updateDependents()
 end
 function class:update(newValue)
 	local owner = self._owner
+	local shouldContinue
 	if owner and owner._update then
 		if owner._isStaticDependency then
-			newValue = self._owner:_update(newValue) or newValue
+			shouldContinue = self._owner:_update()
 		else
 			self:deactivateAllDependencies()
-			newValue = self._owner:_update(newValue) or newValue
+			shouldContinue = self._owner:_update()
 			self:simplifyDependencyTree()
+		end
+
+		if not shouldContinue then
+			return false
 		end
 	end
 
 	self:updateDependents()
+	return true
 end
 
 --[[
@@ -56,12 +61,9 @@ end
 	generally because they don't hold dependencies.
 ]]
 function class:deactivateAllDependencies()
-	for dependency in self._dependencySet do
-		if not dependency._isSelfContained then
-			continue
-		end
+	for dependency, state in self._dependencySet do
 		self._dependencySet[dependency] = false
-		dependency._dependentSet[self] = false
+		dependency._dependentSet[self] = false 
 	end
 end
 
@@ -85,6 +87,6 @@ return function(owner)
 		_owner = owner,
 		_dependencySet = {},
 		_dependentSet = {},
-	}, META)
+ 	}, META)
 	return self
 end

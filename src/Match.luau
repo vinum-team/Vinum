@@ -1,6 +1,5 @@
 local graph = require(script.Parent.utils.graph)
 local use = require(script.Parent.utils.use)
-local Symbols = require(script.Parent.utils.Symbols)
 local read = require(script.Parent.utils.read)
 
 --[=[
@@ -19,19 +18,15 @@ local class = { type = "state", kind = "match" }
 local meta = { __index = class }
 
 function class:_update()
-	local cases = self._cases
-	local chosenArm = cases[read(self._inputState)] or cases["default"]
+	local chosenArm = self._cases[read(self._inputState)] or self._defaultCase
 
-	local oldValue = self._value
-	self._value = Symbols.Pending
 	local newArmValue = chosenArm(self._use)
 
-	if self._updateProcessor(oldValue, newArmValue) then
+	if self._updateProcessor(self._value, newArmValue) then
 		self._value = newArmValue
-		return newArmValue
+		return true
 	else
-		self._value = oldValue
-		return nil
+		return false
 	end
 end
 
@@ -54,13 +49,12 @@ return function(
 	updateProcessor: (oldValue: any, newValue: any) -> (boolean)
 )
 	local self = setmetatable({
-		_isSelfContained = true,
 		_isStaticDependency = false,
 		_cases = cases,
-		_value = Symbols.None,
 		_updateProcessor = updateProcessor,
 		_inputState = inputState,
 		_isWritable = false,
+		_defaultCase = cases["default"]
 	}, meta)
 
 	self._graph = graph(self)

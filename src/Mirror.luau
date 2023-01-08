@@ -53,7 +53,7 @@ function class:_update()
 	end
 
 	self._value = chosenArm._value
-	return self._value
+	return true
 end
 
 function class:_setValue(newValue: any)
@@ -71,7 +71,6 @@ end
 
 local function Mirror<T, U>(inputState: { _value: T, [any]: any }, cases: { [T | "default"]: { _value: U, [any]: any } })
 	local self = setmetatable({
-		_isSelfContained = true,
 		_isStaticDependency = true,
 		_cases = cases,
 		_value = Symbols.None,

@@ -75,7 +75,6 @@ return {
 		end, Vinum.Processors.AlwaysTrue)
 
 		expect(read(obj)).to.equal(400)
-
 		write(root, "Hi", 100)
 		expect(read(obj)).to.equal(200)
 	end,

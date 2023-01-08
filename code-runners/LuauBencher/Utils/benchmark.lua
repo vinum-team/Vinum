@@ -22,9 +22,9 @@ local function benchmark(calls: number, preRun: () -> (any), run: (any, any, any
 		end
 		table.insert(rawBenchmark, timeEnd - timeStart)
 	end
+	task.wait()
 
 	table.sort(rawBenchmark)
-
 	return function()
 		local numTotal = 0
 		local sizeOfRawBenchmark = #rawBenchmark

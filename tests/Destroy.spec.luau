@@ -17,7 +17,9 @@ return {
 	end,
 	["Dependents should be destroyed"] = function(tester)
 		local dependency = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
-		local dependent = Vinum.Record(dependency, true)
+		local dependent = Vinum.Calc(function(use)
+			return use(dependency)
+		end, Vinum.Processors.AlwaysTrue)
 
 		Vinum.Destroy(dependency)
 		tester

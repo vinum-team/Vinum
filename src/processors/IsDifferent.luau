@@ -1,6 +1,6 @@
 local function isDifferent(keyName, oldValue, newValue)
 	if newValue then
-		return oldValue ~= newVallue
+		return oldValue ~= newValue
 	else
 		return keyName ~= oldValue
 	end

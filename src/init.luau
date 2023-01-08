@@ -70,6 +70,8 @@ Vinum.Reflect = require(script.Reflect)
 ]=]
 Vinum.Record = require(script.Record)
 
+Vinum.Progress = require(script.Progress)
+
 --[=[
 	@prop Version {Major: number, Minor: number, Patch: number}
 	@within Vinum
@@ -88,6 +90,8 @@ Vinum.Version = {
 	Destroys the given state object.
 ]=]
 Vinum.Destroy = require(script.utils.deconstruct)
+
+Vinum.Staticify = require(script.Staticify)
 
 --[=[
 	@prop read (stateObj, keyName: string?) -> (any)

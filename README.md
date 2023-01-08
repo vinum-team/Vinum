@@ -1,20 +1,18 @@
-<img align = "left" width="300" src="gh-assets/Banner.svg">
+<img align = "left" width="400" src="gh-assets/Banner.svg">
 
 
-<br><br><br><br><br>
-An ultra-fast, multi-paradigm and modern reactive state management library intended for performance-critical systems - while also providing a simple and declarative API.
+<br><br><br><br><br> 
+_______
 
-Check the [docs](https://plothan.github.io/Vinum/) here.
+Vinum is an incredibly fast state management library that solves the data synchronization problem by imposing declarative and reactive data relativity. 
+
+Check out the [docs](https://plothan.github.io/Vinum/) here.
 
 ## Features
 * **Multi-Paradigm** - Vinum offers state centralization and self-containment, alongside powerful integration between the two.
-
 * **Blazing Fast** - Vinum is insanely optimized to yield incredible speed. Becuase of this, Vinum is the best of its kind for performance-critical systems.
-
 * **Strictness and Flexibility** - In Vinum, Processors allow for greater flexibility, however, they aren't allowed to modify the new value, therefore, allowing for strictness and predictability.
-
 * **Declarative Syntax** - State management is dead simple- no need to manually manage dependencies!
-
 
 ## Contributing
 

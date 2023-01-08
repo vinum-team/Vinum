@@ -26,6 +26,7 @@ function class:_update()
 	for connection in self._connections do
 		spawner(connection, newValue)
 	end
+	return true
 end
 
 --[=[
@@ -89,7 +90,6 @@ end
 
 return function(state, updateProcessor: (newValue: any) -> (boolean))
 	local self = setmetatable({
-		_isSelfContained = true,
 		_isStaticDependency = true,
 		_updateProcessor = updateProcessor,
 		_connections = {},

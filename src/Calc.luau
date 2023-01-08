@@ -1,6 +1,5 @@
 local graph = require(script.Parent.utils.graph)
 local use = require(script.Parent.utils.use)
-local Symbols = require(script.Parent.utils.Symbols)
 
 --[=[
 	@class Calc
@@ -32,16 +31,13 @@ export type Calc<T> = {
 }
 
 function class:_update()
-	local oldValue = self._value
-	self._value = Symbols.Pending
 	local newValue = self._calculator(self._use)
 
-	if self._updateProcessor(oldValue, newValue) then
+	if self._updateProcessor(self._value, newValue) then
 		self._value = newValue
-		return self._value
+		return true
 	else
-		self._value = oldValue
-		return nil
+		return false
 	end
 end
 
@@ -63,13 +59,10 @@ local function Calc<T>(
 	updateProcessor: (oldValue: T, newValue: T) -> (boolean)
 )
 	local self = setmetatable({
-		_isStaticDependency = false,
-		_isSelfContained = true,
 		_calculator = calculator,
-		_value = Symbols.None :: { type: string, value: string } | any,
 		_updateProcessor = updateProcessor,
 		_graph = {} :: typeof(graph()),
-		_onInit = true,
+		_onInit = false,
 		_isWritable = false,
 	}, meta)
 
