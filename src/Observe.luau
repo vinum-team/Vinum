@@ -23,8 +23,14 @@ function class:_update()
 		return
 	end
 
-	for connection in self._connections do
-		spawner(connection, newValue)
+	if self._noYield == true then
+		for connection in self._connections do
+			connection(newValue)
+		end
+	else
+		for connection in self._connections do
+			spawner(connection, newValue)
+		end
 	end
 	return true
 end
@@ -95,6 +101,7 @@ return function(state, updateProcessor: (newValue: any) -> (boolean))
 		_connections = {},
 		_graph = {},
 		_state = state,
+		_noYield = false,
 	}, meta)
 
 	self._graph = graph(self)

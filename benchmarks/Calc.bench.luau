@@ -1,4 +1,3 @@
-local VirtualUser = game:GetService("VirtualUser")
 local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Calc = Vinum.Calc

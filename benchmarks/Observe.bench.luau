@@ -34,5 +34,24 @@ return {
 		run = function(observer)
 			observer:_update(20)
 		end,
+	},	
+	{
+		name = "firing an Observe object with 5 connections- NoYieldified",
+		calls = 50000,
+
+		preRun = function()
+			local root = Hold(100, AlwaysTrue)
+			local observer = Vinum.NoYield(Observe(root, AlwaysTrue))
+
+			for i = 1, 5 do
+				observer:onChange(function() end)
+			end
+
+			return observer
+		end,
+
+		run = function(observer)
+			observer:_update(20)
+		end,
 	},
 }

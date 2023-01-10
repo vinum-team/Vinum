@@ -92,7 +92,7 @@ Vinum.Version = {
 Vinum.Destroy = require(script.utils.deconstruct)
 
 Vinum.Staticify = require(script.Staticify)
-
+Vinum.NoYield = require(script.NoYield)
 --[=[
 	@prop read (stateObj, keyName: string?) -> (any)
 	@within Vinum
