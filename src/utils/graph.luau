@@ -63,7 +63,7 @@ end
 function class:deactivateAllDependencies()
 	for dependency, state in self._dependencySet do
 		self._dependencySet[dependency] = false
-		dependency._dependentSet[self] = false 
+		dependency._dependentSet[self] = false
 	end
 end
 
@@ -87,6 +87,6 @@ return function(owner)
 		_owner = owner,
 		_dependencySet = {},
 		_dependentSet = {},
- 	}, META)
+	}, META)
 	return self
 end

@@ -54,7 +54,7 @@ return function(
 		_updateProcessor = updateProcessor,
 		_inputState = inputState,
 		_isWritable = false,
-		_defaultCase = cases["default"]
+		_defaultCase = cases["default"],
 	}, meta)
 
 	self._graph = graph(self)

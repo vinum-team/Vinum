@@ -6,8 +6,8 @@ local class = { type = "state", kind = "progress" }
 local meta = { __index = class }
 
 local function ProgressUpdater(self)
-    local newValue = self._calculator(self._use, self._become)
-    
+	local newValue = self._calculator(self._use, self._become)
+
 	if self._updateProcessor(self._value, newValue) then
 		self._value = newValue
 		self:_setValue(newValue)
@@ -29,7 +29,6 @@ function class:_update()
 end
 
 function class:_setValue(newValue: any)
-
 	self._value = newValue
 	self._graph:updateDependents()
 end
@@ -52,7 +51,7 @@ local function Progress<T>(initialState: T, calculator, updateProcessor)
 	self._graph = graph(self)
 	self._use = use(self)
 	self._become = become(self)
-    self._graph:update()
+	self._graph:update()
 	return self
 end
 

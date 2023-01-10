@@ -29,7 +29,6 @@ function class:_update()
 	return self._isSynced
 end
 
-
 function class:_setValue(newValue: any)
 	if self._isWritable == false then
 		return
@@ -55,7 +54,7 @@ local function Record<T>(state, isSynced)
 	}, meta)
 
 	self._graph = graph(self)
-	
+
 	return self :: Record<T>
 end
 

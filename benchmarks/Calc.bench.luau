@@ -84,16 +84,14 @@ return {
 
 			for i = 1, 10, 1 do
 				table.insert(tbl, Hold(i, Vinum.Processors.AlwaysTrue))
-
 			end
 			local B = Calc(function(useState)
 				for _, t in tbl do
 					useState(t)
 				end
 				return true
-
 			end, AlwaysTrue)
-			
+
 			Staticify(B)
 			return B
 		end,

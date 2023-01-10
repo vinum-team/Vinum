@@ -34,7 +34,7 @@ return {
 		run = function(observer)
 			observer:_update(20)
 		end,
-	},	
+	},
 	{
 		name = "firing an Observe object with 5 connections- NoYieldified",
 		calls = 50000,
