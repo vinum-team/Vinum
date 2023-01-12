@@ -6,7 +6,7 @@ local use = require(script.Parent.utils.use)
 
 	```lua
 	function Calc<T>(
-		calculator: (useState, useKeyState) -> (T), -- The function that Calc will use to perform calculations
+		calculator: (use) -> (T), -- The function that Calc will use to perform calculations
 		updateProcessor: (T, T) -> (boolean) -- The function that Calc will use to determine whether to let updates pass or not
 	)
 	```
@@ -14,21 +14,6 @@ local use = require(script.Parent.utils.use)
 ]=]
 local class = { type = "state", kind = "calc" }
 local meta = { __index = class }
-
-type Tuse = typeof(use())
-export type Calc<T> = {
-	type: "state",
-	kind: "calc",
-
-	_isStaticDependency: false,
-	_isSelfContained: true,
-	_calculator: (use: Tuse) -> (T),
-	_value: { type: "Symbol", value: "None" } | T,
-	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
-	_graph: typeof(graph()),
-	_update: (self: Calc<T>) -> (T | nil),
-	get: (self: Calc<T>) -> (T),
-}
 
 function class:_update()
 	local newValue = self._calculator(self._use)

@@ -25,8 +25,12 @@ export type Record<T> = {
 }
 
 function class:_update()
-	self._value = read(self._owner)
-	return self._isSynced
+	if read(self._isSynced) == true then
+		self._value = read(self._owner)
+		return true
+	else
+		return false
+	end
 end
 
 function class:_setValue(newValue: any)
@@ -44,17 +48,23 @@ end
 
 local function Record<T>(state, isSynced)
 	local self = setmetatable({
-		_isSelfContained = true,
 		_isStaticDependency = true,
 		_owner = state,
 		_value = read(state),
-		_isSynced = read(isSynced),
+		_isSynced = isSynced,
 		_graph = {},
 		_isWritable = false,
 	}, meta)
 
 	self._graph = graph(self)
 
+	self._graph._dependencySet[state._graph] = true
+	state._graph._dependentSet[self._graph] = true
+
+	if type(isSynced) == "table" and isSynced.type == "state" then
+		self._graph._dependencySet[isSynced._graph] = true
+		isSynced._graph._dependentSet[self._graph] = true
+	end
 	return self :: Record<T>
 end
 

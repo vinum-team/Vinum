@@ -17,7 +17,7 @@ local Symbols = require(script.Parent.utils.Symbols)
 
 	Constructs a Group object, which is used for storing centralized state.
 ]=]
-local class = { type = "state", kind = "group" }
+local class = { type = "state", kind = "group", behavior = "center"}
 local meta = { __index = class }
 
 --[=[
@@ -31,7 +31,10 @@ local selfContainedClass = {
 		_getValue = function(self)
 			return self._graph._owner._values[self.name]
 		end,
+		type = "state",
+		kind = "selfgroup",
 	},
+
 }
 
 function class:_setValue(keyName, value)

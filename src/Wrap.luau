@@ -1,5 +1,5 @@
 local graph = require(script.Parent.utils.graph)
-
+local read = require(script.Parent.utils.read)
 --[=[
 	@class Wrap
 
@@ -17,28 +17,36 @@ local graph = require(script.Parent.utils.graph)
 	that captures a specific argument in the event. The `...` is for setting initial values- the order of the values in this one should map the 
 	numOfArguments parameter.
 ]=]
-local class = { type = "state", kind = "wrap" }
+local class = { type = "state", kind = "wrap", behavior = "center" }
 local meta = { __index = class }
-local Symbols = require(script.Parent.utils.Symbols)
 
---[=[
-	Disconncts the connection that Wrap uses to automatically update your wrapped object.
-	
-	```lua
-	local wrapState1, wrapState2 = Wrap(AnySignal, 2, 100, 200)
+function class:_update()
+	local event = read(self._signal)
 
-	wrapState1:disconnect()
-	wraoState2:disconnect()
-	```
-	@within Wrap
-]=]
-function class:disconnect()
-	self._disconnected = true
-	self._internalConnection:Disconnect()
+	if self._currentEvent ~= event then
+		if self._currentEvent then
+			self._currentConnection:Disconnect()
+		end
+
+		self._currentConnection = event:Connect(function(...)
+			for index in self._values do
+				self._values[index] = select(index, ...)
+			end
+
+			for index, value in table.pack(self._handler(...)) do
+				self._values[index] = value
+			end
+
+			self._graphs[1]:update()
+		end)
+
+		self._currentEvent = event
+	end
+	return true
 end
 
-function class:_getValue()
-	return self._value
+function class:_getValue(index)
+	return self._values[index]
 end
 
 function class:_setValue(newValue: any)
@@ -50,35 +58,39 @@ function class:_setValue(newValue: any)
 	self._graph:updateDependents()
 end
 
-local function Wrap(
-	Signal: RBXScriptSignal | {
-		Connect: (fn: (...any) -> ()) -> (any),
-	},
-	numOfArguments: number,
-	...: any
-)
-	local states = table.create(numOfArguments)
+local function Wrap(Signal: RBXScriptSignal | any, defaultValues: { any }, handler: () -> ())
+	local self = setmetatable({
+		_signal = Signal,
+		_isStaticDependency = true,
+		_values = defaultValues,
+		_graphs = {},
+		_isWritable = false,
+		_handler = handler,
+	}, meta)
 
-	for i = 1, numOfArguments do
-		local self = setmetatable({
-			_disconnected = false,
-			_isStaticDependency = true,
-			_value = select(i, ...) or Symbols.None,
-			_graph = {},
-			_isWritable = false,
-		}, meta)
+	local mainGraph
+	for index in defaultValues do
+		local graphObj
+		if index == 1 then
+			graphObj = graph(self)
 
-		self._graph = graph(self)
+			if type(Signal) == "table" and Signal.behavior ~= "center" and Signal.tyoe == "state" then
+				Signal._graph._dependentSet[graphObj] = true
+				graphObj._dependencySet[Signal._graph] = true
+			end
 
-		self._internalConnection = (Signal :: any):Connect(function(...)
-			self._value = select(i, ...)
-			self._graph:update()
-		end)
-
-		table.insert(states, self)
+			mainGraph = graphObj
+		else
+			graphObj = graph()
+			mainGraph._dependentSet[graphObj] = true
+			graphObj._dependencySet[mainGraph] = true
+		end
+		table.insert(self._graphs, graphObj)
 	end
 
-	return table.unpack(states)
+	mainGraph:update()
+
+	return self
 end
 
 return Wrap

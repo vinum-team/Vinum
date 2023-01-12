@@ -18,36 +18,63 @@ local graph = require(script.Parent.utils.graph)
 	:::caution
 	Passing a nil for `initialValue` is considered unsafe and can cause unintended behavior.
 	:::
+
+	____
+
+	In Vinum, one of the ways to store singular, independent state is through
+	Holds. 
+
+	## Usage
+	
+	In order to use `Hold`, we can either directly reference it from the `Vinum` table, or 
+	import it like so:
+	```lua
+	local Hold = Vinum.Hold
+	```
+
+	To create a Hold object, we pass an initial value, and a Processor- though for now, you only need to understand
+	that Processors are just pure functions that return booleans that determine whether to let an update go or not.
+
+	Generally speaking; with Holds, we usually need our code to not launch updates then the new value is the same. To do this, we can use the `IsDifferent` processor- this is a
+	processor that returns true if both the old value and the new value are different.
+
+	To use this processor, we can import it like:
+	```lua
+	local isDifferent = Vinum.Processors.isDifferent
+	```
+
+	Now, we can fully create our Hold object like the following:
+	```lua
+	local holder = Hold(100, isDifferent)
+	```
+
+	To learn more about Processors, go to the `Processors` page on the left.
+
+	### Reading
+
+	In order to read our Holds' values, we use the `read` standard function.
+
+	To import it, do the following:
+	```lua
+	local read = Vinum.read
+	```
+
+	Now, to read from our previously-created `holder`, we do:
+	```lua
+	print(read(holder)) -- 100
+	```
+
+	### Writing
+
+	In order to read our Holds
 ]=]
 local class = { type = "state", kind = "hold" }
 local meta = { __index = class }
 
-export type Hold<T> = {
-	type: "state",
-	kind: "hold",
-
-	_value: T,
-	_updateProcessor: (oldValue: T, newValue: T) -> (boolean),
-	_graph: typeof(graph()),
-	get: (self: Hold<T>) -> (T),
-	set: (self: Hold<T>, newValue: T) -> (),
-}
 
 function class:_getValue()
 	return self._value
 end
-
---[=[
-	Sets the new value of this Hold object.
-
-	```lua
-	local holdState = Hold(100, Vinum.AlwaysTrue)
-
-	holdState:set(40)
-	```
-	@param newValue any -- The new value you want this object to contain
-	@within Hold
-]=]
 
 function class:_setValue(newValue)
 	if not self._updateProcessor(self._value, newValue) then
@@ -59,22 +86,17 @@ function class:_setValue(newValue)
 	self._graph:updateDependents()
 end
 
-function class:update(updater)
-	class:_setValue(updater(self._value))
-	return true
-end
-
-local function Hold<T>(ogValue: T, updateProcessor: (T, T) -> (boolean))
+local function Hold<T>(initialValue: T, updateProcessor: (T, T) -> (boolean))
 	local self = setmetatable({
 		_isSelfContained = true,
-		_value = ogValue,
+		_value = initialValue,
 		_updateProcessor = updateProcessor,
 		_graph = {},
 	}, meta)
 
 	self._graph = graph(self)
 
-	return self :: Hold<T>
+	return self
 end
 
 return Hold

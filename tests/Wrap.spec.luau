@@ -18,7 +18,9 @@ return {
 	["Should construct a wrap object"] = function(tester)
 		local expect = tester.expect
 
-		local wrapState = Vinum.Wrap({ Connect = function() end }, 1, 123)
+		local wrapState = Vinum.Wrap({ Connect = function() end }, { 0 }, function(...)
+			return ...
+		end)
 
 		expect(wrapState).to.be.a("table")
 		expect(wrapState.type).to.equal("state")
@@ -27,16 +29,20 @@ return {
 	["Should hold values initially"] = function(tester)
 		local expect = tester.expect
 
-		local wrapState = Vinum.Wrap(game.AncestryChanged, 1, 123, 334, 45)
-		expect(read(wrapState)).to.equal(123)
+		local wrapState = Vinum.Wrap({ Connect = function() end }, { 0 }, function(...)
+			return ...
+		end)
+		expect(read(wrapState, 1)).to.equal(0)
 	end,
 	["Should change as the given event fires"] = function(tester)
 		local expect = tester.expect
 
-		local wrapState1, wrapState2 = Vinum.Wrap(throwawaySignal, 2, 123, 4)
+		local wrapState = Vinum.Wrap(throwawaySignal, { 0, 0 }, function(...)
+			return ...
+		end)
 
 		throwawaySignal:fire(2, 3)
-		expect(read(wrapState1)).to.equal(2)
-		expect(read(wrapState2)).to.equal(3)
+		expect(read(wrapState, 1)).to.equal(2)
+		expect(read(wrapState, 2)).to.equal(3)
 	end,
 }

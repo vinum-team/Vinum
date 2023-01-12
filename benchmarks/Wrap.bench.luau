@@ -25,7 +25,9 @@ return {
 			return throwawaySignal
 		end,
 		run = function(t)
-			Wrap(t, 1, 10)
+			Wrap(t, { 1 }, function(...)
+				return ...
+			end)
 		end,
 	},
 	{
@@ -46,7 +48,9 @@ return {
 				end
 			end
 
-			Wrap(throwawaySignal, 1, 1)
+			Wrap(throwawaySignal, { 1 }, function(...)
+				return ...
+			end)
 
 			return throwawaySignal
 		end,
