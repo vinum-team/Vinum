@@ -28,18 +28,12 @@ return {
 	end,
 	["Should dismiss an update"] = function(tester)
 		local expect = tester.expect
-		local flag = false
 
 		local hold = Vinum.Hold(100, Vinum.Processors.AlwaysTrue)
 		local calc = Vinum.Calc(function(use)
 			return use(hold) + 100
 		end, function()
-			if flag then
-				return false
-			else
-				flag = true
-				return true
-			end
+			return false
 		end)
 
 		expect(read(calc)).to.equal(200)

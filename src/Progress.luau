@@ -8,13 +8,15 @@ local meta = { __index = class }
 local function ProgressUpdater(self)
 	local newValue = self._calculator(self._use, self._become)
 
+	local toReturn = true
 	if self._updateProcessor(self._value, newValue) then
 		self._value = newValue
 		self:_setValue(newValue)
-		return true
+	else
+		toReturn = false
 	end
 
-	return false
+	return toReturn
 end
 
 function class:_update()

@@ -22,12 +22,20 @@ function class:_update()
 
 	local newArmValue = chosenArm(self._use)
 
-	if self._updateProcessor(self._value, newArmValue) then
-		self._value = newArmValue
-		return true
+	local toReturn = true
+	if self._isInit then
+		if self._updateProcessor(self._value, newArmValue) then
+			self._value = newArmValue
+		else
+			self._isInit = true
+			toReturn = false
+		end
 	else
-		return false
+		self._value = newArmValue
+		self._isInit = true
 	end
+
+	return toReturn
 end
 
 function class:_setValue(newValue: any)

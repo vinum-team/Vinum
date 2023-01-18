@@ -18,12 +18,19 @@ local meta = { __index = class }
 function class:_update()
 	local newValue = self._calculator(self._use)
 
-	if self._updateProcessor(self._value, newValue) then
-		self._value = newValue
-		return true
+	local toReturn = true
+	if self._isInit then
+		if self._updateProcessor(self._value, newValue) then
+			self._value = newValue
+		else
+			toReturn = false
+		end
 	else
-		return false
+		self._value = newValue
+		self._isInit = true
 	end
+
+	return toReturn
 end
 
 function class:_setValue(newValue: any)
