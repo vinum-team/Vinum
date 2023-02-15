@@ -16,5 +16,5 @@ local caseList = {
 }
 
 game:GetService("RunService").Heartbeat:Connect(function()
-    --Absorb(toAbsorb, isSynced, caseList, alwaysTrue)
+    Absorb(toAbsorb, caseList, isSynced, alwaysTrue)
 end)
