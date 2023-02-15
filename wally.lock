@@ -3,6 +3,6 @@
 registry = "test"
 
 [[package]]
-name = "sinlerdev/vinum"
-version = "0.2.0"
+name = "plothan/vinum"
+version = "0.3.0-rc2"
 dependencies = []

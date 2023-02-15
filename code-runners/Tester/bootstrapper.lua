@@ -3,6 +3,7 @@ type options = {
 }
 
 type set<T> = { T | { T } }
+local expect = require(script.Parent.expect)
 
 local function testDirectory(dir: set<ModuleScript>, options: options)
 	local dirResults = {}
@@ -16,7 +17,7 @@ local function testDirectory(dir: set<ModuleScript>, options: options)
 			local currentTestCase = dirResults[child.Name]
 
 			for caseName, caseFunction in module do
-				local ok, err = pcall(caseFunction, options.context)
+				local ok, err = pcall(caseFunction, expect ,options.context)
 
 				currentTestCase[caseName] = { ok = ok, err = err }
 			end

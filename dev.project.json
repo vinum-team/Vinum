@@ -17,6 +17,11 @@
 
       "ServerScriptService" : {
         "$path" : "code-runners"
+      },
+      "StarterPlayer" : {
+        "StarterPlayerScripts" : {
+          "$path" : "stressTest"
+        }
       }
     }
   }

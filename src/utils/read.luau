@@ -1,21 +1,22 @@
-local function xtype(obj)
-	local typeOf = type(obj)
+--!strict
+local Utils = script.Parent
+local LibraryRoot = Utils.Parent
+local Types = require(LibraryRoot.types)
 
-	if typeOf == "table" and obj.type == "state" then
-		typeOf = obj.type
+local function read<T>(state: Types.CanBeState<T> | Types.TAnyCentralState<T> | T, key: Types.maybeStringOrNumber?): T
+
+	if type(state) == "table" then
+		local behaviorField = state.behavior
+		if behaviorField == "central" then
+			return (state::Types.TAnyCentralState<T>)._values[key]
+		elseif behaviorField == "self" then
+			return (state::Types.TAnySelfState<T>)._value
+		else
+			return (state::any)::T
+		end
 	end
 
-	return typeOf
+	return state::T
 end
 
-return function(state, keyName)
-	if xtype(state) ~= "state" then
-		return state
-	end
-	
-	if keyName then
-		return state:_getValue(keyName)
-	else
-		return state:_getValue()
-	end
-end
+return read

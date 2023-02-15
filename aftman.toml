@@ -8,4 +8,4 @@ wally = "upliftgames/wally@0.3.1" # for package management
 selene = "kampfkarren/selene@0.23.1" # for static linting
 stylua = "JohnnyMorganz/stylua@0.15.3" # for styling
 luau-lsp = "JohnnyMorganz/luau-lsp@1.14.3" # for LSP
-remodel = "rojo-rbx/remodel@0.11.0"
+lune = "filiptibell/lune@0.2.0"
