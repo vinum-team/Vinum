@@ -1,27 +1,21 @@
-local args = process.args
-
-local path = args[1]
-local version = args[2]
-local isInteg = args[3]
+local processArgs = process.args
+local pathForSourceDir = processArgs[1] or ""
+local version = processArgs[2] or ""
 
 local function assert(condition, err)
 	if not condition then
-		console.error(err)
-		process.exit(0)
-		task.wait()
+		error(err, 2)
 	end
 end
+-- ensure that the required arguments are given
+assert(fs.isDir(pathForSourceDir), `"${pathForSourceDir}" doesn't point at a directory.`)
 
---check if the given path is a dir or not.
-assert(fs.isDir(path or ""), "The given path doesn't point at a directory.")
+-- find the source path for the given
+local sourceCodePath = `{pathForSourceDir}/{stdio.prompt("text", "Please put the name for the source code directory")}`
 
-local final = if fs.isDir(string.format("%*/src", path))
-	then "src"
-	elseif fs.isDir(string.format("%*/lib", path)) then "lib"
-	else nil
+-- ask for build mode
+local buildMode =
+	stdio.prompt("select", "Please choose the build mode for this process.", { "integrated", "standalone" })
 
-assert(final ~= nil, "There is no src or lib folder in your given path")
-
-if isInteg == true then
-	require(".lune/buildModes/integ")(path, final, version)
-end
+-- call the needed builder 
+print(buildMode)

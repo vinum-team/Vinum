@@ -3,7 +3,10 @@ local LibraryRoot = script.Parent.Parent
 local Utils = LibraryRoot.Utils
 local PubTypes = require(LibraryRoot.pubTypes)
 local Types = require(LibraryRoot.types)
-local Graph = require(Utils.graph)
+local Grapher = require(Utils.grapher)
+local create = Grapher.create
+local update = Grapher.updateGraph
+local updateDependents = Grapher.updateDependents
 local use = require(Utils.makeUseInjector)
 
 local class: PubTypes.Absorb<unknown> = { type = "state", kind = "absorb", behavior = "self" } :: any
@@ -38,29 +41,29 @@ function class:_update()
 		newValue = chosenArm(self._use)
 	end
 
-	if not self._processor(self._value, newValue) then
+	if not self._processor(nil, self._value, newValue, false) then
 		return false, false
 	end
 
-	(self :: PubTypes.Absorb<unknown>)._value = newValue
+	self._value = newValue
 	return true, shouldSimplifyTree
 end
 
 function class:_setValue(newValue)
-	if not self._processor(self._value, newValue) then
+	if not self._processor(nil, self._value, newValue, false) then
 		return false
 	end
 
 	self._value = newValue
-	self._graph:updateDependents()
+	updateDependents(self._graph)
 	return true
 end
 
 return function<T>(
 	toAbsorb: Types.TAnySelfState<any>,
-	caseList: { [any]: (any) -> () | Types.TAnySelfState<any> },
+	caseList: { [any]: Types.union<(Types.use<T>) -> T, Types.TAnySelfState<any>> },
 	isSynced: Types.TAnySelfState<boolean>,
-	processor: ((oldValue: any, newValue: any) -> boolean)?
+	processor: Types.TProcessor<any>?
 )
 	local self = (
 		setmetatable({
@@ -72,14 +75,14 @@ return function<T>(
 		}, meta) :: any
 	) :: PubTypes.Absorb<T>
 
-	local myGraph = Graph(self)
+	local myGraph = create(self)
 	self._graph = myGraph
 
 	toAbsorb._graph.dependentSet[myGraph] = true
 	isSynced._graph.dependentSet[myGraph] = true
 
 	self._use = use(self)
-	myGraph:update()
+	update(myGraph)
 
 	return self
 end

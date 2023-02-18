@@ -9,13 +9,17 @@ export type Observe<T> = Types.TState<"observe", "self", nil, true> & {
 	onChange: (self: Observe<T>, fn: (newValue: T) -> ()) -> (() -> ()),
 	onBind: (self: Observe<T>, fn: (newValue: T) -> ()) -> (() -> ()),
 }
-type union<a, b> = a | b
 export type Group<T> = Types.TCentralState<"group", T, true>
 export type Absorb<T> = Types.TSelfState<"absorb", T, boolean> & {
-	_caseList: { [any]: union<(any) -> any,Types.TAnySelfState<any>> },
+	_caseList: { [any]: Types.union<(any) -> any,Types.TAnySelfState<any>> },
 	_isSynced: Types.TAnySelfState<boolean>,
 	_toAbsorb: Types.TAnySelfState<any>,
 	_use: any
+}
+
+export type Compute<T> = Types.TSelfState<"compute", T, boolean> & {
+	_use: Types.use<T>,
+	_computer: (use: Types.use<T>) -> (T)
 }
 
 

@@ -1,8 +1,8 @@
 --!strict
 
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Graph = Vinum.Utils.Graph
-
+local Grapher = Vinum.Utils.Grapher
+local create, simplify, update, _updateDepenents = Grapher.create, Grapher.simplifyTreeForGraph, Grapher.updateGraph, Grapher.updateDependents
 
 local function initBond(dependency: any, dependent: any)
     dependency.dependentSet[dependent] = true
@@ -12,35 +12,35 @@ end
 type expect = (any) -> (any)
 return {
 	["should create a Graph without owner"] = function(expect: expect)
-		local thing = Graph()
+		local thing = create()
 
 		expect(thing.type).to.equal("utils")
         expect(thing.kind).to.equal("graph")
         expect(thing).to.be.a("table")
 	end,
     ["ownerless Graph should notify its subgraphs"] = function(expect: expect)
-        local graph = Graph()
+        local graph = create()
         local flag = false
-        local subGraph = Graph({
+        local subGraph = create({
             _update = function(self)
                 flag = true
             end
         }::any)
         
         initBond(graph, subGraph)
-        expect(graph:update()).to.equal(true)
+        expect(update(graph)).to.equal(true)
         expect(flag).to.equal(true)
     end,
     ["Dependency tree simplification should work"] = function(expect: expect)
-        local A = Graph()
-        local B = Graph()
-        local C = Graph()
+        local A = create()
+        local B = create()
+        local C = create()
 
         initBond(A, B)
         initBond(B, C)
         initBond(A, C)
 
-        C:simplifyDependencies()
+        simplify(C)
 
         expect(C.dependencySet[A]).to.equal(nil)
     end

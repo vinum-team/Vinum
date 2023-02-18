@@ -1,10 +1,14 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Graph = Vinum.Utils.Graph
+local Grapher = Vinum.Utils.Grapher
 
 local function initBond(dependency, dependent)
     dependency.dependentSet[dependent] = true
     dependent.dependencySet[dependency] = true
 end
+
+local create = Grapher.create 
+local update = Grapher.updateGraph 
+local simplify = Grapher.simplifyTreeForGraph
 
 return {
     {
@@ -12,7 +16,7 @@ return {
         calls = 50_000,
 
         run = function()
-            Graph()
+            create()
         end
     },
     {
@@ -20,9 +24,9 @@ return {
         calls = 50_000,
 
         preRun = function()
-            local A = Graph()
-            local B = Graph()
-            local C = Graph()
+            local A = create()
+            local B = create()
+            local C = create()
 
             initBond(A, B)
             initBond(B, C)
@@ -31,8 +35,8 @@ return {
             return C
         end,
 
-        run = function(graphObj: typeof(Graph()))
-            graphObj:simplifyDependencies()
+        run = function(graphObj)
+            simplify(graphObj)
         end
     },
     {
@@ -40,19 +44,19 @@ return {
         calls = 50_000,
 
         preRun = function()
-            local A = Graph()
-            local B = Graph()
-            local C = Graph()
+            local A = create()
+            local B = create()
+            local C = create()
 
             initBond(A, B)
             initBond(B, C)
             initBond(A, C)
 
-            C:simplifyDependencies()
+            simplify(C)
             return A
         end,
         run = function(root)
-            root:update()
+            update(root)
         end
     },
     {
@@ -60,9 +64,9 @@ return {
         calls = 50_000,
 
         preRun = function()
-            local A = Graph()
-            local B = Graph()
-            local C = Graph()
+            local A = create()
+            local B = create()
+            local C = create()
 
             initBond(A, B)
             initBond(B, C)
@@ -71,7 +75,7 @@ return {
             return A
         end,
         run = function(root)
-            root:update()
+            update(root)
         end
     }
 }

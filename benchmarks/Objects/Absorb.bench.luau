@@ -1,7 +1,7 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local Hold = Vinum.Objects.Hold
 local Absorb = Vinum.Objects.Absorb 
-
+local update = Vinum.Utils.Grapher.updateGraph
 local function alwaysTrue(...)
     return true
 end
@@ -14,6 +14,7 @@ local caseList = {
         return 200
     end
 }
+
 
 return {
     {
@@ -34,7 +35,7 @@ return {
         end,
 
         run = function(absorber)
-            absorber._graph:update()
+            update(absorber._graph)
         end
-    },
+    }
 }

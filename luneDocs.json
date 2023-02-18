@@ -1,136 +1,4 @@
 {
-  "@roblox/global/console": {
-    "code_sample": "",
-    "documentation": "Logging & formatting",
-    "keys": {
-      "console": "@roblox/global/console.console"
-    },
-    "learn_more_link": ""
-  },
-  "@roblox/global/console.error": {
-    "code_sample": "",
-    "documentation": "Prints arguments as a human-readable string with syntax highlighting for tables to stderr.\n\nThis will also prepend an [ERROR] tag at the beginning of the message.\n\nUsing this function will automatically set the exit code of the process\nto 1, unless it gets manually specified afterwards using `process.exit`.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.error/param/0",
-        "name": "..."
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.error/param/0": {
-    "documentation": "The values to print out to stderr"
-  },
-  "@roblox/global/console.format": {
-    "code_sample": "",
-    "documentation": "Formats arguments into a human-readable string with syntax highlighting for tables.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.format/param/0",
-        "name": "..."
-      }
-    ],
-    "returns": [
-      "@roblox/global/console.format/return/0"
-    ]
-  },
-  "@roblox/global/console.format/param/0": {
-    "documentation": "The values to format"
-  },
-  "@roblox/global/console.format/return/0": {
-    "documentation": "The formatted string"
-  },
-  "@roblox/global/console.info": {
-    "code_sample": "",
-    "documentation": "Prints arguments as a human-readable string with syntax highlighting for tables to stdout.\n\nThis will also prepend an [INFO] tag at the beginning of the message.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.info/param/0",
-        "name": "..."
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.info/param/0": {
-    "documentation": "The values to print out"
-  },
-  "@roblox/global/console.log": {
-    "code_sample": "",
-    "documentation": "Prints arguments as a human-readable string with syntax highlighting for tables to stdout.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.log/param/0",
-        "name": "..."
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.log/param/0": {
-    "documentation": "The values to print out"
-  },
-  "@roblox/global/console.resetColor": {
-    "code_sample": "",
-    "documentation": "Resets the current persistent output color.",
-    "learn_more_link": "",
-    "params": [],
-    "returns": []
-  },
-  "@roblox/global/console.resetStyle": {
-    "code_sample": "",
-    "documentation": "Resets the current persistent output style.",
-    "learn_more_link": "",
-    "params": [],
-    "returns": []
-  },
-  "@roblox/global/console.setColor": {
-    "code_sample": "",
-    "documentation": "Sets the current persistent output color.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.setColor/param/0",
-        "name": "color"
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.setColor/param/0": {
-    "documentation": "The color to set"
-  },
-  "@roblox/global/console.setStyle": {
-    "code_sample": "",
-    "documentation": "Sets the current persistent output style.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.setStyle/param/0",
-        "name": "style"
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.setStyle/param/0": {
-    "documentation": "The style to set"
-  },
-  "@roblox/global/console.warn": {
-    "code_sample": "",
-    "documentation": "Prints arguments as a human-readable string with syntax highlighting for tables to stdout.\n\nThis will also prepend an [INFO] tag at the beginning of the message.",
-    "learn_more_link": "",
-    "params": [
-      {
-        "documentation": "@roblox/global/console.warn/param/0",
-        "name": "..."
-      }
-    ],
-    "returns": []
-  },
-  "@roblox/global/console.warn/param/0": {
-    "documentation": "The values to print out"
-  },
   "@roblox/global/fs": {
     "code_sample": "",
     "documentation": "Filesystem",
@@ -361,6 +229,48 @@
   "@roblox/global/net.request/return/0": {
     "documentation": "A dictionary representing the response for the request"
   },
+  "@roblox/global/net.serve": {
+    "code_sample": "",
+    "documentation": "Creates an HTTP server that listens on the given `port`.\n\nThis will ***not*** block and will keep listening for requests on the given `port`\nuntil the `stop` function on the returned `NetServeHandle` has been called.",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/net.serve/param/0",
+        "name": "port"
+      },
+      {
+        "documentation": "@roblox/global/net.serve/param/1",
+        "name": "handlerOrConfig"
+      }
+    ],
+    "returns": []
+  },
+  "@roblox/global/net.serve/param/0": {
+    "documentation": "The port to use for the server"
+  },
+  "@roblox/global/net.serve/param/1": {
+    "documentation": "The handler function or config to use for the server"
+  },
+  "@roblox/global/net.socket": {
+    "code_sample": "",
+    "documentation": "Connects to a web socket at the given URL.\n\nThrows an error if the server at the given URL does not support\nweb sockets, or if a miscellaneous network or I/O error occurs.",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/net.socket/param/0",
+        "name": "url"
+      }
+    ],
+    "returns": [
+      "@roblox/global/net.socket/return/0"
+    ]
+  },
+  "@roblox/global/net.socket/param/0": {
+    "documentation": "The URL to connect to"
+  },
+  "@roblox/global/net.socket/return/0": {
+    "documentation": "A web socket handle"
+  },
   "@roblox/global/process": {
     "code_sample": "",
     "documentation": "Current process & child processes",
@@ -438,6 +348,133 @@
   },
   "@roblox/global/process.spawn/return/0": {
     "documentation": "A dictionary representing the result of the child process"
+  },
+  "@roblox/global/stdio": {
+    "code_sample": "",
+    "documentation": "Standard input / output & utility functions",
+    "keys": {
+      "stdio": "@roblox/global/stdio.stdio"
+    },
+    "learn_more_link": ""
+  },
+  "@roblox/global/stdio.color": {
+    "code_sample": "",
+    "documentation": "Return an ANSI string that can be used to modify the persistent output color.\n\nPass `\"reset\"` to get a string that can reset the persistent output color.\n\n### Example usage\n\n```lua\nstdio.write(stdio.color(\"red\"))\nprint(\"This text will be red\")\nstdio.write(stdio.color(\"reset\"))\nprint(\"This text will be normal\")\n```",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.color/param/0",
+        "name": "color"
+      }
+    ],
+    "returns": [
+      "@roblox/global/stdio.color/return/0"
+    ]
+  },
+  "@roblox/global/stdio.color/param/0": {
+    "documentation": "The color to use"
+  },
+  "@roblox/global/stdio.color/return/0": {
+    "documentation": "A printable ANSI string"
+  },
+  "@roblox/global/stdio.ewrite": {
+    "code_sample": "",
+    "documentation": "Writes a string directly to stderr, without any newline.",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.ewrite/param/0",
+        "name": "s"
+      }
+    ],
+    "returns": []
+  },
+  "@roblox/global/stdio.ewrite/param/0": {
+    "documentation": "The string to write to stderr"
+  },
+  "@roblox/global/stdio.format": {
+    "code_sample": "",
+    "documentation": "Formats arguments into a human-readable string with syntax highlighting for tables.",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.format/param/0",
+        "name": "..."
+      }
+    ],
+    "returns": [
+      "@roblox/global/stdio.format/return/0"
+    ]
+  },
+  "@roblox/global/stdio.format/param/0": {
+    "documentation": "The values to format"
+  },
+  "@roblox/global/stdio.format/return/0": {
+    "documentation": "The formatted string"
+  },
+  "@roblox/global/stdio.prompt": {
+    "code_sample": "",
+    "documentation": "Prompts for user input using the wanted kind of prompt:\n\n* `\"text\"` - Prompts for a plain text string from the user\n* `\"confirm\"` - Prompts the user to confirm with y / n\n* `\"select\"` - Prompts the user to select *one* value from a list\n* `\"multiselect\"` - Prompts the user to select *one or more* values from a list\n* `nil` - Equivalent to `\"text\"` with no extra arguments",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.prompt/param/0",
+        "name": "kind"
+      },
+      {
+        "documentation": "@roblox/global/stdio.prompt/param/1",
+        "name": "message"
+      },
+      {
+        "documentation": "@roblox/global/stdio.prompt/param/2",
+        "name": "defaultOrOptions"
+      }
+    ],
+    "returns": []
+  },
+  "@roblox/global/stdio.prompt/param/0": {
+    "documentation": "The kind of prompt to use"
+  },
+  "@roblox/global/stdio.prompt/param/1": {
+    "documentation": "The message to show the user"
+  },
+  "@roblox/global/stdio.prompt/param/2": {
+    "documentation": "The default value for the prompt, or options to choose from for selection prompts"
+  },
+  "@roblox/global/stdio.style": {
+    "code_sample": "",
+    "documentation": "Return an ANSI string that can be used to modify the persistent output style.\n\nPass `\"reset\"` to get a string that can reset the persistent output style.\n\n### Example usage\n\n```lua\nstdio.write(stdio.style(\"bold\"))\nprint(\"This text will be bold\")\nstdio.write(stdio.style(\"reset\"))\nprint(\"This text will be normal\")\n```",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.style/param/0",
+        "name": "style"
+      }
+    ],
+    "returns": [
+      "@roblox/global/stdio.style/return/0"
+    ]
+  },
+  "@roblox/global/stdio.style/param/0": {
+    "documentation": "The style to use"
+  },
+  "@roblox/global/stdio.style/return/0": {
+    "documentation": "A printable ANSI string"
+  },
+  "@roblox/global/stdio.write": {
+    "code_sample": "",
+    "documentation": "Writes a string directly to stdout, without any newline.",
+    "learn_more_link": "",
+    "params": [
+      {
+        "documentation": "@roblox/global/stdio.write/param/0",
+        "name": "s"
+      }
+    ],
+    "returns": []
+  },
+  "@roblox/global/stdio.write/param/0": {
+    "documentation": "The string to write to stdout"
   },
   "@roblox/global/task": {
     "code_sample": "",

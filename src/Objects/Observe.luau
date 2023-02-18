@@ -3,7 +3,8 @@ local LibraryRoot = script.Parent.Parent
 local Utils = LibraryRoot.Utils
 local Types = require(LibraryRoot.types)
 local PubTypes = require(LibraryRoot.pubTypes)
-local Graph = require(Utils.graph)
+local Grapher = require(Utils.grapher)
+local create = Grapher.create 
 local Spawn = require(Utils.spawner)
 
 local class: PubTypes.Observe<unknown> = { type = "state", kind = "observe", behavior = "self" } :: any
@@ -46,7 +47,7 @@ local function Observe<T>(owner: Types.TAnySelfState<T>, processor: (newValue: a
 		_processor = processor
 	}, meta) :: any
 
-	local graph = Graph(self)
+	local graph = create(self)
 	local ownerGraph = owner._graph
 	self._graph = graph
 

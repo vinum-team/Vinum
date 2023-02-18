@@ -1,15 +1,16 @@
 return {
 	Utils = {
-		Graph = require(script.Utils.graph),
 		Read = require(script.Utils.read),
 		Write = require(script.Utils.write),
-		WriteIndex = require(script.Utils.writeIndex)
+		WriteIndex = require(script.Utils.writeIndex),
+		Grapher = require(script.Utils.grapher)
 	},
 	Objects = {
 		Hold = require(script.Objects.Hold),
 		Observe = require(script.Objects.Observe),
 		Group = require(script.Objects.Group),
-		Absorb = require(script.Objects.Absorb)
+		Absorb = require(script.Objects.Absorb),
+		Compute = require(script.Objects.Compute)
 	},
 	Types = require(script.types),
 }

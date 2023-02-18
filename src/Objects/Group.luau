@@ -2,8 +2,10 @@
 local LibraryRoot = script.Parent.Parent
 local Utils = LibraryRoot.Utils
 local PubTypes = require(LibraryRoot.pubTypes)
-local Graph = require(Utils.graph)
-
+local Grapher = require(Utils.grapher)
+local Types = require(LibraryRoot.types)
+local create = Grapher.create
+local update = Grapher.updateGraph
 local class: PubTypes.Group<any> = { type = "state", kind = "group", behavior = "central" } :: any
 local meta = { __index = class }
 
@@ -11,26 +13,26 @@ function class:_setValue(key, newValue)
 	local valuesLocation = self._values
 	local oldValue = valuesLocation[key]
 
-	if not self._processor(key, oldValue, newValue) then
+	if not self._processor(key, oldValue, newValue, false) then
 		return false
 	end
 
 	if oldValue then
 		valuesLocation[key] = newValue
-		self._graphs[key]:update()
-	else 
+		update(self._graphs[key])
+	else
 		valuesLocation[key] = newValue
-		local graph = Graph(self)
+		local graph = create(self)
 		self._graphs[key] = graph
 
-		graph:update()
+		update(graph)
 	end
 	return true
 end
 
 return function<T>(
-	initialValue: { [string | number]: T },
-	processor: (key: string | number, oldValue: any, newValue: any) -> boolean
+	initialValue: { [string | number]: any},
+	processor: Types.TProcessor<any>
 )
 	local self = (
 		setmetatable({
@@ -44,7 +46,7 @@ return function<T>(
 
 	local graphs = self._graphs
 	for key in initialValue do
-		graphs[key] = Graph(self)
+		graphs[key] = create(self)
 	end
 
 	return self

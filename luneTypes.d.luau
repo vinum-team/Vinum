@@ -1,90 +1,4 @@
--- Lune v0.2.0
-
---[=[
-	@class console
-
-	Logging & formatting
-]=]
-declare console: {
-	--[=[
-		@within console
-
-		Resets the current persistent output color.
-	]=]
-	resetColor: () -> (),
-	--[=[
-		@within console
-
-		Sets the current persistent output color.
-
-		@param color The color to set
-	]=]
-	setColor: (color: "black" | "red" | "green" | "yellow" | "blue" | "purple" | "cyan" | "white") -> (),
-	--[=[
-		@within console
-
-		Resets the current persistent output style.
-	]=]
-	resetStyle: () -> (),
-	--[=[
-		@within console
-
-		Sets the current persistent output style.
-
-		@param style The style to set
-	]=]
-	setStyle: (style: "bold" | "dim") -> (),
-	--[=[
-		@within console
-
-		Formats arguments into a human-readable string with syntax highlighting for tables.
-
-		@param ... The values to format
-		@return The formatted string
-	]=]
-	format: (...any) -> (string),
-	--[=[
-		@within console
-
-		Prints arguments as a human-readable string with syntax highlighting for tables to stdout.
-
-		@param ... The values to print out
-	]=]
-	log: (...any) -> (),
-	--[=[
-		@within console
-
-		Prints arguments as a human-readable string with syntax highlighting for tables to stdout.
-
-		This will also prepend an [INFO] tag at the beginning of the message.
-
-		@param ... The values to print out
-	]=]
-	info: (...any) -> (),
-	--[=[
-		@within console
-
-		Prints arguments as a human-readable string with syntax highlighting for tables to stdout.
-
-		This will also prepend an [INFO] tag at the beginning of the message.
-
-		@param ... The values to print out
-	]=]
-	warn: (...any) -> (),
-	--[=[
-		@within console
-
-		Prints arguments as a human-readable string with syntax highlighting for tables to stderr.
-
-		This will also prepend an [ERROR] tag at the beginning of the message.
-
-		Using this function will automatically set the exit code of the process
-		to 1, unless it gets manually specified afterwards using `process.exit`.
-
-		@param ... The values to print out to stderr
-	]=]
-	error: (...any) -> (),
-}
+-- Lune v0.4.0
 
 --[=[
 	@class fs
@@ -210,6 +124,54 @@ declare fs: {
 	isDir: (path: string) -> boolean,
 }
 
+type NetMethod = "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "OPTIONS" | "PATCH"
+
+export type NetFetchParams = {
+	url: string,
+	method: NetMethod?,
+	headers: { [string]: string }?,
+	body: string?,
+}
+export type NetFetchResponse = {
+	ok: boolean,
+	statusCode: number,
+	statusMessage: string,
+	headers: { [string]: string },
+	body: string,
+}
+
+export type NetRequest = {
+	path: string,
+	query: { [string]: string? },
+	method: NetMethod,
+	headers: { [string]: string },
+	body: string,
+}
+export type NetResponse = {
+	status: number?,
+	headers: { [string]: string }?,
+	body: string?,
+}
+
+type NetServeHttpHandler = (request: NetRequest) -> string | NetResponse
+type NetServeWebSocketHandler = (socket: NetWebSocket) -> ()
+
+export type NetServeConfig = {
+	handleRequest: NetServeHttpHandler?,
+	handleWebSocket: NetServeWebSocketHandler?,
+}
+
+export type NetServeHandle = {
+	stop: () -> (),
+}
+
+declare class NetWebSocket
+	close: () -> ()
+	send: (message: string) -> ()
+	next: () -> string?
+	function __iter(self): () -> string
+end
+
 --[=[
 	@class net
 
@@ -226,18 +188,31 @@ declare net: {
 		@param config The URL or request config to use
 		@return A dictionary representing the response for the request
 	]=]
-	request: (config: string | {
-		url: string,
-		method: ("GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "OPTIONS" | "PATCH")?,
-		headers: { [string]: string }?,
-		body: string?,
-	}) -> {
-		ok: boolean,
-		statusCode: number,
-		statusMessage: string,
-		headers: { [string]: string },
-		body: string,
-	},
+	request: (config: string | NetFetchParams) -> NetFetchResponse,
+	--[=[
+		@within net
+
+		Connects to a web socket at the given URL.
+		
+		Throws an error if the server at the given URL does not support
+		web sockets, or if a miscellaneous network or I/O error occurs.
+
+		@param url The URL to connect to
+		@return A web socket handle
+	]=]
+	socket: (url: string) -> NetWebSocket,
+	--[=[
+		@within net
+
+		Creates an HTTP server that listens on the given `port`.
+
+		This will ***not*** block and will keep listening for requests on the given `port`
+		until the `stop` function on the returned `NetServeHandle` has been called.
+
+		@param port The port to use for the server
+		@param handlerOrConfig The handler function or config to use for the server
+	]=]
+	serve: (port: number, handlerOrConfig: NetServeHttpHandler | NetServeConfig) -> NetServeHandle,
 	--[=[
 		@within net
 
@@ -257,6 +232,22 @@ declare net: {
 		@return The decoded lua value
 	]=]
 	jsonDecode: (encoded: string) -> any,
+}
+
+type ProcessSpawnOptionsStdio = "inherit" | "default"
+
+export type ProcessSpawnOptions = {
+	cwd: string?,
+	env: { [string]: string }?,
+	shell: (boolean | string)?,
+	stdio: ProcessSpawnOptionsStdio?,
+}
+
+export type ProcessSpawnResult = {
+	ok: boolean,
+	code: number,
+	stdout: string,
+	stderr: string,
 }
 
 --[=[
@@ -319,18 +310,103 @@ declare process: {
 	spawn: (
 		program: string,
 		params: { string }?,
-		options: {
-			cwd: string?,
-			env: { [string]: string }?,
-			shell: (boolean | string)?,
-			stdio: ("inherit" | "default")?,
-		}?
-	) -> {
-		ok: boolean,
-		code: number,
-		stdout: string,
-		stderr: string,
-	},
+		options: ProcessSpawnOptions?
+	) -> ProcessSpawnResult,
+}
+
+--[=[
+	@class stdio
+
+	Standard input / output & utility functions 
+]=]
+declare stdio: {
+	--[=[
+		@within stdio
+
+		Return an ANSI string that can be used to modify the persistent output color.
+
+		Pass `"reset"` to get a string that can reset the persistent output color.
+		
+		### Example usage
+		
+		```lua
+		stdio.write(stdio.color("red"))
+		print("This text will be red")
+		stdio.write(stdio.color("reset"))
+		print("This text will be normal")
+		```
+
+		@param color The color to use
+		@return A printable ANSI string
+	]=]
+	color: (color: "reset" | "black" | "red" | "green" | "yellow" | "blue" | "purple" | "cyan" | "white") -> string,
+	--[=[
+		@within stdio
+
+		Return an ANSI string that can be used to modify the persistent output style.
+
+		Pass `"reset"` to get a string that can reset the persistent output style.
+		
+		### Example usage
+		
+		```lua
+		stdio.write(stdio.style("bold"))
+		print("This text will be bold")
+		stdio.write(stdio.style("reset"))
+		print("This text will be normal")
+		```
+
+		@param style The style to use
+		@return A printable ANSI string
+	]=]
+	style: (style: "reset" | "bold" | "dim") -> string,
+	--[=[
+		@within stdio
+
+		Formats arguments into a human-readable string with syntax highlighting for tables.
+
+		@param ... The values to format
+		@return The formatted string
+	]=]
+	format: (...any) -> string,
+	--[=[
+		@within stdio
+
+		Writes a string directly to stdout, without any newline.
+
+		@param s The string to write to stdout
+	]=]
+	write: (s: string) -> (),
+	--[=[
+		@within stdio
+
+		Writes a string directly to stderr, without any newline.
+
+		@param s The string to write to stderr
+	]=]
+	ewrite: (s: string) -> (),
+	--[=[
+		@within stdio
+
+		Prompts for user input using the wanted kind of prompt:
+
+		* `"text"` - Prompts for a plain text string from the user
+		* `"confirm"` - Prompts the user to confirm with y / n
+		* `"select"` - Prompts the user to select *one* value from a list
+		* `"multiselect"` - Prompts the user to select *one or more* values from a list
+		* `nil` - Equivalent to `"text"` with no extra arguments
+
+		@param kind The kind of prompt to use
+		@param message The message to show the user
+		@param defaultOrOptions The default value for the prompt, or options to choose from for selection prompts
+	]=]
+	prompt: (
+		(() -> string)
+		& ((kind: "text", message: string?, defaultOrOptions: string?) -> string)
+		& ((kind: "confirm", message: string, defaultOrOptions: boolean?) -> boolean)
+		& ((kind: "select", message: string?, defaultOrOptions: { string }) -> number?)
+		& ((kind: "multiselect", message: string?, defaultOrOptions: { string }) -> { number }?)
+	),
 }
 
 --[=[
@@ -385,5 +461,12 @@ declare task: {
 		@param duration The amount of time to wait
 		@return The exact amount of time waited
 	]=]
-	wait: (duration: number?) -> (number),
+	wait: (duration: number?) -> number,
 }
+
+-- TODO: Write docs for these and include them in docs gen
+
+declare print: <T...>(T...) -> ()
+declare info: <T...>(T...) -> ()
+declare warn: <T...>(T...) -> ()
+declare error: <T>(message: T, level: number?) -> ()
