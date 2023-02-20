@@ -13,9 +13,7 @@ export type TState<K, B, VT, SD> = {
 	_update: (self: TState<K, B, VT, SD> & any) -> (boolean, boolean),
 }
 
-export type TProcessor<T> = (key: maybeStringOrNumber, old: T, new: T, destroying: boolean) -> (
-	boolean
-)
+export type TProcessor<T> = (key: maybeStringOrNumber, old: T, new: T, destroying: boolean) -> boolean
 
 export type TGraphNode = {
 	type: "utils",

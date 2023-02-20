@@ -9,11 +9,11 @@ local update = Grapher.updateGraph
 local updateDependents = Grapher.updateDependents
 local use = require(Utils.makeUseInjector)
 
-local class: PubTypes.Absorb<unknown> = { type = "state", kind = "absorb", behavior = "self" } :: any
+local class: PubTypes.Absorb<unknown, unknown, unknown> = { type = "state", kind = "absorb", behavior = "self" } :: any
 local meta = { __index = class }
 
 --temp
-local function alwaysTrue(...)
+local function alwaysTrue()
 	return true
 end
 
@@ -59,11 +59,11 @@ function class:_setValue(newValue)
 	return true
 end
 
-return function<T>(
-	toAbsorb: Types.TAnySelfState<any>,
-	caseList: { [any]: Types.union<(Types.use<T>) -> T, Types.TAnySelfState<any>> },
+return function<T, U, D>(
+	toAbsorb: Types.TAnySelfState<D>,
+	caseList: { [D | "default"]: Types.union<(use: Types.use<T>) -> U, Types.TAnySelfState<U>> },
 	isSynced: Types.TAnySelfState<boolean>,
-	processor: Types.TProcessor<any>?
+	processor: Types.TProcessor<U>?
 )
 	local self = (
 		setmetatable({
@@ -73,7 +73,7 @@ return function<T>(
 			_caseList = caseList,
 			_toAbsorb = toAbsorb,
 		}, meta) :: any
-	) :: PubTypes.Absorb<T>
+	) :: PubTypes.Absorb<T, U, D>
 
 	local myGraph = create(self)
 	self._graph = myGraph

@@ -4,7 +4,7 @@ local function microOrMili(num)
 	return if MiliVersion < 1 then tostring(num * 1_000_000) .. "us" else tostring(MiliVersion) .. "ms"
 end
 
-local function benchmark(calls: number, preRun: () -> (any), run: (any, any, any) -> (), postRun: () -> ())
+local function benchmark(calls: number, preRun: () -> any, run: (any, any, any) -> (), postRun: () -> ())
 	local rawBenchmark = table.create(calls)
 
 	local function returnNil()

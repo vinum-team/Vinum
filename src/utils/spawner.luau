@@ -24,7 +24,7 @@ for i = 1, threadIndex do
 	threads[i] = thread
 end
 
-return function<_, params>(func: (params) -> (), ...: params): (thread)
+return function<_, params>(func: (params) -> (), ...: params): thread
 	if threadIndex ~= 0 then
 		-- Thread available
 		local thread = threads[threadIndex]

@@ -4,7 +4,7 @@ local Group = Vinum.Objects.Group
 local Read = Vinum.Utils.Read
 local WriteIndex = Vinum.Utils.WriteIndex
 
-local function alwaysTrue(...)
+local function alwaysTrue()
 	return true
 end
 
@@ -18,17 +18,16 @@ return {
 	end,
 	["should be able to read from"] = function(expect: any)
 		local grouped = Group({
-			name = "hello"
+			name = "hello",
 		}, alwaysTrue)
 
 		expect(Read(grouped, "name")).to.equal("hello")
 	end,
 	["should be able to write to"] = function(expect: any)
-		local grouped = Group({
-		}, alwaysTrue)
+		local grouped = Group({}, alwaysTrue)
 
 		WriteIndex(grouped, "name", 123)
 
 		expect(Read(grouped, "name")).to.equal(123)
-	end
+	end,
 }

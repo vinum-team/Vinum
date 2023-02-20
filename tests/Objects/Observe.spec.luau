@@ -5,7 +5,7 @@ local Observe = Vinum.Objects.Observe
 local Read = Vinum.Utils.Read
 local Write = Vinum.Utils.Write
 
-local function alwaysTrue(...)
+local function alwaysTrue()
 	return true
 end
 type expect = (any) -> any
@@ -25,8 +25,8 @@ return {
 		end)
 
 		local flag = true
-		observer:onChange(function(newValue)
-			flag = false			
+		observer:onChange(function()
+			flag = false
 		end)
 
 		Write(holder, "123")
@@ -45,5 +45,5 @@ return {
 		Write(holder, "sup")
 
 		expect(value).to.equal(Read(holder))
-	end
+	end,
 }

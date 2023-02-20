@@ -30,10 +30,7 @@ function class:_setValue(key, newValue)
 	return true
 end
 
-return function<T>(
-	initialValue: { [string | number]: any},
-	processor: Types.TProcessor<any>
-)
+return function<T>(initialValue: T, processor: Types.TProcessor<any>)
 	local self = (
 		setmetatable({
 			_isWritable = true,
@@ -45,7 +42,7 @@ return function<T>(
 	) :: PubTypes.Group<T>
 
 	local graphs = self._graphs
-	for key in initialValue do
+	for key in initialValue :: any do
 		graphs[key] = create(self)
 	end
 
