@@ -22,5 +22,11 @@ export type Compute<T> = Types.TSelfState<"compute", T, boolean> & {
 	_use: Types.use<T>,
 	_computer: (use: Types.use<T>) -> T,
 }
+export type Wrap<T, R> = Types.TCentralState<"wrap", T, boolean> & {
+	_handler: (oldValues: { T }, newValues: { T }) -> ...T,
+	_event: RBXScriptSignal | {Connect: (...any) -> (any)},
+	_eventConnection: RBXScriptConnection | any,
+	_currentEvent: any
+}
 
 return {}

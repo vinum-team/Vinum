@@ -20,8 +20,7 @@ local function readAndType<T>(
 	return state :: T, "raw"
 end
 
-local function constructor(self: Types.TAnySelfState<any>)
-	local myGraph = self._graph
+local function constructor(myGraph: Types.TGraphNode)
 	local function use<T>(dependency: Types.TAnyCentralState<T> | Types.CanBeState<T>, key: string | number): T
 		local value, typeState = readAndType(dependency, key)
 

@@ -1,4 +1,4 @@
 --!strict
 return function()
-    return true
+	return true
 end

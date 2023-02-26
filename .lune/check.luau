@@ -1,6 +1,16 @@
 local cwd = process.cwd:sub(5)
 
-process.spawn("stylua", {cwd})
-local result = process.spawn("selene", {cwd})
+local content = fs.readFile("luneTypes.d.luau")
+fs.removeFile("luneTypes.d.luau")
+local styluaResult = process.spawn("stylua", {cwd})
 
-print(result.stdout)
+fs.writeFile("luneTypes.d.luau", content)
+
+local seleneResult = process.spawn("selene", {cwd})
+
+if not styluaResult.ok then
+    error(styluaResult.stderr)
+end
+
+print(seleneResult.stderr)
+print(seleneResult.stdout)

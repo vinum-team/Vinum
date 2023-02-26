@@ -1,6 +1,8 @@
 --!strict
 local LibraryRoot = script.Parent.Parent
 local Utils = LibraryRoot.Utils
+local Processors = LibraryRoot.Processors
+local AlwaysTrue = require(Processors.alwaysTrue)
 local PubTypes = require(LibraryRoot.pubTypes)
 local Types = require(LibraryRoot.types)
 local Grapher = require(Utils.grapher)
@@ -35,14 +37,15 @@ end
 return function<T, U>(computer: (use: Types.use<T>) -> U, processor: Types.TProcessor<U>)
 	local self = (
 		setmetatable({
-			_processor = processor,
+			_processor = AlwaysTrue,
 			_computer = computer,
 		}, meta) :: any
 	) :: PubTypes.Compute<U>
 
 	local Graph = create(self)
 	self._graph = Graph
-	self._use = use(self)
+	self._use = use(self._graph)
 	update(Graph)
+	self._processor = processor
 	return self
 end

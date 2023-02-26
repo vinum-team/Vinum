@@ -68,7 +68,7 @@ return function<T, U, D>(
 	local self = (
 		setmetatable({
 			_static = false,
-			_processor = processor or alwaysTrue,
+			_processor = alwaysTrue,
 			_isSynced = isSynced,
 			_caseList = caseList,
 			_toAbsorb = toAbsorb,
@@ -81,8 +81,9 @@ return function<T, U, D>(
 	toAbsorb._graph.dependentSet[myGraph] = true
 	isSynced._graph.dependentSet[myGraph] = true
 
-	self._use = use(self)
+	self._use = use(self._graph)
 	update(myGraph)
+	self._processor = processor or alwaysTrue
 
 	return self
 end
