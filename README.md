@@ -1,7 +1,5 @@
-<img align = "left" width="400" src="gh-assets/Banner.svg">
+<img align = "center" width="400" src="gh-assets/Banner.svg">
 
-
-<br><br><br><br><br> 
 _______
 
 Vinum is an incredibly fast state management library that solves the data synchronization problem by imposing declarative and reactive data relativity. 
