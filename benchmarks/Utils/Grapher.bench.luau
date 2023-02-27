@@ -1,5 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Grapher = Vinum.Utils.Grapher
+local Grapher = Vinum.Utils.grapher
 
 local function initBond(dependency, dependent)
 	dependency.dependentSet[dependent] = true

@@ -1,6 +1,6 @@
 --!strict
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Read = Vinum.Utils.Read
+local Read = Vinum.Utils.read
 
 local stateEmu = {
 	_getValue = function()

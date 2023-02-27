@@ -1,5 +1,5 @@
 --[[
-    A utility for state object construction
+    A utility for state object deconstruction
 ]]
 local cantReadClass = {
 	__index = function()
@@ -41,3 +41,5 @@ local function deconstruct(state)
 	table.clear(state)
 	return setmetatable(state, cantReadClass)
 end
+
+return deconstruct

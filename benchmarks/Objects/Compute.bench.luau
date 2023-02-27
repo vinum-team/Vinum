@@ -1,6 +1,6 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local Compute = Vinum.Objects.Compute
-local update = Vinum.Utils.Grapher.updateGraph
+local update = Vinum.Utils.grapher.updateGraph
 local function alwaysTrue(...)
 	return true
 end

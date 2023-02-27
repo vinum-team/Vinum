@@ -1,10 +1,11 @@
 local value = {
 	Utils = {
-		Read = require(script.Utils.read),
-		Write = require(script.Utils.write),
-		WriteIndex = require(script.Utils.writeIndex),
-		Grapher = require(script.Utils.grapher),
-		Modify = require(script.Utils.modify),
+		read = require(script.Utils.read),
+		write = require(script.Utils.write),
+		writeIndex = require(script.Utils.writeIndex),
+		grapher = require(script.Utils.grapher),
+		modify = require(script.Utils.modify),
+		deconstruct = require(script.Utils.deconstruct),
 	},
 	Objects = {
 		Hold = require(script.Objects.Hold),

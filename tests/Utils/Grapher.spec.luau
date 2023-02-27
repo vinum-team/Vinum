@@ -1,7 +1,7 @@
 --!strict
 
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Grapher = Vinum.Utils.Grapher
+local Grapher = Vinum.Utils.grapher
 local create, simplify, update, _updateDepenents =
 	Grapher.create, Grapher.simplifyTreeForGraph, Grapher.updateGraph, Grapher.updateDependents
 

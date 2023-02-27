@@ -1,6 +1,6 @@
 --!strict
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Write = Vinum.Utils.Write
+local Write = Vinum.Utils.write
 
 local stateEmu = {
 	_setValue = function(new)

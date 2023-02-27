@@ -1,8 +1,8 @@
 --!strict
 local Vinum = require(game.ReplicatedStorage.Vinum)
 local Group = Vinum.Objects.Group
-local Read = Vinum.Utils.Read
-local WriteIndex = Vinum.Utils.WriteIndex
+local Read = Vinum.Utils.read
+local WriteIndex = Vinum.Utils.writeIndex
 
 local function alwaysTrue()
 	return true

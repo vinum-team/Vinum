@@ -1,7 +1,5 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Hold = Vinum.Objects.Hold
 local Wrap = Vinum.Objects.Wrap
-local update = Vinum.Utils.Grapher.updateGraph
 local function alwaysTrue(...)
 	return true
 end

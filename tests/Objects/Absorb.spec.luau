@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Read = Vinum.Utils.Read
-local Write = Vinum.Utils.Write
+local Read = Vinum.Utils.read
+local Write = Vinum.Utils.write
 local Absorb = Vinum.Objects.Absorb
 local Hold = Vinum.Objects.Hold
 
