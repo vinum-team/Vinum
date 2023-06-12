@@ -1,3 +1,4 @@
+local serde = require("@lune/serde")
 -- util
 local function reporter(condition, err)
 	if not condition then
@@ -8,7 +9,7 @@ end
 -- ensure that a project.json file is provided
 reporter(fs.isFile(process.args[1] or "dev.project.json"), "The given path doesn't point at a file.")
 
-local dependency = net.decode("toml", fs.readFile(`wally.toml`)).dependencies
+local dependency = serde.decode("toml", fs.readFile(`wally.toml`)).dependencies
 local shouldInstall = false
 
 for _ in dependency do

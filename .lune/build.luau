@@ -1,4 +1,5 @@
 local p = require("commandParser")
+local serde = require("@lune/serde")
 
 type ProcessedInfo = {
 	mainPath: string,
@@ -18,7 +19,7 @@ if subCommand == "help" then
 		"\n	==mainPath string? -- defaults to cwd",
 		"\n	==version string? -- i.e 0.2.0",
 		"\n	==pathForSourceDir string? -- i.e src",
-		"\n	==buildMove integrated | standalone? -- i.e standalone",
+		"\n	==buildMode integrated | standalone? -- i.e standalone",
 		"\n	[NOTE] every flag that is not ==mainPath will eventually be asked for in a prompt in the CLI- aka, not ideal for CI machines."
 	)
 	return
@@ -41,9 +42,9 @@ buildMode = buildMode and buildMode
 		then "standalone"
 		else "integrated"
 
-if net.decode("toml", fs.readFile(`{mainPath}wally.toml`)).dependencies and buildMode ~= "standalone" then
+if serde.decode("toml", fs.readFile(`{mainPath}wally.toml`)).dependencies and buildMode ~= "standalone" then
 	buildMode = "standalone"
-	warn("Switched to standalone since there is no dependencies definied.")
+	warn("Switched to standalone since there are no dependencies definied.")
 end
 -- call the needed builder
 if buildMode == "integrated" then
@@ -91,7 +92,9 @@ if buildMode == "integrated" then
 	fs.removeFile(`{mainPath}/Release.project.json`)
 else
 	local t = string.split(mainPath, "\\")
-	t = t[#t]:split("/")[1]
+	print(t)
+
+	t = t[#t-1]
 	print(t)
 	-- create Release.project.json
 	fs.writeFile(

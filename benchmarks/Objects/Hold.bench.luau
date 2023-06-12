@@ -1,41 +1,40 @@
 local Vinum = require(game.ReplicatedStorage.Vinum)
-local Hold = Vinum.Objects.Hold
 
-local function alwaysTrue(...)
-	return true
+local Hold = Vinum.Hold
+local returner = function(value)
+    return function()
+        return value
+    end
 end
-
 return {
 	{
-		name = "hold creation",
-		calls = 50_000,
+		name = "Creating Holds",
+		calls = 50000,
 
 		run = function()
-			Hold(1, alwaysTrue)
+			Hold(1, returner(true))
 		end,
 	},
 	{
-		name = "reading",
-		calls = 50_000,
+		name = "set()'ing Holds",
+		calls = 50000,
 
 		preRun = function()
-			return Hold(123, alwaysTrue)
+			return Hold(100, returner(true))
 		end,
-
 		run = function(holder)
-			return holder._value
+			holder:set(400)
 		end,
 	},
 	{
-		name = "writing",
-		calls = 50_000,
+		name = "get()'ing Holds value",
+		calls = 50000,
 
 		preRun = function()
-			return Hold(100, alwaysTrue)
+			return Hold(100, returner(true))
 		end,
-
 		run = function(holder)
-			holder:_setValue(200)
+			holder:get()
 		end,
 	},
 }

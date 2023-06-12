@@ -1,32 +1,24 @@
-local Types = require(script.Parent.types)
+local types = require(script.Parent.types)
 
-export type Hold<T> = Types.TSelfState<"hold", T, true>
-export type Observe<T> = Types.TState<"observe", "self", nil, true> & {
-	_owner: Types.TAnySelfState<T>,
-	_processor: (newValue: T) -> boolean,
-	_connections: { [(newValue: T) -> ()]: true },
-	_numOfConnections: number,
+export type inject<T> = (types.StateObj<any, T>) -> T
 
-	onChange: (self: Observe<T>, fn: (newValue: T) -> ()) -> (() -> ()),
-	onBind: (self: Observe<T>, fn: (newValue: T) -> ()) -> (() -> ()),
-}
-export type Group<T> = Types.TCentralState<"group", T, true>
-export type Absorb<T, U, D> = Types.TSelfState<"absorb", U, boolean> & {
-	_caseList: { [D | "default"]: Types.union<(use: Types.use<T>) -> U, Types.TAnySelfState<U>> },
-	_isSynced: Types.TAnySelfState<boolean>,
-	_toAbsorb: Types.TAnySelfState<D>,
-	_use: any,
-}
+export type Hold<T> = types.StateObj<"Hold", T>
 
-export type Compute<T> = Types.TSelfState<"compute", T, boolean> & {
-	_use: Types.use<T>,
-	_computer: (use: Types.use<T>) -> T,
-}
-export type Wrap<T, R> = Types.TCentralState<"wrap", T, boolean> & {
-	_handler: (oldValues: { T }, newValues: { T }) -> ...T,
-	_event: RBXScriptSignal | {Connect: (...any) -> (any)},
-	_eventConnection: RBXScriptConnection | any,
-	_currentEvent: any
-}
+export type KeyOf<T, k> = types.Extends<types.StateObj<"KeyOf", T>, {
+	_key: k,
+	_obj: types.StateObj<any, any>,
+}>
+
+export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
+	_computer: (inject: inject<U>) -> T,
+	_inject: inject<U>,
+}>
+
+export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
+	_handler: (self: Absorb<T, U>) -> T,
+	_inject: inject<U>,
+    _toAbsorb: types.StateObj<any, any>,
+	_cases: {[any]: any}
+}>
 
 return {}

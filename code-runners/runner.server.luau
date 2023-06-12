@@ -1,5 +1,5 @@
 --!optimize 2
-local shouldBenchmark = true
+local shouldBenchmark = false
 local shouldTest = true
 
 local Tester = require(script.Parent.Tester)
@@ -19,7 +19,7 @@ if shouldTest then
 	Tester.bootstrapper:start({
 		directories = { game.ReplicatedStorage.tests },
 		options = {
-			context = Tester,
+			context = Tester.expect,
 		},
 	})
 end

@@ -16,11 +16,17 @@
       },
 
       "ServerScriptService" : {
-        "$path" : "code-runners"
+        "$path" : "code-runners",
+        "pg-server": {
+          "$path" : "playground/server"
+        }
       },
       "StarterPlayer" : {
         "StarterPlayerScripts" : {
-          "$path" : "stressTest"
+          "$path" : "stressTest",
+          "pg-client": {
+            "$path" : "playground/client"
+          }
         }
       }
     }

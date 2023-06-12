@@ -1,51 +1,42 @@
 --!strict
-local LibraryRoot = script.Parent.Parent
-local Utils = LibraryRoot.Utils
-local Processors = LibraryRoot.Processors
-local AlwaysTrue = require(Processors.alwaysTrue)
-local PubTypes = require(LibraryRoot.pubTypes)
-local Types = require(LibraryRoot.types)
-local Grapher = require(Utils.grapher)
-local create = Grapher.create
-local update = Grapher.updateGraph
-local updateDependents = Grapher.updateDependents
-local use = require(Utils.makeUseInjector)
+local graph = require(script.Parent.Parent.Utils.graph)
+local pubTypes = require(script.Parent.Parent.pubTypes)
+local types = require(script.Parent.Parent.types)
+local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
 
-local class: PubTypes.Compute<unknown> = { type = "state", kind = "compute", behavior = "self" } :: any
+local class = {}
 local meta = { __index = class }
 
+
 function class:_update()
-	local newValue = self._computer(self._use)
-	if not self._processor(nil, self._value, newValue, false) then
-		return false, false
-	end
-
-	self._value = newValue
-	return true, true
-end
-
-function class:_setValue(value)
-	if not self._processor(nil, self._value, value, false) then
-		return false
+	local value = self._computer(self._inject)
+	if not self._processor(self._value, value, false) then
+		return
 	end
 
 	self._value = value
-	updateDependents(self._graph)
-	return true
 end
 
-return function<T, U>(computer: (use: Types.use<T>) -> U, processor: Types.TProcessor<U>)
+function class:get()
+	return self._value
+end
+
+return function<T, U>(
+	computer: (inject: pubTypes.inject<U>) -> (T),
+	processor: types.Processor<T>
+) : pubTypes.Compute<T,U>
 	local self = (
 		setmetatable({
-			_processor = AlwaysTrue,
+			meta = "Compute",
+			static = false,
 			_computer = computer,
+			_processor = processor
 		}, meta) :: any
-	) :: PubTypes.Compute<U>
+	) :: pubTypes.Compute<T,U>
+	local myGraph = graph.create(self)
+	self._graph = myGraph
+	self._inject = makeInjector(myGraph)
 
-	local Graph = create(self)
-	self._graph = Graph
-	self._use = use(self._graph)
-	update(Graph)
-	self._processor = processor
+	graph.run(myGraph, true)
 	return self
 end

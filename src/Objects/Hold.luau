@@ -1,38 +1,34 @@
 --!strict
-local LibraryRoot = script.Parent.Parent
-local Utils = LibraryRoot.Utils
-local PubTypes = require(LibraryRoot.pubTypes)
-local Types = require(LibraryRoot.types)
-local Grapher = require(Utils.grapher)
-local create = Grapher.create
-local update = Grapher.updateGraph
+local graph = require(script.Parent.Parent.Utils.graph)
+local pubTypes = require(script.Parent.Parent.pubTypes)
+local types = require(script.Parent.Parent.types)
 
-local class: PubTypes.Hold<unknown> = { type = "state", kind = "hold", behavior = "self" } :: any
+local class = {}
 local meta = { __index = class }
 
-function class:_setValue(newValue)
-	if not self._processor(nil, self._value, newValue, false) then
-		return false
+function class:set(value)
+	if not self._processor(self._value, value, false) then
+		return
 	end
 
-	self._value = newValue
-	update(self._graph)
-	return true
+	self._value = value
+
+	graph.run(self._graph, false)
 end
 
-local function Hold<T>(initialValue: T, processor: Types.TProcessor<T>)
-	local self = (
-		setmetatable({
-			_isWritable = true,
-			_static = true,
-			_value = initialValue,
-			_processor = processor,
-		}, meta) :: any
-	) :: PubTypes.Hold<T>
-
-	self._graph = create(self)
-
-	return self
+function class:get()
+	return self._value
 end
 
-return Hold
+return function<T>(newValue: T, processor: types.Processor<T>): pubTypes.Hold<T>
+	local self = setmetatable({
+		_value = newValue,
+		meta = "Hold",
+		static = true,
+		_processor = processor
+	}, meta)
+
+	self._graph = graph.create(self)
+
+	return self :: any
+end
