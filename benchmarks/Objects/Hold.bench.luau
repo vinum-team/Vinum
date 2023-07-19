@@ -6,13 +6,16 @@ local returner = function(value)
         return value
     end
 end
+
+local alwaysTrue = returner(true)
+
 return {
 	{
 		name = "Creating Holds",
 		calls = 50000,
 
 		run = function()
-			Hold(1, returner(true))
+			Hold(1, alwaysTrue)
 		end,
 	},
 	{
@@ -20,7 +23,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, returner(true))
+			return Hold(100, alwaysTrue)
 		end,
 		run = function(holder)
 			holder:set(400)
@@ -31,7 +34,7 @@ return {
 		calls = 50000,
 
 		preRun = function()
-			return Hold(100, returner(true))
+			return Hold(100, alwaysTrue)
 		end,
 		run = function(holder)
 			holder:get()

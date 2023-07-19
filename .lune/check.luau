@@ -1,4 +1,6 @@
 local cwd = process.cwd:sub(5)
+local process = require("@lune/process")
+local fs = require("@lune/fs")
 
 local content = fs.readFile("luneTypes.d.luau")
 fs.removeFile("luneTypes.d.luau")

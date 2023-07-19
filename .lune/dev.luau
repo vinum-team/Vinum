@@ -1,4 +1,7 @@
 local serde = require("@lune/serde")
+local process = require("@lune/process")
+local fs = require("@lune/fs")
+
 -- util
 local function reporter(condition, err)
 	if not condition then

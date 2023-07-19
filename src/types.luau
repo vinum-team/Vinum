@@ -3,7 +3,19 @@ export type Graph = {
 	owner: any,
 	dependencies: { [Graph]: any },
 	dependents: { [Graph]: any },
+	asyncOperations: {any}
 }
+
+export type AsyncOperation<data> = {
+    isFinished: boolean,
+    listener: ((data) -> ())?,
+    data: data?,
+    coroutine: thread,
+
+    cancel: (self: AsyncOperation<data>) -> (),
+    on: (self: AsyncOperation<data>, fn: (...any) -> (data)) -> ()
+}
+
 export type Processor<T> = (old: T, new: T, destroying: boolean) -> boolean
 
 export type StateObj<M, T> = {
@@ -19,6 +31,8 @@ export type StateObj<M, T> = {
 }
 
 export type Extends<base, other> = base & other
+
+export type CanBeState<T> = T | StateObj<string, T>
 
 export type union<t1, t2, t3> = t1 | t2 | t3
 

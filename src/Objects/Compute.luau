@@ -3,13 +3,17 @@ local graph = require(script.Parent.Parent.Utils.graph)
 local pubTypes = require(script.Parent.Parent.pubTypes)
 local types = require(script.Parent.Parent.types)
 local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
+local asyncInjector = require(script.Parent.Parent.Utils.asyncInjector)
+local staticInjector = require(script.Parent.Parent.Utils.staticInjector)
 
 local class = {}
 local meta = { __index = class }
 
-
+--graph utils
+local createGraph = graph.create
+local runGraph = graph.run
 function class:_update()
-	local value = self._computer(self._inject)
+	local value = self._computer(self._inject, self._asyncInject, self._staticInject)
 	if not self._processor(self._value, value, false) then
 		return
 	end
@@ -22,21 +26,27 @@ function class:get()
 end
 
 return function<T, U>(
-	computer: (inject: pubTypes.inject<U>) -> (T),
+	computer: (
+		inject: pubTypes.inject<U>,
+		addAsync: (types.AsyncOperation<any>) -> types.AsyncOperation<any>,
+		staticify: (boolean) -> ()
+	) -> T,
 	processor: types.Processor<T>
-) : pubTypes.Compute<T,U>
+): pubTypes.Compute<T, U>
 	local self = (
 		setmetatable({
 			meta = "Compute",
 			static = false,
 			_computer = computer,
-			_processor = processor
+			_processor = processor,
 		}, meta) :: any
-	) :: pubTypes.Compute<T,U>
-	local myGraph = graph.create(self)
+	) :: pubTypes.Compute<T, U>
+	local myGraph = createGraph(self)
 	self._graph = myGraph
 	self._inject = makeInjector(myGraph)
+	self._asyncInject = asyncInjector(myGraph)
+	self._staticInject = staticInjector(myGraph)
 
-	graph.run(myGraph, true)
+	runGraph(myGraph, true)
 	return self
 end

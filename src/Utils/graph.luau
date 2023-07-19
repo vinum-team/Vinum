@@ -9,14 +9,33 @@ function graph.create(owner): types.Graph
         type = "graph",
         owner = owner,
         dependencies = {},
-        dependents = {}
+        dependents = {},
+        asyncOperations = {}
     }
+end
+
+function graph.isAnDependent(dependency: types.Graph, dependent: types.Graph)
+    if not dependency.dependents[dependent] then
+        if not graph.haveDependent(dependency) then
+            return false
+        end
+
+        for dependentItem in dependency.dependents do
+            return graph.isAnDependent(dependentItem, dependent)
+        end
+    end
+
+    return true
 end
 
 function graph.run(graphObj: types.Graph, recalculate: boolean)
     local owner = graphObj.owner
 
     if owner and owner._update then
+        for _, asyncOperation in graphObj.asyncOperations do
+            asyncOperation:cancel()
+        end
+
         if recalculate then
             -- clear all dependencies
             local myDependencies = graphObj.dependencies
@@ -32,15 +51,14 @@ function graph.run(graphObj: types.Graph, recalculate: boolean)
 
 
             -- tree simplification
-
             for dependency in myDependencies do
-                for upperDependency in dependency.dependencies do
-                    if not myDependencies[upperDependency] then
-                        continue
+                for anotherDependencyRef in myDependencies do
+                    if not graph.isAnDependent(dependency, anotherDependencyRef) then
+                        continue 
                     end
 
-                    myDependencies[upperDependency] = nil
-                    upperDependency.dependents[graphObj] = nil
+                    dependency.dependents[graphObj] = nil
+                    graphObj.dependencies[dependency] = nil
                 end
             end
         else
@@ -51,6 +69,13 @@ function graph.run(graphObj: types.Graph, recalculate: boolean)
     for dependent in graphObj.dependents do
         graph.run(dependent, not dependent.owner.static)
     end
+end
+
+function graph.haveDependent(graphObj: types.Graph)
+    for _ in graphObj.dependents do
+        return true
+    end
+    return false
 end
 
 return graph

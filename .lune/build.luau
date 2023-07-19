@@ -1,5 +1,8 @@
 local p = require("commandParser")
 local serde = require("@lune/serde")
+local process = require("@lune/process")
+local fs = require("@lune/fs")
+local stdio = require("@lune/stdio")
 
 type ProcessedInfo = {
 	mainPath: string,
@@ -92,10 +95,7 @@ if buildMode == "integrated" then
 	fs.removeFile(`{mainPath}/Release.project.json`)
 else
 	local t = string.split(mainPath, "\\")
-	print(t)
-
 	t = t[#t-1]
-	print(t)
 	-- create Release.project.json
 	fs.writeFile(
 		`{mainPath}/Release.project.json`,

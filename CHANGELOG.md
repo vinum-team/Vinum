@@ -2,11 +2,13 @@
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
 ## V0.3
-* Standardized Reading and Writing
-* initial state for groups
-* unified injector
-* Added `Writable`- which modifies a state object to allow direct value modification.
-* Refine Processors
+* Everything is completely refined, and changed since the last version. Everything below is just a "summary" of the new major features.
+* Async Operations are now supported.
+* Mirror, Reflect, Match and other similar objects are now moved into a single object.
+* Observe is now changed to listener, and now has the ability to remember old state.
+* Ability to cancel dependency tree recalcuation is now present.
+* Groups are now removed, and now a `KeyOf` object is present to caputre a "selection" of a state object that holds a table.
+* A new dependency tree simplifier.
 ## V0.2
 * `Vinum.JustOk` was renamed to `Vinum.AlwaysTrue` for a more descriptive API for begineers
 * `Observe:onBind`, which fires the provided function, and then returns a connection disconnector.

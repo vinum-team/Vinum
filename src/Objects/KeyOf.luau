@@ -6,6 +6,10 @@ local types = require(script.Parent.Parent.types)
 local class = {}
 local meta = { __index = class }
 
+--graph utils
+local createGraph = graph.create
+local runGraph = graph.run
+
 function class:set(value)
 	if not self._processor(self._value, value, false) then
 		return
@@ -18,9 +22,9 @@ function class:set(value)
 
 	obj._value[self._key] = value
 	objGraph.dependents[myGraph] = nil
-	graph.run(objGraph, false)
+	runGraph(objGraph, false)
 	objGraph.dependents[myGraph] = true
-	graph.run(myGraph, false)
+	runGraph(myGraph, false)
 end
 
 function class:_update()
@@ -51,11 +55,10 @@ return function<T>(
 			_processor = processor
 		}, meta) :: any
 	) :: pubTypes.KeyOf<any, T>
-	local myGraph = graph.create(self)
+	local myGraph = createGraph(self)
 	local objGraph = obj._graph
 	self._graph = myGraph
 
 	objGraph.dependents[myGraph] = true
-	myGraph.dependencies[objGraph] = true
 	return self
 end
