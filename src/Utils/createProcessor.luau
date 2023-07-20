@@ -10,6 +10,7 @@ return function(valueChecker: (a: any, b: any) -> boolean, cleaner: (taskItem: a
 			return false
 		end
 
+		cleaner(old)
 		return true
 	end
 end
