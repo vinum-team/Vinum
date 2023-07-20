@@ -8,5 +8,9 @@ return {
 	unpack = require(script.Utils.unpack),
 	async = require(script.Utils.async),
 	wrapSource = require(script.Utils.wrapSource),
-	sourceObject = require(script.Utils.sourceObject)
+	sourceObject = require(script.Utils.sourceObject),
+	equals = require(script.Utils.equals),
+	clean = require(script.Utils.clean),
+	alwaysTrue = require(script.Utils.alwaysTrue),
+	createProcessor = require(script.Utils.createProcessor),
 }

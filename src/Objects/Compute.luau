@@ -5,6 +5,7 @@ local types = require(script.Parent.Parent.types)
 local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
 local asyncInjector = require(script.Parent.Parent.Utils.asyncInjector)
 local staticInjector = require(script.Parent.Parent.Utils.staticInjector)
+local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 
 local class = {}
 local meta = { __index = class }
@@ -38,7 +39,7 @@ return function<T, U>(
 			meta = "Compute",
 			static = false,
 			_computer = computer,
-			_processor = processor,
+			_processor = alwaysTrue(),
 		}, meta) :: any
 	) :: pubTypes.Compute<T, U>
 	local myGraph = createGraph(self)
@@ -48,5 +49,6 @@ return function<T, U>(
 	self._staticInject = staticInjector(myGraph)
 
 	runGraph(myGraph, true)
+	self._processor = processor
 	return self
 end

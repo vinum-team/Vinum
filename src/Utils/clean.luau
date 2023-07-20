@@ -1,6 +1,6 @@
 --!strict
 
-local function cleanup(taskItem: any)
+return function(taskItem: any)
 	local taskType = typeof(task)
 
 	-- case 1: Instance
@@ -32,5 +32,3 @@ local function cleanup(taskItem: any)
 		end
 	end
 end
-
-cleanup(cleanup)
