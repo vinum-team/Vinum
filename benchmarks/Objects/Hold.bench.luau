@@ -2,9 +2,9 @@ local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local returner = function(value)
-    return function()
-        return value
-    end
+	return function()
+		return value
+	end
 end
 
 local alwaysTrue = returner(true)

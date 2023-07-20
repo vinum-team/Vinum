@@ -40,11 +40,7 @@ function class:get()
 	return self._value
 end
 
-return function<T>(
-	obj: types.StateObj<any, any>,
-	key: T,
-	processor: types.Processor<T>
-): pubTypes.KeyOf<any, T>
+return function<T>(obj: types.StateObj<any, any>, key: T, processor: types.Processor<T>): pubTypes.KeyOf<any, T>
 	local self = (
 		setmetatable({
 			_value = obj._value[key],
@@ -52,7 +48,7 @@ return function<T>(
 			meta = "KeyOf",
 			static = true,
 			_obj = obj,
-			_processor = processor
+			_processor = processor,
 		}, meta) :: any
 	) :: pubTypes.KeyOf<any, T>
 	local myGraph = createGraph(self)

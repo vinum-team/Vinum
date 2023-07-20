@@ -3,17 +3,17 @@ export type Graph = {
 	owner: any,
 	dependencies: { [Graph]: any },
 	dependents: { [Graph]: any },
-	asyncOperations: {any}
+	asyncOperations: { any },
 }
 
 export type AsyncOperation<data> = {
-    isFinished: boolean,
-    listener: ((data) -> ())?,
-    data: data?,
-    coroutine: thread,
+	isFinished: boolean,
+	listener: ((data) -> ())?,
+	data: data?,
+	coroutine: thread,
 
-    cancel: (self: AsyncOperation<data>) -> (),
-    on: (self: AsyncOperation<data>, fn: (...any) -> (data)) -> ()
+	cancel: (self: AsyncOperation<data>) -> (),
+	on: (self: AsyncOperation<data>, fn: (...any) -> data) -> (),
 }
 
 export type Processor<T> = (old: T, new: T, destroying: boolean) -> boolean
@@ -26,8 +26,8 @@ export type StateObj<M, T> = {
 	_update: (self: StateObj<M, T>) -> ()?,
 
 	set: (self: StateObj<M, T>, newValue: T) -> (),
-	get: (self: StateObj<M, T>) -> (T),
-	_processor: Processor<T>
+	get: (self: StateObj<M, T>) -> T,
+	_processor: Processor<T>,
 }
 
 export type Extends<base, other> = base & other

@@ -11,7 +11,7 @@ type configuration = {
 
 function bootstrapper.run(options: configuration)
 	local finalString = "\n\nBenchmarks:"
-	for _, directory: Instance in options.directories do
+	for _, directory: any in options.directories do
 		finalString ..= "\n[>] " .. directory.Name
 		finalString ..= stringifyResult(readDir(directory), "    ")
 		task.wait()

@@ -13,21 +13,21 @@ export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
 	_computer: (inject: inject<U>) -> T,
 	_inject: inject<U>,
 	_asyncInject: any,
-	_staticInject: (boolean) -> ()
+	_staticInject: (boolean) -> (),
 }>
 
 export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
 	_handler: (self: Absorb<T, U>) -> T,
 	_inject: inject<U>,
-    _toAbsorb: types.StateObj<any, any>,
-	_cases: {[any]: any}
+	_toAbsorb: types.StateObj<any, any>,
+	_cases: { [any]: any },
 }>
 
 export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
 	Connect: (self: Listen<T>, fn: (any) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
-	_connections: {[(any) -> ()]: true},
-	_numOfConnections: number
+	_connections: { [(any) -> ()]: true },
+	_numOfConnections: number,
 }>
 
 return {}

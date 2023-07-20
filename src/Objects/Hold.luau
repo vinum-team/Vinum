@@ -25,7 +25,7 @@ return function<T>(newValue: T, processor: types.Processor<T>): pubTypes.Hold<T>
 		_value = newValue,
 		meta = "Hold",
 		static = true,
-		_processor = processor
+		_processor = processor,
 	}, meta)
 
 	self._graph = graph.create(self)

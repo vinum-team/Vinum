@@ -1,10 +1,11 @@
+--!strict
 --An injector that manages async operations that are running during an object's update.
 local types = require(script.Parent.Parent.types)
 
 return function(graph: types.Graph)
 	return function(operation: types.AsyncOperation<any>): types.AsyncOperation<any>
-        table.insert(graph.asyncOperations, operation)
-        
-        return operation
-    end
+		table.insert(graph.asyncOperations, operation)
+
+		return operation
+	end
 end

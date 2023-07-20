@@ -26,7 +26,7 @@ return function()
 		kind = "VusionKey",
 		stage = "self",
 
-		apply = function(self, values, applyTo, cleanupTasks)
+		apply = function(_, values, applyTo, cleanupTasks)
 			for propName, stateObj in values do
 				local valueType = type(stateObj)
 

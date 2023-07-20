@@ -21,4 +21,3 @@ local computedStore = Compute(function(inject)
 end, returner(true))
 
 print(KeyOf(computedStore, "doubledHealth", returner(true)):get())
-

@@ -1,11 +1,13 @@
-return function(old, new, isdestroying)
-    if not isdestroying then
-        if type(old) == "table" then
-            return true
-        end
+--!strict
 
-        return old ~= new
-    end
+return function<T>(old: T, new: T, isdestroying: boolean)
+	if not isdestroying then
+		if type(old) == "table" then
+			return true
+		end
 
-    return true
+		return old ~= new
+	end
+
+	return true
 end
