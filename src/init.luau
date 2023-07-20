@@ -7,4 +7,6 @@ return {
 	Listen = require(script.Objects.Listen),
 	unpack = require(script.Utils.unpack),
 	async = require(script.Utils.async),
+	wrapSource = require(script.Utils.wrapSource),
+	sourceObject = require(script.Utils.sourceObject)
 }

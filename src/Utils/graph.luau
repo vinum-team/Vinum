@@ -15,17 +15,20 @@ function graph.create(owner): types.Graph
 end
 
 function graph.isAnDependent(dependency: types.Graph, dependent: types.Graph)
-	if not dependency.dependents[dependent] then
-		if not graph.haveDependent(dependency) then
-			return false
+	if graph.haveDependent(dependency) then
+		if dependency.dependents[dependent] then
+			return true
 		end
-
-		for dependentItem in dependency.dependents do
-			return graph.isAnDependent(dependentItem, dependent)
+		
+		for dependencyDependent in dependency.dependents do
+			local result = graph.isAnDependent(dependencyDependent, dependent)
+			if result then
+				return result
+			end
 		end
 	end
 
-	return true
+	return false
 end
 
 function graph.run(graphObj: types.Graph, recalculate: boolean)
