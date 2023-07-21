@@ -39,7 +39,7 @@ return function(handler: (self: pubTypes.Absorb<any, any>, inject: pubTypes.inje
 
 		toAbsorb._graph.dependents[myGraph] = true
 
-		graph.run(myGraph, true)
+		graph.run(myGraph, true, false)
 		return self :: any
 	end
 end

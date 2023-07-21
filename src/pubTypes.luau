@@ -24,7 +24,8 @@ export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
 }>
 
 export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
-	Connect: (self: Listen<T>, fn: (any) -> ()) -> (),
+	connect: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
+	bind: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
 	_connections: { [(any) -> ()]: true },
 	_canYield: boolean

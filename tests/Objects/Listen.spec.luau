@@ -20,7 +20,7 @@ return {
 		local listener = Listen(dep, returner(true))
 
 		local didRun = false
-		listener:Connect(function()
+		listener:connect(function()
 			didRun = true
 		end)
 
@@ -31,7 +31,7 @@ return {
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 		local old, new
-		listener:Connect(function(o, n)
+		listener:connect(function(o, n)
 			old = o
 			new = n
 		end)

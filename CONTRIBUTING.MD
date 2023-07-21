@@ -26,7 +26,13 @@ This file is the specification for the following structure that will be built in
 
 Of course, there are plans to change that structure because of some issues with how testing works because of that very specific structure, although you are recommended to not do it yourself, as it will ultimately get harder to modify new Vinum versions without losing any progress.
 
-## DefaultProject Structure
+## Style Guide
 
-Another file you can find in Vinum's repo, is `default.project.json`. This file is responsible for building a rbxm for a library, most notably the Vinum library, and binding libraries.
+While Vinum follows most of the Roblox Lua Style guide, there are a few changes, such as how we write classses, and case the Public API.
 
+To know how we write classes, please refer to any of the files in `src/objects` folder.
+
+For casing the API:
+All class members are camelCase, while Classes themselves are PascalCase case.
+
+All non-object-constructor public APIs are camelCase.

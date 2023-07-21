@@ -55,7 +55,7 @@ function class:_update()
 	end
 end
 
-function class:Connect(fn)
+function class:connect(fn)
 	self._connections[fn] = true
 
 	return function()
@@ -63,11 +63,11 @@ function class:Connect(fn)
 	end
 end
 
-function class:Bind(fn)
+function class:bind(fn)
 	local value = self._value
 	fn(value.old, value.new)
 
-	return self:Connect(fn)
+	return self:connect(fn)
 end
 
 return function<T>(dependency: types.StateObj<any, T>, processor: types.Processor<T>): pubTypes.Listen<{ old: T, new: T }>
