@@ -42,7 +42,7 @@ return {
 		part.Parent = workspace
 
 		local dep = Hold(100, returner(true))
-		local object = Compute(function(use)
+		local _ = Compute(function(use)
 			use(dep)
 			return part
 		end, function(old, new, isDestroying)
@@ -63,7 +63,7 @@ return {
         destroyObject(dep)
 
         expect(function()
-            local thing = dep._graph
+            local _ = dep._graph
         end).to.throw()
 
     end

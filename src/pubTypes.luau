@@ -27,7 +27,7 @@ export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
 	Connect: (self: Listen<T>, fn: (any) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
 	_connections: { [(any) -> ()]: true },
-	_numOfConnections: number,
+	_canYield: boolean
 }>
 
 return {}

@@ -13,6 +13,20 @@ local meta = { __index = class }
 --graph utils
 local createGraph = graph.create
 local runGraph = graph.run
+
+function class:set(value)
+	if not self._writable then
+		return
+	end
+
+	if not self._processor(self._value, value, false) then
+		return
+	end
+
+	self._value = value
+
+	graph.run(self._graph, false)
+end
 function class:_update()
 	local value = self._computer(self._inject, self._asyncInject, self._staticInject)
 	if not self._processor(self._value, value, false) then
@@ -40,6 +54,7 @@ return function<T, U>(
 			static = false,
 			_computer = computer,
 			_processor = alwaysTrue,
+			_writable = false,
 		}, meta) :: any
 	) :: pubTypes.Compute<T, U>
 	local myGraph = createGraph(self)

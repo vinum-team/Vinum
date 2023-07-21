@@ -9,8 +9,18 @@ local meta = { __index = class }
 -- graph
 local createGraph = graph.create
 
-function class:set()
-	--illegal
+function class:set(value)
+	if not self._writable then
+		return
+	end
+
+	if not self._processor(self._value, value, false) then
+		return
+	end
+
+	self._value = value
+
+	graph.run(self._graph, false)
 end
 
 function class:get()
@@ -33,8 +43,15 @@ function class:_update()
 
 	local old = valueSet.old
 	local new = valueSet.new
-	for fn in self._connections do
-		fn(old, new)
+
+	if self._canYield then
+		for fn in self._connections do
+			task.spawn(fn, old, new)
+		end
+	else
+		for fn in self._connections do
+			fn(old, new)
+		end
 	end
 end
 
@@ -54,7 +71,8 @@ return function<T>(dependency: types.StateObj<any, T>, processor: types.Processo
 		_processor = processor,
 		_dependency = dependency,
 		_connections = {},
-		_numOfConnections = 0,
+		_writable = false,
+		_canYield = true,
 	}, meta)
 
 	local myGraph = createGraph(self)

@@ -11,6 +11,10 @@ local createGraph = graph.create
 local runGraph = graph.run
 
 function class:set(value)
+	if not self._writable then
+		return
+	end
+	
 	if not self._processor(self._value, value, false) then
 		return
 	end
@@ -49,6 +53,7 @@ return function<T>(obj: types.StateObj<any, any>, key: T, processor: types.Proce
 			static = true,
 			_obj = obj,
 			_processor = processor,
+			_writable = true,
 		}, meta) :: any
 	) :: pubTypes.KeyOf<any, T>
 	local myGraph = createGraph(self)
