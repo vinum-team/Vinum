@@ -31,10 +31,10 @@ function graph.isAnDependent(dependency: types.Graph, dependent: types.Graph)
 	return false
 end
 
-function graph.run(graphObj: types.Graph, recalculate: boolean)
+function graph.run(graphObj: types.Graph, recalculate: boolean, shouldOnlyUpdateDependents: boolean)
 	local owner = graphObj.owner
 
-	if owner and owner._update then
+	if owner and owner._update and not shouldOnlyUpdateDependents then
 		for _, asyncOperation in graphObj.asyncOperations do
 			asyncOperation:cancel()
 		end
@@ -69,7 +69,7 @@ function graph.run(graphObj: types.Graph, recalculate: boolean)
 	end
 
 	for dependent in graphObj.dependents do
-		graph.run(dependent, not dependent.owner.static)
+		graph.run(dependent, not dependent.owner.static, false)
 	end
 end
 

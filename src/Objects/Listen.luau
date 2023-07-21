@@ -20,7 +20,7 @@ function class:set(value)
 
 	self._value = value
 
-	graph.run(self._graph, false)
+	graph.run(self._graph, false, true)
 end
 
 function class:get()

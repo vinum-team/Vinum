@@ -26,9 +26,9 @@ function class:set(value)
 
 	obj._value[self._key] = value
 	objGraph.dependents[myGraph] = nil
-	runGraph(objGraph, false)
+	runGraph(objGraph, false, false)
 	objGraph.dependents[myGraph] = true
-	runGraph(myGraph, false)
+	runGraph(myGraph, false, false)
 end
 
 function class:_update()

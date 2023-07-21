@@ -25,7 +25,7 @@ function class:set(value)
 
 	self._value = value
 
-	graph.run(self._graph, false)
+	graph.run(self._graph, false, true)
 end
 function class:_update()
 	local value = self._computer(self._inject, self._asyncInject, self._staticInject)
@@ -63,7 +63,7 @@ return function<T, U>(
 	self._asyncInject = asyncInjector(myGraph)
 	self._staticInject = staticInjector(myGraph)
 
-	runGraph(myGraph, true)
+	runGraph(myGraph, true, false)
 	self._processor = processor
 	return self
 end
