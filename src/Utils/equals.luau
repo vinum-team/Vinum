@@ -1,6 +1,6 @@
 --!strict
 
-return function(a: any, b: any): boolean
+local function equals(a: any, b: any): boolean
     -- INFO: Vinum doesn't officially support immutability currently- so, we just assume
     -- that every new table entry is not equal. See issue 26
     if type(a) == "table" then
@@ -9,3 +9,5 @@ return function(a: any, b: any): boolean
 
     return a == b
 end
+
+return equals

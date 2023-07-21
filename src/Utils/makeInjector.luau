@@ -2,7 +2,7 @@
 
 local types = require(script.Parent.Parent.types)
 
-return function(graph: types.Graph)
+local function makeInjector(graph: types.Graph)
 	return function<T>(obj: types.StateObj<any, T>): T
 		local myGraphObject = graph.owner
 
@@ -15,3 +15,6 @@ return function(graph: types.Graph)
 		return obj._value
 	end
 end
+
+
+return makeInjector

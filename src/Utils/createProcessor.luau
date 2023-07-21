@@ -1,5 +1,5 @@
 --!strict
-return function(valueChecker: (a: any, b: any) -> boolean, cleaner: (taskItem: any) -> ())
+local function createProcessor(valueChecker: (a: any, b: any) -> boolean, cleaner: (taskItem: any) -> ())
 	return function<T>(old: T, new: T, isDestroying: boolean)
 		if isDestroying then
 			cleaner(old)
@@ -14,3 +14,6 @@ return function(valueChecker: (a: any, b: any) -> boolean, cleaner: (taskItem: a
 		return true
 	end
 end
+
+
+return createProcessor

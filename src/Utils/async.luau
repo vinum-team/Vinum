@@ -31,7 +31,7 @@ function class:cancel()
 	end
 end
 
-return function<T>(fn, ...)
+local function async<T>(fn, ...)
 	local self = setmetatable({
 		isFinished = false,
 		listener = nil,
@@ -43,3 +43,5 @@ return function<T>(fn, ...)
 
 	return (self :: any) :: types.AsyncOperation<T>
 end
+
+return async

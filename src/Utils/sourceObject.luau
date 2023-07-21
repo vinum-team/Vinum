@@ -14,20 +14,10 @@ function class:Fire(...)
 end
 
 
-return function(updater)
+local function sourceObject(updater)
     local self = setmetatable({listeners = {}}, meta)
     updater(self)
     return self
 end
 
---[[
-    Source(function(self)
-        if signal is constant then
-            signal:Connect(function(...)
-                self:fire({...})
-            end)
-        else
-            do some Listen Tricks
-        end
-    end)
-]]
+return sourceObject

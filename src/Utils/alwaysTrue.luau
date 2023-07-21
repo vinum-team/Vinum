@@ -1,5 +1,7 @@
 --!strict
 
-return function(...)
+local function alwaysTrue(...)
     return true
 end
+
+return alwaysTrue

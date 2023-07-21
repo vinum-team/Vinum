@@ -1,6 +1,6 @@
 --!strict
 
-return function(taskItem: any)
+local function clean(taskItem: any)
 	local taskType = typeof(task)
 
 	-- case 1: Instance
@@ -32,3 +32,5 @@ return function(taskItem: any)
 		end
 	end
 end
+
+return clean

@@ -13,4 +13,5 @@ return {
 	clean = require(script.Utils.clean),
 	alwaysTrue = require(script.Utils.alwaysTrue),
 	createProcessor = require(script.Utils.createProcessor),
+	destroyObject = require(script.Utils.destroyObject)
 }
