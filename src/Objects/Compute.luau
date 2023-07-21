@@ -39,7 +39,7 @@ return function<T, U>(
 			meta = "Compute",
 			static = false,
 			_computer = computer,
-			_processor = alwaysTrue(),
+			_processor = alwaysTrue,
 		}, meta) :: any
 	) :: pubTypes.Compute<T, U>
 	local myGraph = createGraph(self)
