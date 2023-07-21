@@ -63,6 +63,13 @@ function class:Connect(fn)
 	end
 end
 
+function class:Bind(fn)
+	local value = self._value
+	fn(value.old, value.new)
+
+	return self:Connect(fn)
+end
+
 return function<T>(dependency: types.StateObj<any, T>, processor: types.Processor<T>): pubTypes.Listen<{ old: T, new: T }>
 	local self = setmetatable({
 		_value = { old = dependency._value, new = nil },
