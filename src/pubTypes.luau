@@ -18,14 +18,13 @@ export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
 }>
 
 export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
-	_handler: (self: Absorb<T, U>) -> T,
-	_inject: inject<U>,
-	_toAbsorb: types.StateObj<any, any>,
-	_cases: { [any]: any },
+	_toAbsorb: types.StateObj<any, U>,
+	_cases: {[U | "default"]: types.StateObj<any,T>},
+	_lastArm: types.Graph
 }>
 
 export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
-	connect: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
+	connect: (self: Listen<T>, fn: (old: T, new: T) -> ()) -> (),
 	bind: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
 	_connections: { [(any) -> ()]: true },

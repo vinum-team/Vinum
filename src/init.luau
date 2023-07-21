@@ -2,7 +2,7 @@ return {
 	Hold = require(script.Objects.Hold),
 	KeyOf = require(script.Objects.KeyOf),
 	Compute = require(script.Objects.Compute),
-	AbsorbCreator = require(script.Objects.AbsorbCreator),
+	Absorb = require(script.Objects.Absorb),
 	Listen = require(script.Objects.Listen),
 	graph = require(script.Utils.graph),
 	unpack = require(script.Utils.unpack),
