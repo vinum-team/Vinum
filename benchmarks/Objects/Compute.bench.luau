@@ -7,9 +7,6 @@ local returner = function(value)
 		return value
 	end
 end
-local graph = Vinum.graph
-local run = graph.run
-
 local alwaysTrue = returner(true)
 
 return {
@@ -36,10 +33,10 @@ return {
 			local function capturer(use)
 				return use(dep)
 			end
-			return Compute(capturer, alwaysTrue)._graph
+			return Compute(capturer, alwaysTrue)
 		end,
 		run = function(obj)
-			run(obj, true)
+			obj:_update()
 		end,
 	},
 	{
@@ -52,10 +49,10 @@ return {
 				static(true)
 				return use(dep)
 			end
-			return Compute(capturer, alwaysTrue)._graph
+			return Compute(capturer, alwaysTrue)
 		end,
 		run = function(obj)
-			run(obj, false)
+			obj:_update()
 		end,
 	},
 }
