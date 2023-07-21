@@ -14,6 +14,7 @@ export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
 	_inject: inject<U>,
 	_asyncInject: any,
 	_staticInject: (boolean) -> (),
+	_becomeInject: (value: T) -> ()
 }>
 
 export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {

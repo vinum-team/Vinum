@@ -5,6 +5,7 @@ local types = require(script.Parent.Parent.types)
 local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
 local asyncInjector = require(script.Parent.Parent.Utils.asyncInjector)
 local staticInjector = require(script.Parent.Parent.Utils.staticInjector)
+local becomeInjector = require(script.Parent.Parent.Utils.becomeInjector)
 local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 
 local class = {}
@@ -28,7 +29,7 @@ function class:set(value)
 	graph.run(self._graph, false, true)
 end
 function class:_update()
-	local value = self._computer(self._inject, self._asyncInject, self._staticInject)
+	local value = self._computer(self._inject, self._asyncInject, self._staticInject, self._becomeInject)
 	if not self._processor(self._value, value, false) then
 		return
 	end
@@ -62,6 +63,7 @@ return function<T, U>(
 	self._inject = makeInjector(myGraph)
 	self._asyncInject = asyncInjector(myGraph)
 	self._staticInject = staticInjector(myGraph)
+	self._becomeInject = becomeInjector(myGraph)
 
 	runGraph(myGraph, true, false)
 	self._processor = processor
