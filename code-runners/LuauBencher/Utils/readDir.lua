@@ -1,9 +1,9 @@
 local benchmark = require(script.Parent.benchmark)
 
-local function readDir(dir: Instance)
+local function readDir(dir: any)
 	local serDir = {}
 
-	for _, dirFile: Instance in dir:GetChildren() do
+	for _, dirFile in dir:GetChildren() do
 		if dirFile:IsA("ModuleScript") and dirFile.Name:match("%.bench") then
 			local requiredFile = require(dirFile)
 			local fileSections = {}

@@ -1,4 +1,7 @@
-return function(Fusion, Vinum)
+local Fusion = require(script.Parent.Fusion)
+local Vinum = require(script.Parent.Vinum)
+
+return function()
 	local Vusion = {}
 
 	function Vusion.toVinum(fusionObj, writable: boolean)
@@ -23,7 +26,7 @@ return function(Fusion, Vinum)
 		kind = "VusionKey",
 		stage = "self",
 
-		apply = function(self, values, applyTo, cleanupTasks)
+		apply = function(_, values, applyTo, cleanupTasks)
 			for propName, stateObj in values do
 				local valueType = type(stateObj)
 

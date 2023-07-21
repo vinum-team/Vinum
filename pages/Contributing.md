@@ -62,6 +62,6 @@ You shouldn't generally recode places, or offer "rewrites" of certain features s
 i.e:
 ```lua
 local function VNew(name, props)
-    -- rewrite the whole New function just to allow binding to Vinum objects.
+    -- rewrite the whole New function from Fusion just to allow binding to Vinum objects.
 end
 ```

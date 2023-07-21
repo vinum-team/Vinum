@@ -3,6 +3,7 @@ type options = {
 }
 
 type set<T> = { T | { T } }
+local expect = require(script.Parent.expect)
 
 local function testDirectory(dir: set<ModuleScript>, options: options)
 	local dirResults = {}
@@ -14,9 +15,9 @@ local function testDirectory(dir: set<ModuleScript>, options: options)
 			dirResults[child.Name] = {}
 
 			local currentTestCase = dirResults[child.Name]
-			
+
 			for caseName, caseFunction in module do
-				local ok, err = pcall(caseFunction, options.context)
+				local ok, err = pcall(caseFunction, expect, options.context)
 
 				currentTestCase[caseName] = { ok = ok, err = err }
 			end
@@ -32,7 +33,7 @@ local function isSuccessful(folder)
 	local numOfFails = 0
 	local numOfSuccess = 0
 
-	for name, value in folder do
+	for _, value in folder do
 		if value.ok ~= nil then
 			if value.ok then
 				numOfSuccess += 1
@@ -74,7 +75,7 @@ end
 local function readifyDirectoryErrs(dir)
 	local finalString = ""
 
-	for name, value in dir do
+	for _, value in dir do
 		if value.ok ~= nil then
 			if value.ok == false then
 				finalString ..= "\n"
@@ -116,7 +117,7 @@ function bootstrapper:start(configuration: { directories: { Instance }, options:
 	end
 
 	if #errMessage > 2 then
-		error(errMessage, 0)
+		error(errMessage, 1)
 	end
 end
 return bootstrapper

@@ -1,9 +1,10 @@
 [package]
-name = "sinlerdev/vinum"
-version = "0.2.0"
+name = "plothan/vinum"
+version = "0.3.0-rc2"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A multi-paradigm, fast and modern reactive state management library."
-include = ["src", "default.project.json"]
 
+exclude = ["**"]
+include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
 [dependencies]

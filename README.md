@@ -1,20 +1,19 @@
-<img align = "left" src="gh-assets/Banner.svg">
+<img align = "center" width="400" src="gh-assets/Banner.svg">
 
+_______
 
-<br><br><br><br><br>
-An ultra-fast, multi-paradigm and modern reactive state management library intended for performance-critical systems - while also providing a simple and declarative API.
+Vinum is a blazingly fast, modern and multi-paradigm state management library. It solves the issue of data synchronization by providing a truly reactive model. 
 
-Check the [docs](https://plothan.github.io/Vinum/) here.
-___
+Check out the [docs](https://plothan.github.io/Vinum/) here.
+
 ## Features
-
-* **Centralized or Self-Contained** - Vinum doesn't "force" you into either centralized or self-contained paradigms, in fact, it allows for powerful integration between the two to leverage the best of the two worlds.
-* **Ultra speed for Performance critical systems** - Vinum is insanely optimized to yield benchmark results that don't exceed 1.3us, in fact, most of the results were lower than a microsecond. Due to this incredible speed, Vinum is the best of its kind for performance critical systems.
-* **Balanced Strictness & Flexibility** - In Vinum, you have to pass a processor function that allows for you to manage middleware, garbage collection, and even typechecking - although you aren't allowed to alter outcome as this decreases predictability.
-* **Declarative API** - State management in Vinum is beautifully simple and scalable - no boilerplate code for implementing a simple feature!
-* **Dependencies? Never heard of them** - In Vinum, you don't have to worry about dependency management and optimization, all of that is abstracted away and heavily optimized by Vinum.
-___
+* **Multi-Paradigm** - Vinum offers state centralization and self-containment in a single interface, which allows for the maximum integration between the two. 
+* **Blazing Fast** - Vinum is insanely optimized to yield incredible speed. Becuase of this, Vinum is the best of its kind for performance-critical systems.
+* **Strictness and Flexibility** - Vinum is a balance of strictness and flexibility. Some limitations are present to solve greater issues, and some features are "minimal" in nature to support flexibility.
+* **Declarative Syntax** - State management is dead simple- no need to manually manage dependencies!
 
 ## Contributing
+If you ever want to contribute for the Vinum project, please refer to [this](CONTRIBUTING.MD)
 
-If you ever want to contribute for the Vinum project, please refer to 
+## license
+The Vinum Library, alongside its associated assets (documentation, the unit testing framework, the benchmarking tool, official bindings) are licensed with MIT.

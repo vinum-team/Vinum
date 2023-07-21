@@ -1,3 +1,16 @@
 {
-    "luau-lsp.sourcemap.rojoProjectFile": "dev.project.json"
+    "luau-lsp.sourcemap.rojoProjectFile": "dev.project.json",
+    "luau-lsp.types.definitionFiles": ["luneTypes.d.luau"],
+    "luau-lsp.sourcemap.enabled": true,
+    "luau-lsp.types.roblox": true,
+    "luau-lsp.require.mode": "relativeToFile",
+    "luau-lsp.require.fileAliases": {
+        "@lune/fs": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/fs.luau",
+        "@lune/net": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/net.luau",
+        "@lune/process": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/process.luau",
+        "@lune/roblox": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/roblox.luau",
+        "@lune/serde": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/serde.luau",
+        "@lune/stdio": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/stdio.luau",
+        "@lune/task": "//?/C:/Users/omr/.lune/.typedefs/0.7.0/task.luau"
+    }
 }
