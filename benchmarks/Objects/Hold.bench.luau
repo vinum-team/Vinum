@@ -1,4 +1,4 @@
-local Vinum = require("src-copy/init")
+local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local returner = function(value)
@@ -12,7 +12,7 @@ local alwaysTrue = returner(true)
 return {
 	{
 		name = "Creating Holds",
-		calls = 20000,
+		calls = 50000,
 
 		run = function()
 			Hold(1, alwaysTrue)
@@ -20,7 +20,7 @@ return {
 	},
 	{
 		name = "set()'ing Holds",
-		calls = 20000,
+		calls = 50000,
 
 		preRun = function()
 			return Hold(100, alwaysTrue)
@@ -31,7 +31,7 @@ return {
 	},
 	{
 		name = "get()'ing Holds value",
-		calls = 20000,
+		calls = 50000,
 
 		preRun = function()
 			return Hold(100, alwaysTrue)

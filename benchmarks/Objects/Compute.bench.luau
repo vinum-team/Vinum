@@ -1,4 +1,4 @@
-local Vinum = require("src-copy/init")
+local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Compute = Vinum.Compute
@@ -12,7 +12,7 @@ local alwaysTrue = returner(true)
 return {
 	{
 		name = "Creating Computes with one dep",
-		calls = 20000,
+		calls = 50000,
 
 		preRun = function()
 			local dep = Hold(1, alwaysTrue)
@@ -26,7 +26,7 @@ return {
 	},
 	{
 		name = "Updating Computes with one dep",
-		calls = 20000,
+		calls = 50000,
 
 		preRun = function()
 			local dep = Hold(1, alwaysTrue)
@@ -41,7 +41,7 @@ return {
 	},
 	{
 		name = "Updating Computes with one dep + static",
-		calls = 20000,
+		calls = 50000,
 
 		preRun = function()
 			local dep = Hold(1, alwaysTrue)

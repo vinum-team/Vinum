@@ -1,4 +1,4 @@
-local Vinum = require("../../src/init")
+local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Compute = Vinum.Compute

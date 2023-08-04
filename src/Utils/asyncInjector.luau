@@ -1,6 +1,6 @@
 --!strict
 --An injector that manages async operations that are running during an object's update.
-local types = require("../types")
+local types = require(script.Parent.Parent.types)
 
 local function asyncInjector(graph: types.Graph)
 	return function(operation: types.AsyncOperation<any>): types.AsyncOperation<any>

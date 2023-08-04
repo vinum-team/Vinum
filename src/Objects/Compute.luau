@@ -1,12 +1,12 @@
 --!strict
-local graph = require("../Utils/graph")
-local pubTypes = require("../pubTypes")
-local types = require("../types")
-local makeInjector = require("../Utils/makeInjector")
-local asyncInjector = require("../Utils/asyncInjector")
-local staticInjector = require("../Utils/staticInjector")
-local becomeInjector = require("../Utils/becomeInjector")
-local alwaysTrue = require("../Utils/alwaysTrue")
+local graph = require(script.Parent.Parent.Utils.graph)
+local pubTypes = require(script.Parent.Parent.pubTypes)
+local types = require(script.Parent.Parent.types)
+local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
+local asyncInjector = require(script.Parent.Parent.Utils.asyncInjector)
+local staticInjector = require(script.Parent.Parent.Utils.staticInjector)
+local becomeInjector = require(script.Parent.Parent.Utils.becomeInjector)
+local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 
 local class = {}
 local meta = { __index = class }

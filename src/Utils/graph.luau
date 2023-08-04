@@ -1,6 +1,6 @@
 --!strict
 
-local types = require("../types")
+local types = require(script.Parent.Parent.types)
 
 local graph = {}
 

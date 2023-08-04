@@ -1,5 +1,5 @@
 --!strict
-local types = require("../types")
+local types = require(script.Parent.Parent.types)
 
 local function destroyObject(stateObject: types.StateObj<any, any>)
 	-- STEP 1: destroy the value that the object is currently holding

@@ -4,5 +4,5 @@ registry = "test"
 
 [[package]]
 name = "plothan/vinum"
-version = "0.3.0"
+version = "0.3.0-rc2"
 dependencies = []

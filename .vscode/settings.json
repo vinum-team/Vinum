@@ -1,5 +1,5 @@
 {
-    "luau-lsp.sourcemap.rojoProjectFile": "default.project.json",
+    "luau-lsp.sourcemap.rojoProjectFile": "dev.project.json",
     "luau-lsp.types.definitionFiles": ["luneTypes.d.luau"],
     "luau-lsp.sourcemap.enabled": true,
     "luau-lsp.types.roblox": true,

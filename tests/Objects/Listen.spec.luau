@@ -1,4 +1,4 @@
-local Vinum = require("../../src")
+local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Listen = Vinum.Listen
@@ -10,12 +10,12 @@ local returner = function(value)
 	end
 end
 return {
-	should_create_a_listener = function(skip, expect)
+	should_create_a_listener = function(expect)
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 		expect(listener.meta).to.equal("Listen")
 	end,
-	should_run_connections = function(skip, expect)
+	should_run_connections = function(expect)
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 
@@ -27,7 +27,7 @@ return {
 		dep:set(false)
 		expect(didRun).to.equal(true)
 	end,
-	should_have_the_old_and_new_values = function(skip, expect)
+	should_have_the_old_and_new_values = function(expect)
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 		local old, new
@@ -40,7 +40,7 @@ return {
 		expect(old).to.equal(true)
 		expect(new).to.equal(false)
 	end,
-	should_capture_the_old_and_new_values_in_itself = function(skip, expect)
+	should_capture_the_old_and_new_values_in_itself = function(expect)
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 
@@ -49,7 +49,7 @@ return {
 		expect(valueSet.old).to.equal(true)
 		expect(valueSet.new).to.equal(false)
 	end,
-	should_have_dependents = function(skip, expect)
+	should_have_dependents = function(expect)
 		local dep = Hold(true, returner(true))
 		local listener = Listen(dep, returner(true))
 

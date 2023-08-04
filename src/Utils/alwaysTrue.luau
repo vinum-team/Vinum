@@ -1,11 +1,6 @@
 --!strict
 
---[=[
-   @within Vinum
-
-   A function that takes an undefined number of arguments, and always return true.
-]=]
-local function alwaysTrue(...: any): true
+local function alwaysTrue(...)
     return true
 end
 

@@ -1,7 +1,7 @@
 --!strict
-local graph = require("../Utils/graph")
-local pubTypes = require("../pubTypes")
-local types = require("../types")
+local graph = require(script.Parent.Parent.Utils.graph)
+local pubTypes = require(script.Parent.Parent.pubTypes)
+local types = require(script.Parent.Parent.types)
 
 local class = {}
 local meta = { __index = class }

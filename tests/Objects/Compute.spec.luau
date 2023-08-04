@@ -1,6 +1,5 @@
 --!strict
-local Vinum = require("../../src")
-local task = require("@lune/task")
+local Vinum = require(game.ReplicatedStorage.Vinum)
 
 local Hold = Vinum.Hold
 local Compute = Vinum.Compute
@@ -13,12 +12,12 @@ local returner = function(value)
 end
 
 return {
-	should_create_a_compute = function(skip, expect)
+	should_create_a_compute = function(expect)
 		expect(Compute(function()
 			return 1
 		end, returner(true)).meta).to.equal("Compute")
 	end,
-	should_inject_dependencies = function(skip, expect)
+	should_inject_dependencies = function(expect)
 		local dependency = Hold(100, returner(true))
 		local computed = Compute(function(inject)
 			return inject(dependency)
@@ -27,7 +26,7 @@ return {
 		dependency:set(200)
 		expect(computed:get()).to.equal(200)
 	end,
-	should_simplify_tree = function(skip, expect)
+	should_simplify_tree = function(expect)
 		local sharedDependency = Hold(100, returner(true))
 		local firstDependency = Compute(function(use)
 			return use(sharedDependency)
@@ -46,7 +45,7 @@ return {
 		sharedDependency:set(200)
 		expect(times).to.equal(1)
 	end,
-	shouldnt_allow_updates_given_disallowing_processor = function(skip, expect)
+	shouldnt_allow_updates_given_disallowing_processor = function(expect)
 		local dependency = Hold(100, returner(true))
 		local computed = Compute(function(inject)
 			return inject(dependency)
@@ -55,7 +54,7 @@ return {
 		dependency:set(200)
 		expect(computed:get()).to.never.equal(200)
 	end,
-	should_cancel_async_operations = function(skip, expect)
+	should_cancel_async_operations = function(expect)
 		local first_flag = 0
 		local second_flag = 0
 		local dependency = Hold(false, returner(true))

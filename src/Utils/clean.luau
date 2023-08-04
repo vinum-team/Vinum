@@ -1,17 +1,5 @@
 --!strict
 
-
---[=[
-   @within Vinum
-
-   A built-in utility for cleaning common datatypes.
-
-   When called with:
-   1. Instance: It will destroy it.
-   2. RBXScriptConnection: It will disconnect it.
-   3. Function: It will call it.
-   4. Table: if it has a destroy/Destroy method, call it, if it doesnt, treat all the members as taskItems.
-]=]
 local function clean(taskItem: any)
 	local taskType = typeof(task)
 

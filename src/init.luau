@@ -1,27 +1,19 @@
---[=[
-    @class Vinum
-
-    The public interface to the Vinum API.
-]=]
-
 return {
-	Hold = require("Objects/Hold"),
-	KeyOf = require("Objects/KeyOf"),
-	Compute = require("Objects/Compute"),
-	Absorb = require("Objects/Absorb"),
-	Listen = require("Objects/Listen"),
-	graph = require("Utils/graph"),
-	unpack = require("Utils/unpack"),
-	async = require("Utils/async"),
-	wrapSource = require("Utils/wrapSource"),
-	sourceObject = require("Utils/sourceObject"),
-	equals = require("Utils/equals"),
-	clean = require("Utils/clean"),
-	alwaysTrue = require("Utils/alwaysTrue"),
-	createProcessor = require("Utils/createProcessor"),
-	destroyObject = require("Utils/destroyObject"),
-	willYield = require("Modifiers/willYield"),
-	isWritable = require("Modifiers/isWritable"),
-
-	Version = {MAJOR = 0, MINOR = 3, PATCH = 0}
+	Hold = require(script.Objects.Hold),
+	KeyOf = require(script.Objects.KeyOf),
+	Compute = require(script.Objects.Compute),
+	Absorb = require(script.Objects.Absorb),
+	Listen = require(script.Objects.Listen),
+	graph = require(script.Utils.graph),
+	unpack = require(script.Utils.unpack),
+	async = require(script.Utils.async),
+	wrapSource = require(script.Utils.wrapSource),
+	sourceObject = require(script.Utils.sourceObject),
+	equals = require(script.Utils.equals),
+	clean = require(script.Utils.clean),
+	alwaysTrue = require(script.Utils.alwaysTrue),
+	createProcessor = require(script.Utils.createProcessor),
+	destroyObject = require(script.Utils.destroyObject),
+	willYield = require(script.Modifiers.willYield),
+	isWritable = require(script.Modifiers.isWritable)
 }
