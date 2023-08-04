@@ -1,0 +1,28 @@
+{
+  bundle: {
+    require_mode: {
+      name: 'path',
+
+      sources: {
+        Objects: 'src/Objects',
+        Utils: 'src/Utils',
+        Modifiers: 'src/Modifiers'
+      }
+    },
+    excludes: ['@lune/**']
+  },
+  rules: [
+    {
+      rule: 'convert_require',
+      current: {
+        name: 'path'
+      },
+      target: {
+        name: 'roblox',
+        indexing_style: 'property'
+      }
+    },
+    "remove_comments"
+  ],
+  generator: "readable",
+}
