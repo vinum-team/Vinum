@@ -1,6 +1,6 @@
 --!strict
 
-local types = require(script.Parent.Parent.types)
+local types = require("../types")
 
 local function becomeInjector(graph: types.Graph)
     local owner = graph.owner

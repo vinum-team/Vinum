@@ -1,9 +1,6 @@
 --!strict
-
-local src = script.Parent.Parent
-local types = require(src.types)
-local Objects = src.Objects
-local KeyOf = require(Objects.KeyOf)
+local types = require("../types")
+local KeyOf = require("../Objects/KeyOf")
 
 local function unpackObject(obj: types.StateObj<any, { [any]: any }>, processors: { types.Processor<any> }, ...: any)
 	local processTable = {}

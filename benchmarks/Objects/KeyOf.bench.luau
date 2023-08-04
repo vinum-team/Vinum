@@ -1,4 +1,4 @@
-local Vinum = require(game.ReplicatedStorage.Vinum)
+local Vinum = require("src-copy/init")
 
 local Hold = Vinum.Hold
 local KeyOf = Vinum.KeyOf
@@ -15,7 +15,7 @@ local mainStore = Hold({ hi = 1 }, alwaysTrue)
 return {
 	{
 		name = "Creating KeyOfs",
-		calls = 50000,
+		calls = 20000,
 
 		run = function()
 			KeyOf(mainStore, "hi", alwaysTrue)
@@ -23,7 +23,7 @@ return {
 	},
 	{
 		name = "Setting KeyOfs",
-		calls = 50000,
+		calls = 20000,
 
 		preRun = function()
 			local store = Hold({ hi = 1 }, alwaysTrue)
@@ -35,7 +35,7 @@ return {
 	},
 	{
 		name = "Updating KeyOfs",
-		calls = 50000,
+		calls = 20000,
 
 		preRun = function()
 			local store = Hold({ hi = 1 }, alwaysTrue)

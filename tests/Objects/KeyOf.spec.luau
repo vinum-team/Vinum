@@ -1,4 +1,4 @@
-local Vinum = require(game.ReplicatedStorage.Vinum)
+local Vinum = require("../../src")
 
 local Hold = Vinum.Hold
 local KeyOf = Vinum.KeyOf
@@ -8,17 +8,17 @@ local returner = function(value)
 	end
 end
 return {
-	should_create_a_keyof = function(expect)
+	should_create_a_keyof = function(skip, expect)
 		expect(KeyOf(Hold({}, returner(true)), "j", returner(true)).meta).to.equal("KeyOf")
 	end,
-	should_update_keyof_when_source_updates = function(expect)
+	should_update_keyof_when_source_updates = function(skip, expect)
 		local source = Hold({ key = 1 }, returner(true))
 		local mirror = KeyOf(source, "key", returner(true))
 
 		source:set({ key = 2 })
 		expect(mirror:get()).to.equal(source:get().key)
 	end,
-	should_update_source_when_keyof_updates = function(expect)
+	should_update_source_when_keyof_updates = function(skip, expect)
 		local source = Hold({ key = 1 }, returner(true))
 		local mirror = KeyOf(source, "key", returner(true))
 

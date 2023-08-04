@@ -1,6 +1,6 @@
 --!strict
 
-local types = require(script.Parent.Parent.types)
+local types = require("../types")
 
 local function makeInjector(graph: types.Graph)
 	return function<T>(obj: types.StateObj<any, T>): T

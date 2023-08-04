@@ -1,4 +1,4 @@
-local types = require(script.Parent.types)
+local types = require("./types")
 
 export type inject<T> = (types.StateObj<any, T>) -> T
 

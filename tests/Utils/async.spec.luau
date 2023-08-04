@@ -1,8 +1,9 @@
-local Vinum = require(game.ReplicatedStorage.Vinum)
+local Vinum = require("../../src")
+local task = require("@lune/task")
 
 local async = Vinum.async
 return {
-	should_fire_listener_when_finished = function(expect)
+	should_fire_listener_when_finished = function(skip, expect)
 		local flag = false
 
 		async(function()
@@ -14,7 +15,7 @@ return {
 		task.wait(1)
 		expect(flag).to.equal(true)
 	end,
-	should_return_data = function(expect)
+	should_return_data = function(skip, expect)
 		local extractedData
 		async(function()
 			return "hi"
@@ -24,7 +25,7 @@ return {
 
 		expect(extractedData).to.equal("hi")
 	end,
-	should_fire_listeners_when_process_finished_before_listener_connection = function(expect)
+	should_fire_listeners_when_process_finished_before_listener_connection = function(skip, expect)
 		local didFire = false
 
 		async(function() end):on(function()
@@ -33,7 +34,7 @@ return {
 
 		expect(didFire).to.equal(true)
 	end,
-	should_cancel_correctly = function(expect)
+	should_cancel_correctly = function(skip, expect)
 		local first_flag = false
 		local second_flag = false
 

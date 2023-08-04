@@ -1,4 +1,4 @@
-local Vinum = require(game.ReplicatedStorage.Vinum)
+local Vinum = require("src-copy/init")
 
 local Graph = Vinum.graph
 
@@ -20,7 +20,7 @@ end
 return {
 	{
 		name = "Creating Graphs",
-		calls = 50000,
+		calls = 20000,
 
 		run = function()
 			create(Vinum)
@@ -28,7 +28,7 @@ return {
 	},
 	{
 		name = "Updating a Graph with complex dependency tree and recalculation applied",
-		calls = 50000,
+		calls = 20000,
 
 		preRun = function()
 			local root = create(owner())
@@ -54,7 +54,7 @@ return {
 	},
 	{
 		name = "Calling haveDependent",
-		calls = 50000,
+		calls = 20000,
 
 		preRun = function()
 			local root = create(owner())
@@ -68,7 +68,7 @@ return {
 	},
 	{
 		name = "Updating a Graph with complex dependency tree",
-		calls = 50000,
+		calls = 20000,
 
 		preRun = function()
 			local root = create(owner())
