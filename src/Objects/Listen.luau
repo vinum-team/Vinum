@@ -6,6 +6,8 @@ local types = require(script.Parent.Parent.types)
 local class = {}
 local meta = { __index = class }
 
+local task = (task or require("@lune/task")) :: any
+
 -- graph
 local createGraph = graph.create
 

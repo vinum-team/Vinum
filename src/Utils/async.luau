@@ -1,6 +1,7 @@
 --!strict
 
 local types = require(script.Parent.Parent.types)
+local task = (task or require("@lune/task")) :: any
 
 local function coRunner(fn, taskRecord, ...)
 	local info = fn(...)
@@ -39,7 +40,7 @@ local function async<T>(fn, ...)
 		coroutine = coroutine.create(coRunner),
 	}, meta)
 
-	coroutine.resume(self.coroutine, fn, self, ...)
+	task.spawn(self.coroutine, fn, self, ...)
 
 	return (self :: any) :: types.AsyncOperation<T>
 end

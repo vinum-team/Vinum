@@ -1,4 +1,4 @@
-local Vinum = require(game.ReplicatedStorage.Vinum)
+local Vinum = require("../../src")
 
 local wrapSource = Vinum.wrapSource 
 local sourceObject = Vinum.sourceObject
@@ -10,7 +10,7 @@ local returner = function(value)
 end
 
 return {
-	should_wrapSource_update_when_source_updates = function(expect)
+	should_wrapSource_update_when_source_updates = function(skip, expect)
         local src = sourceObject(function(self) end)
         local wrapper = wrapSource(src, function(_, new)
             return new
