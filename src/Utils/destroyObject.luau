@@ -17,19 +17,18 @@ local function destroyObject(stateObject: types.StateObj<any, any>)
 		destroyObject(dependent.owner)
 	end
 
-    for _, asyncOperation in myGraph.asyncOperations do
-        asyncOperation:cancel()
-    end
+	for _, asyncOperation in myGraph.asyncOperations do
+		asyncOperation:cancel()
+	end
 
 	-- STEP 4: clean the state's table, and set a non-read metatable on it.
 	table.clear(stateObject)
-    
+
 	return setmetatable(stateObject, {
 		__index = function()
 			error("[Vinum] Object is destroyed")
 		end,
 	})
 end
-
 
 return destroyObject

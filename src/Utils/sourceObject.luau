@@ -7,17 +7,16 @@ function class:On(fn)
 end
 
 function class:Fire(...)
-    local data = {...}
-    for listener in self.listeners do
-        listener(data)
-    end
+	local data = { ... }
+	for listener in self.listeners do
+		listener(data)
+	end
 end
 
-
 local function sourceObject(updater)
-    local self = setmetatable({listeners = {}}, meta)
-    updater(self)
-    return self
+	local self = setmetatable({ listeners = {} }, meta)
+	updater(self)
+	return self
 end
 
 return sourceObject

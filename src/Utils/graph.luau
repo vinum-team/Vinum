@@ -19,7 +19,7 @@ function graph.isAnDependent(dependency: types.Graph, dependent: types.Graph)
 		if dependency.dependents[dependent] then
 			return true
 		end
-		
+
 		for dependencyDependent in dependency.dependents do
 			local result = graph.isAnDependent(dependencyDependent, dependent)
 			if result then

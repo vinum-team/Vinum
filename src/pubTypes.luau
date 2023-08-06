@@ -14,13 +14,13 @@ export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
 	_inject: inject<U>,
 	_asyncInject: any,
 	_staticInject: (boolean) -> (),
-	_becomeInject: (value: T) -> ()
+	_becomeInject: (value: T) -> (),
 }>
 
 export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
 	_toAbsorb: types.StateObj<any, U>,
-	_cases: {[U | "default"]: types.StateObj<any,T>},
-	_lastArm: types.Graph
+	_cases: { [U | "default"]: types.StateObj<any, T> },
+	_lastArm: types.Graph,
 }>
 
 export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
@@ -28,7 +28,7 @@ export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
 	bind: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
 	_connections: { [(any) -> ()]: true },
-	_canYield: boolean
+	_canYield: boolean,
 }>
 
 return {}

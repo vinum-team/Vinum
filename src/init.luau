@@ -15,5 +15,5 @@ return {
 	createProcessor = require(script.Utils.createProcessor),
 	destroyObject = require(script.Utils.destroyObject),
 	willYield = require(script.Modifiers.willYield),
-	isWritable = require(script.Modifiers.isWritable)
+	isWritable = require(script.Modifiers.isWritable),
 }

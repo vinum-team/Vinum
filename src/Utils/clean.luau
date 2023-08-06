@@ -10,12 +10,11 @@ local function clean(taskItem: any)
 	-- case 2: RBXScriptConnection
 	elseif taskType == "RBXScriptConnection" then
 		taskItem:Disconnect()
-	
-        -- case 3: callback
+
+		-- case 3: callback
 	elseif taskType == "function" then
-	    taskItem()
-	
-    elseif taskType == "table" then
+		taskItem()
+	elseif taskType == "table" then
 		-- case 4: destroy() function
 		if typeof(taskItem.destroy) == "function" then
 			taskItem:destroy()

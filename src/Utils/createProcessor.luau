@@ -15,5 +15,4 @@ local function createProcessor(valueChecker: (a: any, b: any) -> boolean, cleane
 	end
 end
 
-
 return createProcessor

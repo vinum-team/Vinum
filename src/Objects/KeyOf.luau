@@ -14,7 +14,7 @@ function class:set(value)
 	if not self._writable then
 		return
 	end
-	
+
 	if not self._processor(self._value, value, false) then
 		return
 	end

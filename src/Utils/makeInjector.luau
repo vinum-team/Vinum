@@ -16,5 +16,4 @@ local function makeInjector(graph: types.Graph)
 	end
 end
 
-
 return makeInjector
