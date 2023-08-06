@@ -6,28 +6,13 @@
         "benchmarks" : {
             "$path" : "benchmarks"
         },
-        "tests" : {
-            "$path" : "tests"
-        },
-
         "Vinum" : {
             "$path" : "src"
         }
       },
 
       "ServerScriptService" : {
-        "$path" : "code-runners",
-        "pg-server": {
-          "$path" : "playground/server"
-        }
-      },
-      "StarterPlayer" : {
-        "StarterPlayerScripts" : {
-          "$path" : "stressTest",
-          "pg-client": {
-            "$path" : "playground/client"
-          }
-        }
+        "$path" : "benchRunner"
       }
     }
   }
