@@ -44,7 +44,7 @@ end
 return function<T, U>(
 	computer: (
 		inject: pubTypes.inject<U>,
-		addAsync: (types.AsyncOperation<any>) -> types.AsyncOperation<any>,
+		async: (() -> ()) -> types.AsyncOperation<any>,
 		staticify: (boolean) -> ()
 	) -> T,
 	processor: types.Processor<T>

@@ -5,7 +5,6 @@ local task = (task or require("@lune/task")) :: any
 local Hold = Vinum.Hold
 local Compute = Vinum.Compute
 
-local async = Vinum.async
 local returner = function(value)
 	return function()
 		return value
@@ -60,12 +59,12 @@ return {
 		local second_flag = 0
 		local dependency = Hold(false, returner(true))
 
-		Compute(function(use, addAsync)
-			addAsync(async(function()
+		Compute(function(use, async)
+			async(function()
 				first_flag += 1
 				task.wait(2)
 				second_flag += 1
-			end))
+			end)
 			return use(dependency)
 		end, returner(true))
 

@@ -1,7 +1,14 @@
 local Vinum = require("../../src")
 local task = (task or require("@lune/task")) :: any
 
-local async = Vinum.async
+local asyncInjector = Vinum.async
+local graph = Vinum.graph
+
+local CONSTANT_GRAPH = graph.create()
+
+local function async(fn, ...)
+	return asyncInjector(CONSTANT_GRAPH)(fn, ...)
+end
 return {
 	should_fire_listener_when_finished = function(skip, expect)
 		local flag = false

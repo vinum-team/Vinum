@@ -6,7 +6,7 @@ return {
 	Listen = require(script.Objects.Listen),
 	graph = require(script.Utils.graph),
 	unpack = require(script.Utils.unpack),
-	async = require(script.Utils.async),
+	async = require(script.Utils.asyncInjector),
 	wrapSource = require(script.Utils.wrapSource),
 	sourceObject = require(script.Utils.sourceObject),
 	equals = require(script.Utils.equals),
