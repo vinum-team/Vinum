@@ -1,0 +1,13 @@
+site_name: Vinum Documentation
+theme:
+  name: material
+  palette:
+    scheme: default
+  font:
+    text: Lato
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
