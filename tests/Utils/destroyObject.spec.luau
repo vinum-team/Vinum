@@ -23,8 +23,13 @@ return {
 		expect(graph.haveDependent(dep._graph)).to.equal(false)
 	end,
 	should_destroy_the_current_value = function(skip, expect)
-		local part = Instance.new("Part")
-		part.Parent = workspace
+		local part = {
+			Destroy = function(self)
+				self.Parent = nil
+			end,
+		}
+		part.Parent = {}
+
 		local dep = Hold(part, function(old, new, isDestroying)
 			if isDestroying then
 				old:Destroy()
@@ -38,33 +43,25 @@ return {
 		expect(part.Parent).to.equal(nil)
 	end,
 	should_destroy_dependents = function(skip, expect)
-		local part = Instance.new("Part")
-		part.Parent = workspace
-
 		local dep = Hold(100, returner(true))
-		local _ = Compute(function(use)
-			use(dep)
-			return part
+		local dependent = Compute(function(use)
+			return use(dep)
 		end, function(old, new, isDestroying)
-			if isDestroying then
-				old:Destroy()
-				return false
-			end
-
 			return true
 		end)
 
-        destroyObject(dep)
-        
-        expect(part.Parent).to.equal(nil)
+		destroyObject(dep)
+
+		expect(function()
+			local _ = dependent._value
+		end).to.throw()
 	end,
-    should_not_be_able_to_index = function(skip, expect)
-        local dep = Hold(100, returner(true))
-        destroyObject(dep)
+	should_not_be_able_to_index = function(skip, expect)
+		local dep = Hold(100, returner(true))
+		destroyObject(dep)
 
-        expect(function()
-            local _ = dep._graph
-        end).to.throw()
-
-    end
+		expect(function()
+			local _ = dep._graph
+		end).to.throw()
+	end,
 }
