@@ -56,4 +56,21 @@ return {
 		expect(first_flag).to.equal(true)
 		expect(second_flag).to.equal(false)
 	end,
+	should_cancel_async_operations = function(skip, expect)
+		local myGraph = graph.create({ _update = Vinum.alwaysTrue })
+
+		local firstFlag = 0
+		local secondFlag = 0
+		asyncInjector(myGraph)(function()
+			firstFlag += 1
+			task.wait(2)
+			secondFlag += 1
+			return "sup"
+		end)
+
+		expect(firstFlag).to.equal(1)
+		graph.run(myGraph, false, false)
+		task.wait(3)
+		expect(secondFlag).to.equal(0)
+	end,
 }
