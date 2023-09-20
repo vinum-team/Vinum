@@ -33,4 +33,22 @@ Before opening an issue, make sure all of the following is met:
 2. After the `discussion` phase, the issue is either rejected and enter the `rejected` phase, or accepted and enter the `designing` phase where a solution will be designed.
 3. When the solution is finally designed, the issue will enter the `approved` phase, where it waits for the said solution to merge into the `master` branch so that it can be closed. 
 
+### Commit Messages
+Vinum adheres to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/#specification) spec alongside a few different types and scopes.
+
+#### Types
+* fix - A code change that fixes a bug.
+* feat - A code change that implements a feature.
+* chore - Changes to our tooling and external dependency updates.
+* docs - Documentation only changes
+* perf - A code change that improves performance.
+* refactor - A code change that doesn't fix a bug or adds a new feature.
+* tests - Adds missing tests or correcting existing ones.
+* bench - Adds missing benchmarks or correcting existing ones.
+
+#### Scopes
+* object - Changes in relation to Vinum's state objects' code.
+* internal - Changes in relation to Vinum's internal systems such as the dependency system.
+* meta - Changes in relation to any non-code component of the repo.
+
 ## Development Workflow
