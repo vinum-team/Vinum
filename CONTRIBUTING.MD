@@ -2,51 +2,35 @@
 All contribution to Vinum is highly welcomed. However, to ensure clarity and that nobody's time is wasted here, we enforce a contribution guideline.
 
 ## Guidelines
+
+### Bug Reporting
+Vinum is a new and immature library, as such, bugs are expected to arise. Read this to learn more about how to report them effectively to the Vinum Team.
+
+Before opening an issue, make sure all of the following is met:
+* You are the first one to report it. To ensure that, you should check both clsoed and opened issues. 
+* If a new variant of a bug was introduced after the original one was fixed, it's best to open a new issue.
+* When opening a new issue, the title should be simple and sensible, with a summary of as much relevant information as possible in addition to simple reproduction steps with a .rbxl file.
+* When a fix has been merged (and verified to work) onto the `master` branch of Vinum, the issue will be closed.
+* Please be patient, as the maintainer team and contributors are volunteers. Bumping issues with `new updates` doesn't help with this.
+
 ### Feature Requests
-We love feature requests, however, we have a tiny bit of guidelines that make it clear what type of features we want to implement to the core library.
+While we work to make Vinum packed with features that satisfy universal cases, some slip away. Read this to learn more about how to suggest new features to the Vinum Team.
 
-These are what we generally accept:
+Before opening an issue, make sure all of the following is met:
+* You are the first one to suggest it. To ensure that, you should check both closed and opened issues. It's possible your feature was rejected.
+* If you do think the issue shouldn't be rejected and have a strong reason behind that, you should always add your thoughts to the existing issue.
+* When opening an issue, the title should be simple and sensible, with an issue body that explains why a feature should be added, and who it would help, when it would and why.
+* As long as it's not the main focus, API design suggestions are allowed.
+* Almost all feature requests do have a valid concern, but it's certianly possible that it needs work to design an API that matches Vinum's current public API.
+* When an implementation has been merged into `master`, the issue will be closed.
+* Your feature adopts a declarative mindset so that users shouldn't depend on imparative code that depends on execution order.
+* Guide the users of the feature towards optimal and maintainable code. This also means that mistakes by the developer are easy to spot. In addition, over engineering isn't welcomed.
 
-* **Styling imperative tasks with declarative API** - Vinum's standard library should offer tools that perform imperative tasks in a declarative style.
-* **Should be fast and readable** - Vinum's standard tools should generally be fast, and on top of that, have an understandable codebase/API.
-* **Should have a universal use case** - Vinum's standard library should only contain tools that have a universal use between Vinum's projects.
+## Repo Management
 
-These are what we generally reject:
-
-* **Prefers writability over readability** - Vinum's standard library code should be implemented in a readable way, and avoid some "writability optimizations" such as abbreviated names like RS for replicated storage.
-* **Is magic** - We generally tend to reject features that are considered magic systems that Just Work. Tools like automatic dependency capturing fall under this.
-
-If you believe that your feature respects our guidelines, and would like to open and issue, please continue:
-
-* **You are the first one to suggest it** - You make sure of that by searching for issues that are either closed/opened in Github's issue tracker.
-* Only if this feature hasn't been suggested before, make sure that:
-    * **The meta information is valid **- Titles should be properly sensible, and descriptions should be provided.
-    * API suggestions shouldn't generally be suggested, but feel free to put some examples.
-* **Be patient** - all project maintainers are volunteers, so it will likely take some time to respond.
-* Don't bump or chase up your issue - commenting 'Any updates on this?' does not add value to the conversation, and only clutters the issue.
+### Issue Phases
+1. When an issue is created, its phase is `discussion` right away. This means that the issue is still being evaluated.
+2. After the `discussion` phase, the issue is either rejected and enter the `rejected` phase, or accepted and enter the `designing` phase where a solution will be designed.
+3. When the solution is finally designed, the issue will enter the `approved` phase, where it waits for the said solution to merge into the `master` branch so that it can be closed. 
 
 ## Development Workflow
-
-### Installing Tools
-Developing Vinum requires few tools so that it can run. Fortunately, these tools are managed by Aftman. 
-
-The version for Aftman that we use for Vinum is currently `0.2.7`.
-
-After you install that version, do the following so that all tools that Vinum use get installed:
-```bash
-    aftman install
-```
-### Running Tests
-The tool responsible for running tests is `Lune`, which if you take a look at the installed tools, you would find it.
-
-Running tests is very easy, all what you need to do is just:
-```bash
-    lune runTests
-```
-
-After you paste that into your CI program, a nicely formatted message will appear.
-
-### Running Benchmarks
-Unlike running tests, to run Vinum's benchmarks, you need to use Roblox Studio.
-
-To start running the benchmarks, `rojo build` the `dev.project.json` project file, and then proceed to start a play-test session. After some time, you will see a message printed in the output that contains the info for the benchmarks' results.
