@@ -26,6 +26,20 @@ Before opening an issue, make sure all of the following is met:
 * **Your feature should adopt a declarative mindset** so that users shouldn't depend on *imparative* code that depends on execution order.
 * **Guide the users of the feature towards optimal and maintainable code**. This also means that mistakes by the developer are easy to spot. In addition, over engineering isn't welcomed.
 
+### Code Contribution
+Ever wanted to implement a feature yourself? Well, read this to know how to effectively do so without wasting your precious time.
+
+
+When working on a pull request, make sure the following is understood:
+* **Your pull request implements an approved feature request**, this means that you shouldn't introduce new API design and features in pull requests. This extends to implementing feature requests that still didn't enter the `approved` phase.
+    * Additionally, extends to pull requests that fix bugs.
+* **You should always create a draft rather than a completed pull request**. This means we can see what you're working on and guide you as you work, rather than lumping all feedback at the end of the process.
+* **Always make it clear what you are working on**, this means adding to-do lists if the feature being developed is fairly big.
+* **Ensure pull requests are focused on a single feature**.
+* **Reviews are bound to happen, but these aren't personal**, though if you have a conflicting opinion with the reviewer, feel free to voice it.
+* **Some pull requests might be closed if deemed conflicting with Vinum**. This *shouldn't* happen a lot, but when it does, we will make it clear why we decided to do so. 
+
+
 ## Repo Management
 
 ### Issue Phases
@@ -39,7 +53,7 @@ Vinum adheres to [Conventional Commits](https://www.conventionalcommits.org/en/v
 #### Types
 * fix - A code change that fixes a bug.
 * feat - A code change that implements a feature.
-* chore - Changes to our tooling and external dependency updates.
+* chore - Changes to our tooling and external dependency updates, and repo-management changes.
 * docs - Documentation only changes
 * perf - A code change that improves performance.
 * refactor - A code change that doesn't fix a bug or adds a new feature.
@@ -47,8 +61,6 @@ Vinum adheres to [Conventional Commits](https://www.conventionalcommits.org/en/v
 * bench - Adds missing benchmarks or correcting existing ones.
 
 #### Scopes
-* object - Changes in relation to Vinum's state objects' code.
+* API - Changes in relation to Vinum's API.
 * internal - Changes in relation to Vinum's internal systems such as the dependency system.
 * meta - Changes in relation to any non-code component of the repo.
-
-## Development Workflow
