@@ -11,10 +11,6 @@ local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 local class = {}
 local meta = { __index = class }
 
---graph utils
-local createGraph = graph.create
-local runGraph = graph.run
-
 function class:set(value)
 	if not self._writable then
 		return
@@ -58,14 +54,14 @@ return function<T, U>(
 			_writable = false,
 		}, meta) :: any
 	) :: pubTypes.Compute<T, U>
-	local myGraph = createGraph(self)
+	local myGraph = graph.create(self)
 	self._graph = myGraph
 	self._inject = makeInjector(myGraph)
 	self._asyncInject = asyncInjector(myGraph)
 	self._staticInject = staticInjector(myGraph)
 	self._becomeInject = becomeInjector(myGraph)
 
-	runGraph(myGraph, true, false)
+	graph.run(myGraph, true, false)
 	self._processor = processor
 	return self
 end
