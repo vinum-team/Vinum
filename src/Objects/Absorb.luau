@@ -4,25 +4,6 @@ local pubTypes = require(script.Parent.Parent.pubTypes)
 local types = require(script.Parent.Parent.types)
 local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 
---[[
-    export type StateObj<M, T> = {
-	meta: M,
-	static: boolean,
-	_value: T,
-	_graph: Graph,
-	_update: (self: StateObj<M, T>) -> ()?,
-	_writable: boolean,
-
-	set: (self: StateObj<M, T>, newValue: T) -> (),
-	get: (self: StateObj<M, T>) -> T,
-	_processor: Processor<T>,
-}
-export type Absorb<T, U> = types.Extends<types.StateObj<"Absorb", T>, {
-	_toAbsorb: types.StateObj<any, U>,
-	_cases: {[U | "default"]: types.CanBeState<T>}?
-}>
-]]
-
 local class = {}
 local meta = { __index = class }
 
