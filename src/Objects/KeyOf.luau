@@ -6,10 +6,6 @@ local types = require(script.Parent.Parent.types)
 local class = {}
 local meta = { __index = class }
 
---graph utils
-local createGraph = graph.create
-local runGraph = graph.run
-
 function class:set(value)
 	if not self._writable then
 		return
@@ -26,9 +22,9 @@ function class:set(value)
 
 	obj._value[self._key] = value
 	objGraph.dependents[myGraph] = nil
-	runGraph(objGraph, false, false)
+	graph.run(objGraph, false, false)
 	objGraph.dependents[myGraph] = true
-	runGraph(myGraph, false, false)
+	graph.run(myGraph, false, false)
 end
 
 function class:_update()
@@ -56,7 +52,7 @@ return function<T>(obj: types.StateObj<any, any>, key: T, processor: types.Proce
 			_writable = true,
 		}, meta) :: any
 	) :: pubTypes.KeyOf<any, T>
-	local myGraph = createGraph(self)
+	local myGraph = graph.create(self)
 	local objGraph = obj._graph
 	self._graph = myGraph
 

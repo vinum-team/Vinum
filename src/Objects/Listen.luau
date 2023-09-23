@@ -8,9 +8,6 @@ local meta = { __index = class }
 
 local task = (task or require("@lune/task")) :: any
 
--- graph
-local createGraph = graph.create
-
 function class:set(value)
 	if not self._writable then
 		return
@@ -84,7 +81,7 @@ return function<T>(dependency: types.StateObj<any, T>, processor: types.Processo
 		_canYield = true,
 	}, meta)
 
-	local myGraph = createGraph(self)
+	local myGraph = graph.create(self)
 	self._graph = myGraph
 
 	local dependencyGraph = dependency._graph
