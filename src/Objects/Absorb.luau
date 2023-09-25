@@ -1,5 +1,6 @@
 --!strict
-local graph = require(script.Parent.Parent.Utils.graph)
+local graph = require(script.Parent.Parent.Internal.graph)
+local setmetatable = require(script.Parent.Parent.Internal.setmetatable)
 local pubTypes = require(script.Parent.Parent.pubTypes)
 local types = require(script.Parent.Parent.types)
 local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
@@ -7,25 +8,13 @@ local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 local class = {}
 local meta = { __index = class }
 
-function class:get()
+type Absorb = pubTypes.Absorb<any, any>
+
+function class.get(self: Absorb)
 	return self._value
 end
 
-function class:set(value)
-	if not self._writable then
-		return
-	end
-
-	if not self._processor(self._value, value, false) then
-		return
-	end
-
-	self._value = value
-
-	graph.run(self._graph, false, true)
-end
-
-function class:_update()
+function class._update(self: Absorb)
 	local toAbsorb = self._toAbsorb
 	local caseList = self._cases
 	local valueContainer = caseList[toAbsorb._value] or caseList["default"]
@@ -58,16 +47,14 @@ return function<T, U>(
 	caseList: { [U | "default"]: types.StateObj<any, T> },
 	processor: types.Processor<T>
 ): pubTypes.Absorb<T, U>
-	local self = (
-		setmetatable({
-			meta = "Absorb",
-			static = true,
-			_writable = false,
-			_processor = alwaysTrue,
-			_toAbsorb = toAbsorb,
-			_cases = caseList,
-		}, meta) :: any
-	) :: pubTypes.Absorb<T, U>
+	local self = setmetatable({
+		meta = "Absorb",
+		static = true,
+		_writable = false,
+		_processor = alwaysTrue,
+		_toAbsorb = toAbsorb,
+		_cases = caseList,
+	}, meta) :: Absorb
 
 	local myGraph = graph.create(self)
 	local toAbsorbGraph = toAbsorb._graph

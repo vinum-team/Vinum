@@ -24,7 +24,6 @@ export type StateObj<M, T> = {
 	_value: T,
 	_graph: Graph,
 	_update: (self: StateObj<M, T>) -> ()?,
-	_writable: boolean,
 
 	set: (self: StateObj<M, T>, newValue: T) -> (),
 	get: (self: StateObj<M, T>) -> T,

@@ -1,30 +1,20 @@
 --!strict
-local graph = require(script.Parent.Parent.Utils.graph)
+local graph = require(script.Parent.Parent.Internal.graph)
+local setmetatable = require(script.Parent.Parent.Internal.setmetatable)
 local pubTypes = require(script.Parent.Parent.pubTypes)
 local types = require(script.Parent.Parent.types)
-local makeInjector = require(script.Parent.Parent.Utils.makeInjector)
-local asyncInjector = require(script.Parent.Parent.Utils.asyncInjector)
-local staticInjector = require(script.Parent.Parent.Utils.staticInjector)
-local becomeInjector = require(script.Parent.Parent.Utils.becomeInjector)
+local makeInjector = require(script.Parent.Parent.Internal.makeInjector)
+local asyncInjector = require(script.Parent.Parent.Internal.asyncInjector)
+local staticInjector = require(script.Parent.Parent.Internal.staticInjector)
+local becomeInjector = require(script.Parent.Parent.Internal.becomeInjector)
 local alwaysTrue = require(script.Parent.Parent.Utils.alwaysTrue)
 
 local class = {}
 local meta = { __index = class }
 
-function class:set(value)
-	if not self._writable then
-		return
-	end
+type Compute = pubTypes.Compute<any>
 
-	if not self._processor(self._value, value, false) then
-		return
-	end
-
-	self._value = value
-
-	graph.run(self._graph, false, true)
-end
-function class:_update()
+function class._update(self: Compute)
 	local value = self._computer(self._inject, self._asyncInject, self._staticInject, self._becomeInject)
 	if not self._processor(self._value, value, false) then
 		return
@@ -33,27 +23,26 @@ function class:_update()
 	self._value = value
 end
 
-function class:get()
+function class.get(self: Compute)
 	return self._value
 end
 
-return function<T, U>(
+return function<T>(
 	computer: (
-		inject: pubTypes.inject<U>,
+		inject: pubTypes.inject,
 		async: (() -> ()) -> types.AsyncOperation<any>,
 		staticify: (boolean) -> ()
 	) -> T,
 	processor: types.Processor<T>
-): pubTypes.Compute<T, U>
-	local self = (
-		setmetatable({
-			meta = "Compute",
-			static = false,
-			_computer = computer,
-			_processor = alwaysTrue,
-			_writable = false,
-		}, meta) :: any
-	) :: pubTypes.Compute<T, U>
+): pubTypes.Compute<T>
+	local self = setmetatable({
+		meta = "Compute",
+		static = false,
+		_computer = computer,
+		_processor = alwaysTrue,
+		_writable = false,
+	}, meta) :: Compute
+
 	local myGraph = graph.create(self)
 	self._graph = myGraph
 	self._inject = makeInjector(myGraph)

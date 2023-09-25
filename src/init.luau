@@ -4,9 +4,9 @@ return {
 	Compute = require(script.Objects.Compute),
 	Absorb = require(script.Objects.Absorb),
 	Listen = require(script.Objects.Listen),
-	graph = require(script.Utils.graph),
+	graph = require(script.Internal.graph),
 	unpack = require(script.Utils.unpack),
-	async = require(script.Utils.asyncInjector),
+	async = require(script.Internal.asyncInjector),
 	wrapSource = require(script.Utils.wrapSource),
 	sourceObject = require(script.Utils.sourceObject),
 	equals = require(script.Utils.equals),
@@ -14,6 +14,4 @@ return {
 	alwaysTrue = require(script.Utils.alwaysTrue),
 	createProcessor = require(script.Utils.createProcessor),
 	destroyObject = require(script.Utils.destroyObject),
-	willYield = require(script.Modifiers.willYield),
-	isWritable = require(script.Modifiers.isWritable),
 }
