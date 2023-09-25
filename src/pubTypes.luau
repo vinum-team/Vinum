@@ -1,6 +1,6 @@
 local types = require(script.Parent.types)
 
-export type inject<T> = (types.StateObj<any, T>) -> T
+export type inject= <T>(types.StateObj<any, T>) -> T
 
 export type Hold<T> = types.StateObj<"Hold", T>
 
@@ -9,9 +9,9 @@ export type KeyOf<T, k> = types.Extends<types.StateObj<"KeyOf", T>, {
 	_obj: types.StateObj<any, any>,
 }>
 
-export type Compute<T, U> = types.Extends<types.StateObj<"Compute", T>, {
-	_computer: (inject: inject<U>) -> T,
-	_inject: inject<U>,
+export type Compute<T> = types.Extends<types.StateObj<"Compute", T>, {
+	_computer: (inject: inject, ...any) -> T,
+	_inject: inject,
 	_asyncInject: any,
 	_staticInject: (boolean) -> (),
 	_becomeInject: (value: T) -> (),
@@ -27,7 +27,7 @@ export type Listen<T> = types.Extends<types.StateObj<"Listen", T>, {
 	connect: (self: Listen<T>, fn: (old: T, new: T) -> ()) -> (),
 	bind: (self: Listen<T>, fn: (old: T, new: T?) -> ()) -> (),
 	_dependency: types.StateObj<any, T>,
-	_connections: { [(any) -> ()]: true },
+	_connections: { [(...any) -> ()]: true },
 	_canYield: boolean,
 }>
 

@@ -1,5 +1,6 @@
 --!strict
-local graph = require(script.Parent.Parent.Utils.graph)
+local graph = require(script.Parent.Parent.Internal.graph)
+local setmetatable = require(script.Parent.Parent.Internal.setmetatable)
 local pubTypes = require(script.Parent.Parent.pubTypes)
 local types = require(script.Parent.Parent.types)
 
@@ -8,25 +9,13 @@ local meta = { __index = class }
 
 local task = (task or require("@lune/task")) :: any
 
-function class:set(value)
-	if not self._writable then
-		return
-	end
+type Listen = pubTypes.Listen<any>
 
-	if not self._processor(self._value, value, false) then
-		return
-	end
-
-	self._value = value
-
-	graph.run(self._graph, false, true)
-end
-
-function class:get()
+function class.get(self: Listen)
 	return self._value
 end
 
-function class:_update()
+function class._update(self: Listen)
 	local value = self._dependency:get()
 	local valueSet = self._value
 
@@ -43,14 +32,8 @@ function class:_update()
 	local old = valueSet.old
 	local new = valueSet.new
 
-	if self._canYield then
-		for fn in self._connections do
-			task.spawn(fn, old, new)
-		end
-	else
-		for fn in self._connections do
-			fn(old, new)
-		end
+	for fn in self._connections do
+		task.spawn(fn, old, new)
 	end
 end
 
