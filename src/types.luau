@@ -1,39 +1,42 @@
-export type Graph = {
-	type: "graph",
-	owner: any,
-	dependencies: { [Graph]: any },
-	dependents: { [Graph]: any },
-	asyncOperations: { any },
+--!strict
+
+export type State<Value> = {
+    type: string,
+    value: Value,
+    node: Node
 }
 
-export type AsyncOperation<data> = {
-	isFinished: boolean,
-	listener: ((data) -> ())?,
-	data: data?,
-	coroutine: thread,
-
-	cancel: (self: AsyncOperation<data>) -> (),
-	on: (self: AsyncOperation<data>, fn: (...any) -> data) -> (),
+export type refState<Value> = {
+    type: "refState",
+    ref: State<Value>
 }
 
-export type Processor<T> = (old: T, new: T, destroying: boolean) -> boolean
+export type EitherState<Value> = State<Value> | refState<Value>
 
-export type StateObj<M, T> = {
-	meta: M,
-	static: boolean,
-	_value: T,
-	_graph: Graph,
-	_update: (self: StateObj<M, T>) -> ()?,
+type MapStruct<K, V> = {[K]: V}
 
-	set: (self: StateObj<M, T>, newValue: T) -> (),
-	get: (self: StateObj<M, T>) -> T,
-	_processor: Processor<T>,
+export type Node = {
+    owner: any,
+    dependents: MapStruct<Node, boolean>,
+    cancelableTasks: {any}
 }
 
-export type Extends<base, other> = base & other
+export type Computer<Value> = (Node: Node) -> Value
 
-export type CanBeState<T> = T | StateObj<string, T>
+export type Compute<Value> = State<Value> & {
+    _computer: Computer<Value>,
+    update: (self: Compute<Value>) -> boolean
+}
 
-export type union<t1, t2, t3> = t1 | t2 | t3
+export type Listen<Value> = State<Value> & {
+    _connections: {() -> ()},
+    update: (self: Listen<Value>) -> boolean
+}
 
+
+export type SliceOf = State<any> & {
+    _owner: State<{[any]: any}>,
+    _key: any,
+    update: (self: SliceOf) -> boolean,
+}
 return {}

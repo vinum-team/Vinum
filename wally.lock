@@ -4,5 +4,15 @@ registry = "test"
 
 [[package]]
 name = "plothan/vinum"
-version = "0.3.0-rc2"
+version = "0.3.0"
+dependencies = [["d", "sinlerdev/atticus@0.1.1"]]
+
+[[package]]
+name = "sinlerdev/atticus"
+version = "0.1.1"
+dependencies = [["RaycastHitbox", "sinlerdev/raycasthitboxrbxl@4.0.1"]]
+
+[[package]]
+name = "sinlerdev/raycasthitboxrbxl"
+version = "4.0.1"
 dependencies = []
