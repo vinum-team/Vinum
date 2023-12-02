@@ -21,7 +21,6 @@ local function SliceOf(scope, state: types.EitherState<{[any]: any}>, Key: any):
         scope = scope
     }
 
-    table.insert(scope, self)
     self.node = Node.Node(self)
     _state.node.dependents[self.node] = true
 
