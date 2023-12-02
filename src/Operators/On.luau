@@ -7,7 +7,7 @@ local Internal = Package.Internal
 local Node = require(Internal.Node)
 local getState = require(Internal.getState)
 
-local watchedStateToListener: {[types.State<any>]: types.Listen<any>} = {}
+local watchedStateToListener: {[types.State<any>]: types.Listen<any>} = setmetatable({}, {_mode = "kvs"}) :: any
 
 local function ListenUpdate(self: types.Listen<any>)
     for _, fn in self._connections do
@@ -26,10 +26,13 @@ local function On(state: types.EitherState<any>, listener: () -> ())
         else
             local myState = {
                 type = "Listener",
-                value = {},
+                value = {} :: any,
                 _connections = {},
                 update = ListenUpdate
             }
+
+            table.insert(_state.scope, myState)
+            myState.scope = _state.scope
 
             myState.node = Node.Node(myState)
             watchedStateToListener[_state] = myState

@@ -4,10 +4,15 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local getState = require(Internal.getState)
 
-local function Ref<T>(state: types.EitherState<T>): types.refState<T>
+local function Ref<T>(scope, state: types.EitherState<T>): types.refState<T>
+    local myState = getState(state)
+
+    -- Any Ref'ed states are technically dependencies from scopes' point of view
+    -- and so we kill our scope when myState's scope is killed.
+    table.insert(myState.scope, scope)
     return {
         type = "refState",
-        ref = getState(state)
+        ref = myState
     }
 end
 

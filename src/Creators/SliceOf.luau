@@ -10,16 +10,18 @@ local function SliceOfUpdater(self: types.SliceOf)
     return true
 end
 
-local function SliceOf(state: types.EitherState<{[any]: any}>, Key: any): types.SliceOf
+local function SliceOf(scope, state: types.EitherState<{[any]: any}>, Key: any): types.SliceOf
     local _state = getState(state)
     local self = {
         type = "SliceOf",
         value = {} :: any,
         update = SliceOfUpdater,
         _owner = _state,
-        _key = Key
+        _key = Key,
+        scope = scope
     }
 
+    table.insert(scope, self)
     self.node = Node.Node(self)
     _state.node.dependents[self.node] = true
 

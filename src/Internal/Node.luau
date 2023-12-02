@@ -19,7 +19,7 @@ local function cancelAllTasksFor(Node: Node)
 end
 
 -- Credit: https://blog.elttob.uk/2022/11/07/sets-efficient-topological-search.html
-local function updateAll(root: Node)
+local function _updateAll(root: Node)
 	local counters: { [Node]: number } = {}
 	local flags: { [Node]: boolean } = {}
 	local queue: { Node } = {}
@@ -55,7 +55,7 @@ local function updateAll(root: Node)
 			and flags[next]
 			and cancelAllTasksFor(next)
 			and next.owner.update ~= nil
-			and (next :: any).owner:update()
+			and (next :: any).owner:update(next)
 			and next.dependents ~= nil
 		then
 			for object in next.dependents do
@@ -63,6 +63,16 @@ local function updateAll(root: Node)
 			end
 		end
 		queuePos += 1
+	end
+end
+
+local function updateAll(root: Node)
+	for innerNode in root.dependents do
+		cancelAllTasksFor(innerNode)
+		if innerNode.owner.update then
+			innerNode.owner.update(innerNode.owner)
+		end
+		updateAll(innerNode)
 	end
 end
 

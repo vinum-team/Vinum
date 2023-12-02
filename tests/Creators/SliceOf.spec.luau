@@ -3,10 +3,11 @@ local Vinum = require("../../src")
 
 return {
     should_update_when_update_is_received = function(_, expect)
-        local Dep = Vinum.Value {
+        local scope = Vinum.Scoped()
+        local Dep = scope:Value {
             {value = 10}            
         }
-        local value = Vinum.SliceOf(Dep, "value")
+        local value = scope:SliceOf(Dep, "value")
 
         Vinum.Write(Dep, {value = 20})
         expect(Vinum.Read(value)).to.equal(20)

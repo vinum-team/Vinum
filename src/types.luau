@@ -1,9 +1,11 @@
 --!strict
+export type Trait<T> = {value: T, fn: (T) -> (), type: "trait"}
 
 export type State<Value> = {
     type: string,
-    value: Value,
-    node: Node
+    value: Trait<Value>,
+    node: Node,
+    scope: {[any]: any}
 }
 
 export type refState<Value> = {
@@ -21,7 +23,7 @@ export type Node = {
     cancelableTasks: {any}
 }
 
-export type Computer<Value> = (Node: Node) -> Value
+export type Computer<Value> = (Node: Node) -> Trait<Value>
 
 export type Compute<Value> = State<Value> & {
     _computer: Computer<Value>,
@@ -33,10 +35,11 @@ export type Listen<Value> = State<Value> & {
     update: (self: Listen<Value>) -> boolean
 }
 
-
 export type SliceOf = State<any> & {
     _owner: State<{[any]: any}>,
     _key: any,
     update: (self: SliceOf) -> boolean,
 }
+
+
 return {}
