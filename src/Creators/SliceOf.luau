@@ -16,7 +16,7 @@ local function SliceOf(scope, state: types.EitherState<{[any]: any}>, Key: any):
     local _state = getState(state)
     local self = {
         type = "SliceOf",
-        value =  Borrowed({}:: any),
+        value =  Borrowed({}),
         update = SliceOfUpdater,
         _owner = _state,
         _key = Key,
