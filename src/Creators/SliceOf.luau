@@ -4,9 +4,11 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local Node = require(Internal.Node)
 local getState = require(Internal.getState)
+local Memory = Package.Memory
+local Borrowed = require(Memory.Borrowed)
 
 local function SliceOfUpdater(self: types.SliceOf)
-    self.value = self._owner.value[self._key]
+    self.value.value = self._owner.value.value[self._key]
     return true
 end
 
@@ -14,7 +16,7 @@ local function SliceOf(scope, state: types.EitherState<{[any]: any}>, Key: any):
     local _state = getState(state)
     local self = {
         type = "SliceOf",
-        value = {} :: any,
+        value =  Borrowed({}:: any),
         update = SliceOfUpdater,
         _owner = _state,
         _key = Key,
