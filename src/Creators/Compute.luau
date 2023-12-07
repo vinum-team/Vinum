@@ -5,6 +5,7 @@ local Internal = Package.Internal
 local Node = require(Internal.Node)
 
 local function ComputeUpdater<T>(self: types.Compute<T>)
+    self.value.fn(self.value.value)
     self.value = self._computer(self.node)
     return true
 end
