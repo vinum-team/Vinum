@@ -15,6 +15,8 @@ export type refState<Value> = {
 
 export type EitherState<Value> = State<Value> | refState<Value>
 
+export type Scope<Constructors> = {[number]: EitherState<any> | Scope<Constructors>} & Constructors
+
 type MapStruct<K, V> = {[K]: V}
 
 export type Node = {
