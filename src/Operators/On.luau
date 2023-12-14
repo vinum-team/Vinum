@@ -6,6 +6,8 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local Node = require(Internal.Node)
 local getState = require(Internal.getState)
+local Memory = Package.Memory
+local Borrowed = require(Memory.Borrowed)
 
 local watchedStateToListener: {[types.State<any>]: types.Listen<any>} = setmetatable({}, {_mode = "kvs"}) :: any
 
@@ -18,7 +20,7 @@ local function ListenUpdate(self: types.Listen<any>)
 end
 
 
-local function On(state: types.EitherState<any>, listener: () -> ())
+local function On(_, state: types.EitherState<any>, listener: () -> ())
     local _state = getState(state)
     local myListener do
         if watchedStateToListener[_state]  then
@@ -26,7 +28,7 @@ local function On(state: types.EitherState<any>, listener: () -> ())
         else
             local myState = {
                 type = "Listener",
-                value = {} :: any,
+                value = Borrowed(nil, {}),
                 _connections = {},
                 update = ListenUpdate
             }
@@ -37,10 +39,12 @@ local function On(state: types.EitherState<any>, listener: () -> ())
             myState.node = Node.Node(myState)
             watchedStateToListener[_state] = myState
             myListener = myState
+            _state.node.dependents[myState.node] = true
         end
     end
 
     table.insert(myListener._connections, listener)
+    return myListener
 end
 
 return On

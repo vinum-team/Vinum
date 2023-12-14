@@ -9,7 +9,9 @@ local function Ref<T>(scope, state: types.EitherState<T>): types.refState<T>
 
     -- Any Ref'ed states are technically dependencies from scopes' point of view
     -- and so we kill our scope when myState's scope is killed.
-    table.insert(myState.scope, scope)
+    if myState.scope ~= scope then
+        table.insert(myState.scope, scope)
+    end
     return {
         type = "refState",
         ref = myState

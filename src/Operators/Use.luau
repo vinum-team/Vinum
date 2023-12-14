@@ -6,7 +6,7 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local getState = require(Internal.getState)
 
-local function Use<T>(dependent: types.Node, dependency: types.EitherState<T>): T
+local function Use<T>(_, dependent: types.Node, dependency: types.EitherState<T>): T
     local dependencyState = getState(dependency)
     dependencyState.node.dependents[dependent] = true
     -- FIXME: While dependency links are entirely dynamic, scope links

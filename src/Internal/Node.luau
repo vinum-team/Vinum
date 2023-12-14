@@ -73,7 +73,9 @@ local function updateAll(root: Node)
 			innerNode.owner.update(innerNode.owner)
 		end
 		updateAll(innerNode)
+		innerNode.dependents = {}
 	end
+	root.dependents = {}
 end
 
 return {

@@ -6,7 +6,7 @@ local types = require(Package.types)
 local Memory = Package.Memory
 local Trait = require(Memory.Trait)
 
-local function MakeOwned<T>(fn: (value: T) -> ())
+local function MakeOwned<T>(_, fn: (value: T) -> ())
     return function(value: T): types.Trait<T>
         return Trait(value, fn)
     end

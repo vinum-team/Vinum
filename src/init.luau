@@ -12,13 +12,30 @@ local scoped = scoper({
     Ref = Ref
 })
 
+local On = require(script.Operators.On)
+local Use =  require(script.Operators.Use)
+local Read = require(script.Operators.Read)
+local Write = require(script.Operators.Write)
+
+local Operators = {
+    Read = Read,
+    Write = Write,
+    On = On,
+    Use = Use,
+}
+
+local MakeOwned = require(script.Memory.MakeOwned)
+local Borrowed = require(script.Memory.Borrowed)
+local Kill = require(script.Memory.Kill)
+
+local Memos = {
+    MakeOwned = MakeOwned,
+    Borrowed = Borrowed,
+    Kill = Kill
+}
+
 return {
     Scoped = scoped,
-    Read = require(script.Operators.Read),
-    Write = require(script.Operators.Write),
-    On = require(script.Operators.On),
-    Use = require(script.Operators.Use),
-    MakeOwned = require(script.Memory.MakeOwned),
-    Borrowed = require(script.Memory.Borrowed),
-    Kill = require(script.Memory.Kill)
+    Operators = Operators,
+    Memos = Memos
 }

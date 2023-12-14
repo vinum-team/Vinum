@@ -9,7 +9,7 @@ local Borrowed = require(Memory.Borrowed)
 local function Value<T>(scope, value: T): types.State<T>
     local self = {
         type = "Value",
-        value = Borrowed(value),
+        value = Borrowed(nil, value),
         scope  = scope
     }
 
