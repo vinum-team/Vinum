@@ -16,6 +16,7 @@ local function cancelAllTasksFor(Node: Node)
 	for _, cTask in Node.cancelableTasks do
 		cTask:cancel()
 	end
+	Node.cancelableTasks = {}
 end
 
 -- Credit: https://blog.elttob.uk/2022/11/07/sets-efficient-topological-search.html

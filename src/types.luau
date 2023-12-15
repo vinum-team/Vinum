@@ -19,10 +19,15 @@ type MapStruct<K, V> = { [K]: V }
 
 export type Scope<Constructors> = {EitherState<any> | {EitherState<any>}} & Constructors
 
+export type CancelableTask = {
+	cancel: (self: CancelableTask) -> (),
+	[any]: any
+}
+
 export type Node = {
 	owner: any,
 	dependents: MapStruct<Node, boolean>,
-	cancelableTasks: { any },
+	cancelableTasks: { CancelableTask },
 }
 
 export type Computer<Value> = (Node: Node) -> Trait<Value>
