@@ -3,13 +3,15 @@ local Compute = require(script.Creators.Compute)
 local SliceOf = require(script.Creators.SliceOf)
 local Value = require(script.Creators.Value)
 local Ref = require(script.Creators.Ref)
+local Map = require(script.Creators.Map)
 
 local scoper = require(script.Memory.Scoper)
 local scoped = scoper({
     Compute = Compute,
     SliceOf = SliceOf,
     Value = Value,
-    Ref = Ref
+    Ref = Ref,
+    Map = Map
 })
 
 local On = require(script.Operators.On)
