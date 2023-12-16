@@ -80,6 +80,6 @@ local function updateAll(root: Node)
 end
 
 return {
-    Node = Node,
-    updateAll = updateAll
+	Node = Node,
+	updateAll = updateAll,
 }

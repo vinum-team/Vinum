@@ -17,11 +17,11 @@ export type EitherState<Value> = State<Value> | refState<Value>
 
 type MapStruct<K, V> = { [K]: V }
 
-export type Scope<Constructors> = {EitherState<any> | {EitherState<any>}} & Constructors
+export type Scope<Constructors> = { EitherState<any> | { EitherState<any> } } & Constructors
 
 export type CancelableTask = {
 	cancel: (self: CancelableTask) -> (),
-	[any]: any
+	[any]: any,
 }
 
 export type Node = {

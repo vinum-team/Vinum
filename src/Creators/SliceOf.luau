@@ -8,25 +8,25 @@ local Memory = Package.Memory
 local Borrowed = require(Memory.Borrowed)
 
 local function SliceOfUpdater(self: types.SliceOf)
-    self.value.value = self._owner.value.value[self._key]
-    return true
+	self.value.value = self._owner.value.value[self._key]
+	return true
 end
 
-local function SliceOf(scope, state: types.EitherState<{[any]: any}>, Key: any): types.SliceOf
-    local _state = getState(state)
-    local self = {
-        type = "SliceOf",
-        value =  Borrowed(nil, {}),
-        update = SliceOfUpdater,
-        _owner = _state,
-        _key = Key,
-        scope = scope
-    }
+local function SliceOf(scope, state: types.EitherState<{ [any]: any }>, Key: any): types.SliceOf
+	local _state = getState(state)
+	local self = {
+		type = "SliceOf",
+		value = Borrowed(nil, {}),
+		update = SliceOfUpdater,
+		_owner = _state,
+		_key = Key,
+		scope = scope,
+	}
 
-    self.node = Node.Node(self)
-    _state.node.dependents[self.node] = true
+	self.node = Node.Node(self)
+	_state.node.dependents[self.node] = true
 
-    return self
+	return self
 end
 
 return SliceOf

@@ -6,7 +6,7 @@ local getState = require(Internal.getState)
 local types = require(Package.types)
 
 local function Kill(_, scope: types.Scope<{}>)
-	for _, object in (scope :: any) do
+	for _, object in scope :: any do
 		if object.type and type(object.type) == "string" then
 			local _object = getState(object)
 			_object.value.fn(_object.value.value)

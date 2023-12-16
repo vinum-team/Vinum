@@ -3,11 +3,11 @@
 
 local Package = script.Parent.Parent
 local types = require(Package.types)
-local Internal= Package.Internal
+local Internal = Package.Internal
 local getState = require(Internal.getState)
 
 local function Read<T>(self, object: types.EitherState<T>): T
-    return getState(object).value.value
+	return getState(object).value.value
 end
 
 return Read

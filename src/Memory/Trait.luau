@@ -4,7 +4,7 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 
 local function Trait<T>(value: T, fn: (value: T) -> ()): types.Trait<T>
-    return { value = value, fn = fn, type = "trait"}
+	return { value = value, fn = fn, type = "trait" }
 end
 
 return Trait

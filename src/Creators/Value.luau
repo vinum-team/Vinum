@@ -7,15 +7,15 @@ local Memory = Package.Memory
 local Borrowed = require(Memory.Borrowed)
 
 local function Value<T>(scope, value: T): types.State<T>
-    local self = {
-        type = "Value",
-        value = Borrowed(nil, value),
-        scope  = scope
-    }
+	local self = {
+		type = "Value",
+		value = Borrowed(nil, value),
+		scope = scope,
+	}
 
-    table.insert(scope, self)
-    self.node = Node.Node(self)
-    return self
+	table.insert(scope, self)
+	self.node = Node.Node(self)
+	return self
 end
 
 return Value

@@ -11,20 +11,20 @@ local types = require(Package.types)
 local function Map<T>(
 	scope,
 	myState: types.EitherState<any>,
-	cases: { [any | "default"]: types.Trait<T> | types.EitherState<T>}
+	cases: { [any | "default"]: types.Trait<T> | types.EitherState<T> }
 ): types.Compute<T>
 	return Compute(scope, function(Node: types.Node)
 		local myState = getState(myState)
 		local myValue = Use(nil, Node, myState)
-        local chosenArm = cases[myValue] or cases["default"]
+		local chosenArm = cases[myValue] or cases["default"]
 
-        if chosenArm.type == "trait" then
-            return chosenArm :: types.Trait<T>
-        else
-            local _chosenArm = getState(chosenArm)
-            Use(nil, Node, _chosenArm)
-            return _chosenArm.value
-        end
+		if chosenArm.type == "trait" then
+			return chosenArm :: types.Trait<T>
+		else
+			local _chosenArm = getState(chosenArm)
+			Use(nil, Node, _chosenArm)
+			return _chosenArm.value
+		end
 	end)
 end
 
