@@ -37,11 +37,6 @@ export type Compute<Value> = State<Value> & {
 	update: (self: Compute<Value>) -> boolean,
 }
 
-export type Listen<Value> = State<Value> & {
-	_connections: { () -> () },
-	update: (self: Listen<Value>) -> boolean,
-}
-
 export type SliceOf = State<any> & {
 	_owner: State<{ [any]: any }>,
 	_key: any,
