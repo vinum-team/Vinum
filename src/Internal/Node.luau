@@ -4,7 +4,7 @@ local types = require(Package.types)
 
 type Node = types.Node
 
-local function Node(owner: types.State<any>): types.Node
+local function Node(owner: any): types.Node
 	return {
 		owner = owner,
 		dependents = {},
@@ -74,9 +74,7 @@ local function updateAll(root: Node)
 			innerNode.owner.update(innerNode.owner)
 		end
 		updateAll(innerNode)
-		innerNode.dependents = {}
 	end
-	root.dependents = {}
 end
 
 return {

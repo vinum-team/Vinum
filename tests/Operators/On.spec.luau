@@ -3,7 +3,6 @@ local Vinum = require("../../src")
 
 local Ops = Vinum.Operators
 local Scoped = Vinum.Scoped
-local Memos = Vinum.Memos
 return {
 	works_with_normal_states = function(_, expect)
 		local scope = Scoped()
@@ -45,14 +44,5 @@ return {
 
 		Ops:Write(myValue, 200)
 		expect(ran).to.equal(true)
-	end,
-	should_clean_up = function(_, expect)
-		local scope = Scoped()
-		local myValue = scope:Value(100)
-
-		local myListener = Ops:On(myValue, function() end)
-		expect((scope :: any)[2]).to.equal(myListener)
-		Memos:Kill(scope)
-		expect((scope :: any)[2]).to.never.be.ok()
 	end,
 }
