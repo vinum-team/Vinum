@@ -28,6 +28,7 @@ export type Node = {
 	owner: any,
 	dependents: MapStruct<Node, boolean>,
 	cancelableTasks: { CancelableTask },
+	dependentAdded: ((self: Node) -> ())?
 }
 
 export type Computer<Value> = (Node: Node) -> Trait<Value>
