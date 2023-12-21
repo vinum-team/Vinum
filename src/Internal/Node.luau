@@ -4,11 +4,12 @@ local types = require(Package.types)
 
 type Node = types.Node
 
-local function Node(owner: any): types.Node
+local function Node(owner: any, dependentAdded: ((self: types.Node) -> ())?): types.Node
 	return {
 		owner = owner,
 		dependents = {},
 		cancelableTasks = {},
+		dependentAdded = dependentAdded
 	}
 end
 

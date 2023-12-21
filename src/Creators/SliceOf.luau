@@ -4,6 +4,7 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local Node = require(Internal.Node)
 local GetState = require(Internal.GetState)
+local AddDependentUtils = require(Internal.AddDependentUtils)
 local Memory = Package.Memory
 local Borrowed = require(Memory.Borrowed)
 
@@ -24,7 +25,7 @@ local function SliceOf(scope, state: types.EitherState<{ [any]: any }>, Key: any
 	}
 
 	self.node = Node.Node(self)
-	_state.node.dependents[self.node] = true
+	AddDependentUtils.addDependent_nodes(_state.node, self.node)
 
 	return self
 end

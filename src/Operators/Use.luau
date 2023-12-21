@@ -5,10 +5,11 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
 local GetState = require(Internal.GetState)
+local AddDependentUtils = require(Internal.AddDependentUtils)
 
 local function Use<T>(_, dependent: types.Node, dependency: types.EitherState<T>): T
 	local dependencyState = GetState(dependency)
-	dependencyState.node.dependents[dependent] = true
+	AddDependentUtils.addDependent_nodes(dependencyState.node, dependent)
 	-- FIXME: While dependency links are entirely dynamic, scope links
 	-- aren't. This needs some design to find a very performant solution
 	-- that doesn't overcomplicate the ocdebase and doesn't eat up
