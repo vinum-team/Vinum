@@ -23,8 +23,6 @@ local function On(_, state: types.EitherState<any>, listener: () -> ())
 
 	listenerOwner.node = Node.Node(listenerOwner)
 	AddDependentUtils.addDependent_nodes(_state.node, listenerOwner.node)
-
-	table.insert(_state.scope, listenerOwner)
 end
 
 return On
