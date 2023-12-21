@@ -5,7 +5,7 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
 local Node = require(Internal.Node)
-local getState = require(Internal.getState)
+local GetState = require(Internal.GetState)
 
 local function runnConnection(self)
 	self._connection()
@@ -14,7 +14,7 @@ local function runnConnection(self)
 end
 
 local function On(_, state: types.EitherState<any>, listener: () -> ())
-	local _state = getState(state)
+	local _state = GetState(state)
 	local listenerOwner = {
 		_connection = listener,
 		update = runnConnection,

@@ -3,7 +3,7 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
 local Node = require(Internal.Node)
-local getState = require(Internal.getState)
+local GetState = require(Internal.GetState)
 local Memory = Package.Memory
 local Borrowed = require(Memory.Borrowed)
 
@@ -13,7 +13,7 @@ local function SliceOfUpdater(self: types.SliceOf)
 end
 
 local function SliceOf(scope, state: types.EitherState<{ [any]: any }>, Key: any): types.SliceOf
-	local _state = getState(state)
+	local _state = GetState(state)
 	local self = {
 		type = "SliceOf",
 		value = Borrowed(nil, {}),
