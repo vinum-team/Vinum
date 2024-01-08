@@ -7,7 +7,7 @@ local GetState = require(Internal.GetState)
 local function addDependent_nodes(dependencyNode: types.Node, dependentNode: types.Node)
 	dependencyNode.dependents[dependentNode] = true
 	if dependencyNode.dependentAdded then
-		(dependencyNode :: any):dependentAdded()
+		(dependencyNode :: any):dependentAdded(dependentNode)
 	end
 end
 
