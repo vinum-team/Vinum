@@ -4,7 +4,7 @@ local SliceOf = require(script.Creators.SliceOf)
 local Value = require(script.Creators.Value)
 local Ref = require(script.Creators.Ref)
 local Map = require(script.Creators.Map)
-local Channel = require(script.Creators.Channel)
+local Stream = require(script.Creators.Stream)
 
 local scoper = require(script.Memory.Scoper)
 local scoped = scoper({
@@ -13,7 +13,7 @@ local scoped = scoper({
 	Value = Value,
 	Ref = Ref,
 	Map = Map,
-	Channel = Channel
+	Stream = Stream,
 })
 
 local On = require(script.Operators.On)
