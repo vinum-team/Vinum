@@ -1,6 +1,7 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
+local Context = require(script.Parent.Context)
 
 type Node = types.Node
 
@@ -71,11 +72,13 @@ end
 local function updateAll(root: Node)
 	for innerNode in root.dependents do
 		cancelAllTasksFor(innerNode)
+		Context.current_node = innerNode
 		if innerNode.owner.update then
 			innerNode.owner.update(innerNode.owner)
 		end
 		updateAll(innerNode)
 	end
+	Context.current_node = nil
 end
 
 return {
