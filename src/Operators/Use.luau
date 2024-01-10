@@ -12,7 +12,7 @@ local function Use<T>(_, dependent: types.Node, dependency: types.EitherState<T>
 	AddDependentUtils.addDependent_nodes(dependencyState.node, dependent)
 	-- FIXME: While dependency links are entirely dynamic, scope links
 	-- aren't. This needs some design to find a very performant solution
-	-- that doesn't overcomplicate the ocdebase and doesn't eat up
+	-- that doesn't overcomplicate the codebase and doesn't eat up
 	-- performance.
 	if dependencyState.scope ~= dependent.owner.scope then
 		table.insert(dependencyState.scope, dependent.owner.scope)
