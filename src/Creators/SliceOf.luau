@@ -2,14 +2,15 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
-local Node = require(Internal.Node)
+local RNode = require(Internal.RNode)
 local GetState = require(Internal.GetState)
-local AddDependentUtils = require(Internal.AddDependentUtils)
+local AddDependent = require(Internal.AddDependent)
 local Memory = Package.Memory
 local Borrowed = require(Memory.Borrowed)
 
 local function SliceOfUpdater(self: types.SliceOf)
 	self.value.value = self._owner.value.value[self._key]
+	AddDependent(self._owner.node, self.node)
 	return true
 end
 
@@ -17,15 +18,15 @@ local function SliceOf(scope, state: types.EitherState<{ [any]: any }>, Key: any
 	local _state = GetState(state)
 	local self = {
 		type = "SliceOf",
-		value = Borrowed(nil, {}),
-		update = SliceOfUpdater,
+		value = Borrowed({}),
+		onUpdate = SliceOfUpdater,
 		_owner = _state,
 		_key = Key,
 		scope = scope,
 	}
 
-	self.node = Node.Node(self)
-	AddDependentUtils.addDependent_nodes(_state.node, self.node)
+	self.node = RNode(self :: any)
+	AddDependent(_state.node, self.node)
 
 	return self
 end

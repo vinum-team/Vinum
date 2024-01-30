@@ -1,7 +1,10 @@
 --!strict
 local Vinum = require("../../src")
 local Scoped = Vinum.Scoped
-local Ops = Vinum.Operators
+
+local Read = Vinum.Read
+local Write = Vinum.Write
+
 return {
 	should_update_when_dependency_changes = function(_, expect)
 		local scope = Scoped()
@@ -10,9 +13,9 @@ return {
 			Name = "Sinlerdev",
 		})
 		local HealthKey = scope:SliceOf(struct, "Health")
-		Ops:Write(struct, { Health = 50, Name = "" })
+		Write(struct, { Health = 50, Name = "" })
 
-		expect(Ops:Read(HealthKey)).to.equal(50)
+		expect(Read(HealthKey)).to.equal(50)
 	end,
 	should_update_through_direct_writing = function(_, expect)
 		local scope = Scoped()
@@ -21,8 +24,8 @@ return {
 			Name = "Sinlerdev",
 		})
 		local HealthKey = scope:SliceOf(struct, "Health")
-		Ops:Write(HealthKey, 50)
-		expect(Ops:Read(HealthKey)).to.equal(50)
-		expect(Ops:Read(struct).Health).to.equal(50)
+		Write(HealthKey, 50)
+		expect(Read(HealthKey)).to.equal(50)
+		expect(Read(struct).Health).to.equal(50)
 	end,
 }

@@ -4,7 +4,6 @@ local SliceOf = require(script.Creators.SliceOf)
 local Value = require(script.Creators.Value)
 local Ref = require(script.Creators.Ref)
 local Map = require(script.Creators.Map)
-local Stream = require(script.Creators.Stream)
 
 local scoper = require(script.Memory.Scoper)
 local scoped = scoper({
@@ -13,7 +12,6 @@ local scoped = scoper({
 	Value = Value,
 	Ref = Ref,
 	Map = Map,
-	Stream = Stream,
 })
 
 local On = require(script.Operators.On)
@@ -21,25 +19,18 @@ local Use = require(script.Operators.Use)
 local Read = require(script.Operators.Read)
 local Write = require(script.Operators.Write)
 
-local Operators = {
-	Read = Read,
-	Write = Write,
-	On = On,
-	Use = Use,
-}
 
 local MakeOwned = require(script.Memory.MakeOwned)
 local Borrowed = require(script.Memory.Borrowed)
 local Kill = require(script.Memory.Kill)
 
-local Memos = {
-	MakeOwned = MakeOwned,
-	Borrowed = Borrowed,
-	Kill = Kill,
-}
-
 return {
 	Scoped = scoped,
-	Operators = Operators,
-	Memos = Memos,
+	On = On, 
+	Use = Use, 
+	Read = Read, 
+	Write = Write,
+	MakeOwned = MakeOwned, 
+	Borrowed = Borrowed,
+	Kill = Kill
 }

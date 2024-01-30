@@ -1,12 +1,18 @@
 --!strict
 local Vinum = require("../../src")
-local Ops = Vinum.Operators
-local Memos = Vinum.Memos
+
 local Scoped = Vinum.Scoped
+local Use = Vinum.Use
+local Read = Vinum.Read
+local Write = Vinum.Write
+
+
+local MakeOwned = Vinum.MakeOwned
+local Borrowed = Vinum.Borrowed
 
 local function returner(x)
 	return function(x)
-		return Memos:Borrowed(x)
+		return Borrowed(x)
 	end
 end
 
@@ -19,28 +25,28 @@ return {
 		local scope = Scoped()
 		local dep = scope:Value(100)
 		local computed = scope:Compute(function(Node)
-			return Memos:Borrowed(Ops:Use(Node, dep) / 2)
+			return Borrowed(Use(Node, dep) / 2)
 		end)
 
-		expect(Ops:Read(computed)).to.equal(50)
-		Ops:Write(dep, 50)
-		expect(Ops:Read(computed)).to.equal(25)
+		expect(Read(computed)).to.equal(50)
+		Write(dep, 50)
+		expect(Read(computed)).to.equal(25)
 	end,
 	should_invoke_older_trait = function(_, expect)
 		local isDestroyed = false
 
 		local scope = Scoped()
-		local Owned = Memos:MakeOwned(function(value)
+		local Owned = MakeOwned(function(value)
 			isDestroyed = true
 		end)
 		local dep = scope:Value(100)
 		scope:Compute(function(Node)
-			Ops:Use(Node, dep)
+			Use(Node, dep)
 			return Owned(true)
 		end)
 
 		expect(isDestroyed).to.equal(false)
-		Ops:Write(dep, 200)
+		Write(dep, 200)
 		expect(isDestroyed).to.equal(true)
 	end,
 }

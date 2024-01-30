@@ -8,7 +8,7 @@ local Trait = require(Memory.Trait)
 
 local function fn() end
 
-local function Borrowed<T>(self, value: T): types.Trait<T>
+local function Borrowed<T>(value: T): types.Trait<T>
 	return Trait(value, fn)
 end
 

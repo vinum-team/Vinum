@@ -4,7 +4,7 @@ export type Trait<T> = { value: T, fn: (T) -> (), type: "trait" }
 export type State<Value> = {
 	type: string,
 	value: Trait<Value>,
-	node: Node,
+	node: RNode,
 	scope: { [any]: any },
 }
 
@@ -24,24 +24,34 @@ export type CancelableTask = {
 	[any]: any,
 }
 
-export type Node = {
-	owner: any,
-	dependents: MapStruct<Node, boolean>,
-	cancelableTasks: { CancelableTask },
-	dependentAdded: ((self: Node, dependent: Node) -> ())?
-}
-
-export type Computer<Value> = (Node: Node) -> Trait<Value>
+export type Computer<Value> = (RNode: RNode) -> Trait<Value>
 
 export type Compute<Value> = State<Value> & {
 	_computer: Computer<Value>,
-	update: (self: Compute<Value>) -> boolean,
+	onUpdate: (self: Compute<Value>) -> boolean,
 }
 
 export type SliceOf = State<any> & {
 	_owner: State<{ [any]: any }>,
 	_key: any,
-	update: (self: SliceOf) -> boolean,
+	onUpdate: (self: SliceOf) -> boolean,
 }
 
+export type CTask = {
+    cancel: (self: CTask) -> (),
+    [any]: any
+}
+
+export type Owner = {
+    onUpdate: ((self: Owner) -> ())?,
+    [any]: any
+}
+
+
+export type RNode = {
+    owner: Owner,
+	dependents: {[RNode]: boolean},
+	cancelableTasks: { CTask },
+    onDependentAdded: ((self: RNode, dependent: RNode) -> ())?
+}
 return {}

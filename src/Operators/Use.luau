@@ -5,19 +5,20 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
 local GetState = require(Internal.GetState)
-local AddDependentUtils = require(Internal.AddDependentUtils)
+local AddDependent = require(Internal.AddDependent)
 
-local function Use<T>(_, dependent: types.Node, dependency: types.EitherState<T>): T
+local Read = require(script.Parent.Read)
+
+type RNode = types.RNode
+local function Use<T>(dependent: RNode, dependency: types.EitherState<T>): T
 	local dependencyState = GetState(dependency)
-	AddDependentUtils.addDependent_nodes(dependencyState.node, dependent)
-	-- FIXME: While dependency links are entirely dynamic, scope links
-	-- aren't. This needs some design to find a very performant solution
-	-- that doesn't overcomplicate the codebase and doesn't eat up
-	-- performance.
+
+	AddDependent(dependencyState.node, dependent)
+	
 	if dependencyState.scope ~= dependent.owner.scope then
 		table.insert(dependencyState.scope, dependent.owner.scope)
 	end
-	return dependencyState.value.value
+	return Read(dependencyState)
 end
 
 return Use

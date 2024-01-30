@@ -5,7 +5,7 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local types = require(Package.types)
 
-local function Kill(_, scope: types.Scope<{}>)
+local function Kill(scope: types.Scope<{}>)
 	for _, object in scope :: any do
 		if object.type and object.value then
 			local _object = GetState(object)
@@ -19,7 +19,7 @@ local function Kill(_, scope: types.Scope<{}>)
 				table.clear(object)
 			end
 		else
-			Kill(nil :: any, object)
+			Kill(object)
 		end
 	end
 	table.clear(scope)

@@ -6,8 +6,10 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 
-local function Read<T>(self, object: types.EitherState<T>): T
-	return GetState(object).value.value
+local function Read<T>(object: types.EitherState<T>): T
+	local state = GetState(object)
+
+	return state.value.value
 end
 
 return Read
