@@ -80,9 +80,25 @@ local ok, err = pcall(function()
     CrescTest.runLune("procTests", CrescTest.expect)
 end)
 
+local function run(path)
+	for _, itemName in fs.readDir(path) do
+		local itemPath = `{path}/{itemName}`
+		if fs.isFile(itemPath) and itemName:find(".luau") then
+			require(`../` .. itemPath)
+		elseif fs.isDir(itemPath) then
+			run(itemPath)
+		end
+	end
+end
+
+fs.copy("benchmarks", "proc-bench")
+transformSrc("proc-bench")
+run("proc-bench")
+
 if not ok then
     warn(err)
 end
 
+fs.removeDir("proc-bench")
 fs.removeDir("procSrc")
 fs.removeDir("procTests")
