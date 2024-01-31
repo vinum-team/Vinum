@@ -14,7 +14,7 @@ local function Use<T>(dependent: RNode, dependency: types.EitherState<T>): T
 	local dependencyState = GetState(dependency)
 
 	AddDependent(dependencyState.node, dependent)
-	
+
 	if dependencyState.scope ~= dependent.owner.scope then
 		table.insert(dependencyState.scope, dependent.owner.scope)
 	end

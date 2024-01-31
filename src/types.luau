@@ -38,20 +38,19 @@ export type SliceOf = State<any> & {
 }
 
 export type CTask = {
-    cancel: (self: CTask) -> (),
-    [any]: any
+	cancel: (self: CTask) -> (),
+	[any]: any,
 }
 
 export type Owner = {
-    onUpdate: ((self: Owner) -> ())?,
-    [any]: any
+	onUpdate: ((self: Owner) -> ())?,
+	[any]: any,
 }
 
-
 export type RNode = {
-    owner: Owner,
-	dependents: {[RNode]: boolean},
+	owner: Owner,
+	dependents: { [RNode]: boolean },
 	cancelableTasks: { CTask },
-    onDependentAdded: ((self: RNode, dependent: RNode) -> ())?
+	onDependentAdded: ((self: RNode, dependent: RNode) -> ())?,
 }
 return {}
