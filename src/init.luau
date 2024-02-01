@@ -6,12 +6,21 @@ local Ref = require(script.Creators.Ref)
 local Map = require(script.Creators.Map)
 
 local scoper = require(script.Memory.Scoper)
+local InnerScope = require(script.Operators.InnerScope)
+
+local function Add(scope, thing)
+	table.insert(scope, thing)
+
+	return thing
+end
 local scoped = scoper({
 	Compute = Compute,
 	SliceOf = SliceOf,
 	Value = Value,
 	Ref = Ref,
 	Map = Map,
+	InnerScope  = InnerScope,
+	Add = Add
 })
 
 local On = require(script.Operators.On)
@@ -19,8 +28,6 @@ local Use = require(script.Operators.Use)
 local Read = require(script.Operators.Read)
 local Write = require(script.Operators.Write)
 
-local MakeOwned = require(script.Memory.MakeOwned)
-local Borrowed = require(script.Memory.Borrowed)
 local Kill = require(script.Memory.Kill)
 
 return {
@@ -29,7 +36,5 @@ return {
 	Use = Use,
 	Read = Read,
 	Write = Write,
-	MakeOwned = MakeOwned,
-	Borrowed = Borrowed,
 	Kill = Kill,
 }

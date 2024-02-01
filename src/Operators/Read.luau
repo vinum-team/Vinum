@@ -9,7 +9,7 @@ local GetState = require(Internal.GetState)
 local function Read<T>(object: types.EitherState<T>): T
 	local state = GetState(object)
 
-	return state.value.value
+	return state.value
 end
 
 return Read

@@ -13,14 +13,14 @@ do TITLE "Compute"
     BENCH("Creating Computes", function()  
         for i = 1, START(20_000) do
             Scope:Compute(function(RNode)  
-                return Vinum.Borrowed(1)
+                return 1
             end)
         end
     end)
 
     BENCH("Updating Computes", function()  
         local v = Scope:Compute(function(RNode)  
-                return Vinum.Borrowed(1)
+                return 1
         end)
 
         for i = 1, START(20_000) do

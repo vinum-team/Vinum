@@ -6,8 +6,6 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local Internal = Package.Internal
 local UpdateAll = require(Internal.UpdateAll)
-local Memory = Package.Memory
-local Borrowed = require(Memory.Borrowed)
 
 local function Write<T>(object: types.State<T>, newValue: T)
 	-- Implementing hard-coded support for SliceOfs is awkward
@@ -15,10 +13,10 @@ local function Write<T>(object: types.State<T>, newValue: T)
 	-- will not affect the API, so backwards compatibility wouldn't be violated.
 	if object.type == "SliceOf" then
 		local _object = object :: types.SliceOf
-		_object._owner.value.value[_object._key] = newValue
+		_object._owner.value[_object._key] = newValue
 		UpdateAll(_object._owner.node)
 	else
-		object.value = Borrowed(newValue)
+		object.value = newValue
 		UpdateAll(object.node)
 	end
 end

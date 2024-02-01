@@ -1,11 +1,9 @@
 --!strict
-export type Trait<T> = { value: T, fn: (T) -> (), type: "trait" }
-
 export type State<Value> = {
 	type: string,
-	value: Trait<Value>,
+	value: Value,
 	node: RNode,
-	scope: { [any]: any },
+	scope: any
 }
 
 export type refState<Value> = {
@@ -17,14 +15,9 @@ export type EitherState<Value> = State<Value> | refState<Value>
 
 type MapStruct<K, V> = { [K]: V }
 
-export type Scope<Constructors> = { EitherState<any> | { EitherState<any> } } & Constructors
+export type Scope<Constructors> = { any } & Constructors
 
-export type CancelableTask = {
-	cancel: (self: CancelableTask) -> (),
-	[any]: any,
-}
-
-export type Computer<Value> = (RNode: RNode) -> Trait<Value>
+export type Computer<Value> = (RNode: RNode) -> Value
 
 export type Compute<Value> = State<Value> & {
 	_computer: Computer<Value>,
