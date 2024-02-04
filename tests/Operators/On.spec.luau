@@ -8,7 +8,7 @@ local Write = Vinum.Write
 return {
 	works_with_normal_states = function(_, expect)
 		local scope = Scoped()
-		local myValue = scope:Value(100)
+		local myValue = scope:Source(100)
 		local ran = true
 		On(myValue, function()
 			ran = not ran
@@ -21,7 +21,7 @@ return {
 	end,
 	can_connect_more_than_one_connection = function(_, expect)
 		local scope = Scoped()
-		local myValue = scope:Value(100)
+		local myValue = scope:Source(100)
 
 		local runs = 0
 		for i = 1, 2, 1 do
@@ -35,7 +35,7 @@ return {
 	end,
 	can_unwrap_refs = function(_, expect)
 		local scope = Scoped()
-		local myValue = scope:Value(100)
+		local myValue = scope:Source(100)
 		local Ref = scope:Ref(myValue)
 
 		local ran = false

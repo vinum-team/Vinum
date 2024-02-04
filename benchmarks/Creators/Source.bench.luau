@@ -7,10 +7,10 @@ local function TITLE(name: string)
 end
 
 local Scope = Vinum.Scoped()
-do TITLE "Values"
-    BENCH("Creating Values", function()  
+do TITLE "Sources"
+    BENCH("Creating Sources", function()  
     for i = 1, START(20_000) do
-        Scope:Value(i)
+        Scope:Source(i)
     end
     end)
 end

@@ -11,8 +11,8 @@ local function Write<T>(object: types.State<T>, newValue: T)
 	-- Implementing hard-coded support for SliceOfs is awkward
 	-- but its fine for now, and any change that might occur regarding this
 	-- will not affect the API, so backwards compatibility wouldn't be violated.
-	if object.type == "SliceOf" then
-		local _object = object :: types.SliceOf
+	if object.type == "Select" then
+		local _object = object :: types.Select
 		_object._owner.value[_object._key] = newValue
 		UpdateAll(_object._owner.node)
 	else

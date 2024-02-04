@@ -1,7 +1,7 @@
 --!strict
-local Compute = require(script.Creators.Compute)
-local SliceOf = require(script.Creators.SliceOf)
-local Value = require(script.Creators.Value)
+local Derived = require(script.Creators.Derived)
+local Select = require(script.Creators.Select)
+local Source = require(script.Creators.Source)
 local Ref = require(script.Creators.Ref)
 local Map = require(script.Creators.Map)
 
@@ -14,9 +14,9 @@ local function Add(scope, thing)
 	return thing
 end
 local scoped = scoper({
-	Compute = Compute,
-	SliceOf = SliceOf,
-	Value = Value,
+	Derived = Derived,
+	Select = Select,
+	Source = Source,
 	Ref = Ref,
 	Map = Map,
 	InnerScope = InnerScope,

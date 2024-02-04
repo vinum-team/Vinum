@@ -19,15 +19,15 @@ export type Scope<Constructors> = { any } & Constructors
 
 export type Computer<Value> = (RNode: RNode) -> Value
 
-export type Compute<Value> = State<Value> & {
+export type Derived<Value> = State<Value> & {
 	_computer: Computer<Value>,
-	onUpdate: (self: Compute<Value>) -> boolean,
+	onUpdate: (self: Derived<Value>) -> boolean,
 }
 
-export type SliceOf = State<any> & {
+export type Select = State<any> & {
 	_owner: State<{ [any]: any }>,
 	_key: any,
-	onUpdate: (self: SliceOf) -> boolean,
+	onUpdate: (self: Select) -> boolean,
 }
 
 export type CTask = {

@@ -6,7 +6,7 @@ local RNode = require(Internal.RNode)
 
 local function Value<T>(scope, value: T): types.State<T>
 	local self = {
-		type = "Value",
+		type = "Source",
 		value = value,
 		scope = scope,
 	}

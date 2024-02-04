@@ -4,17 +4,17 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local RNode = require(Internal.RNode)
 
-local function ComputeUpdater<T>(self: types.Compute<T>)
+local function DerivedUpdater<T>(self: types.Derived<T>)
 	self.value = self._computer(self.node)
 
 	return true
 end
 
-local function Compute<T, U>(scope: types.Scope<U>, computer: types.Computer<T>): types.Compute<T>
+local function Derived<T, U>(scope: types.Scope<U>, computer: types.Computer<T>): types.Derived<T>
 	local self = {
-		type = "Compute",
+		type = "Derived",
 		value = 0 :: any,
-		onUpdate = ComputeUpdater :: any,
+		onUpdate = DerivedUpdater :: any,
 		_computer = computer,
 		scope = scope,
 		node = 0 :: any,
@@ -27,4 +27,4 @@ local function Compute<T, U>(scope: types.Scope<U>, computer: types.Computer<T>)
 	return self
 end
 
-return Compute
+return Derived
