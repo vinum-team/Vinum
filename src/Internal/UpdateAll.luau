@@ -3,8 +3,8 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
-local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
-	local naiveDependentsQueue: { types.RNode }, naiveLength = { root }, 1
+local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number ,...: types.RNode)
+	local naiveDependentsQueue: { types.RNode }, naiveLength = { ... }, numberOfRoots
 	local naivePos = 1
 
 	-- first pass - We do a naive toposort where dependencies are placed before their dependents.
@@ -53,6 +53,7 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 		if not disableDependentClearing then
 			myRNode.dependents = nil
 		end
+
 		if myRNode.owner.onUpdate then
 			myRNode.owner.onUpdate(myRNode.owner)
 		end

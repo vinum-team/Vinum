@@ -14,10 +14,10 @@ local function Write<T>(object: types.State<T>, newValue: T)
 	if object.type == "Select" then
 		local _object = object :: types.Select
 		_object._owner.value[_object._key] = newValue
-		UpdateAll(_object._owner.node)
+		UpdateAll(false, 1, _object._owner.node)
 	else
 		object.value = newValue
-		UpdateAll(object.node)
+		UpdateAll(false, 1, object.node)
 	end
 end
 

@@ -27,6 +27,7 @@ local On = require(script.Operators.On)
 local Use = require(script.Operators.Use)
 local Read = require(script.Operators.Read)
 local Write = require(script.Operators.Write)
+local Batch = require(script.Operators.Batch)
 
 local Kill = require(script.Memory.Kill)
 
@@ -37,4 +38,5 @@ return {
 	Read = Read,
 	Write = Write,
 	Kill = Kill,
+	Batch = Batch,
 }

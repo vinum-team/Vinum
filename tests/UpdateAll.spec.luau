@@ -19,7 +19,7 @@ return {
         local a = RNode(Owner("a", tracker))
         AddDependent(root, a)
 
-        UpdateAll(root)
+        UpdateAll(false,  1, root)
 
         expect(tracker[1]).to.equal("root")
         expect(tracker[2]).to.equal("a")
@@ -33,7 +33,7 @@ return {
         AddDependent(a, b)
         AddDependent(a, c)
         AddDependent(b, c)
-        UpdateAll(a)
+        UpdateAll(false, 1, a)
 
         expect(tracker[1]).to.equal("A")
         expect(tracker[2]).to.equal("B")

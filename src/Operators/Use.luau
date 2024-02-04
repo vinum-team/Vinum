@@ -16,7 +16,7 @@ local function Use<T>(dependent: RNode, dependency: types.EitherState<T>): T
 	AddDependent(dependencyState.node, dependent)
 
 	--FIXME: Scopes need rework to support dynamic links.
-	if dependencyState.scope ~= dependent.owner.scope then
+	if dependencyState.scope ~= dependent.owner.scope and table.find(dependencyState.scope, dependent.owner.node) then
 		table.insert(dependencyState.scope, dependent.owner.scope)
 	end
 	return Read(dependencyState)

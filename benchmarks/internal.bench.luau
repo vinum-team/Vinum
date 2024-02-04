@@ -22,7 +22,7 @@ do
 
 		BENCH("with direct dependents", function()
 			for i = 1, START(20_00) do
-				UpdateAll(root, true)
+				UpdateAll(true, 1, root)
 			end
 		end)
 	end
@@ -36,7 +36,7 @@ do
 	AddDependents(a, RNode({}))
 	BENCH("with nested dependents", function()
 		for i = 1, START(20_00) do
-			UpdateAll(root, true)
+			UpdateAll(true, 1, root)
 		end
 	end)
 end
