@@ -5,6 +5,7 @@ local Scoped = Vinum.Scoped
 local Use = Vinum.Use
 local Read = Vinum.Read
 local Write = Vinum.Write
+local On = Vinum.On
 
 local function returner(x)
 	return function(x)
@@ -43,5 +44,21 @@ return {
 		expect(destructed).to.equal(false)
 		Write(dep, 50)
 		expect(destructed).to.equal(true)
+	end,
+	should_clean_up_scope_when_dismissed = function(_, expect)
+		local scope = Scoped()
+		local dep = scope:Value(100)
+		local destructed = 0
+		
+		local t = scope:Compute(function(Node)
+			Use(Node, dep)
+			return scope:InnerScope(Node):Add(function()
+				destructed += 1
+			end)
+		end)
+
+		On(t, returner :: any)
+		Write(dep, 50)
+		expect(destructed).to.equal(2)
 	end
 }

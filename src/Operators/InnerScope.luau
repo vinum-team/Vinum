@@ -15,6 +15,7 @@ local function InnerScope<T, U>(scope: types.Scope<T>, Node: types.RNode, additi
 		cancel = function()
 			Kill(myScope)
 		end,
+		cleanable = true,
 	})
 
 	return myScope

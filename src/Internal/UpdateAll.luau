@@ -3,16 +3,6 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
-local function cancelAllCTasks(RNode: types.RNode)
-	if RNode.cancelableTasks then
-		for _, ctask in RNode.cancelableTasks do
-			ctask:cancel()
-		end
-
-		RNode.cancelableTasks = nil
-	end
-end
-
 local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	local naiveDependentsQueue: { types.RNode }, naiveLength = { root }, 1
 	local naivePos = 1
@@ -52,7 +42,13 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	-- tree hasn't changed since the last update.
 	for i = queueLength, 1, -1 do
 		local myRNode = queue[i]
-		cancelAllCTasks(myRNode)
+		if myRNode.cancelableTasks then
+			for _, ctask in myRNode.cancelableTasks do
+				ctask:cancel()
+			end
+
+			myRNode.cancelableTasks = nil
+		end
 
 		if not disableDependentClearing then
 			myRNode.dependents = nil
@@ -65,6 +61,17 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	for _, RNode in queue do
 		if not ShouldCacheValue(RNode) and RNode.owner.type ~= "Value" then
 			RNode.owner.value = nil
+
+			if RNode.cancelableTasks then
+				for _, ctask in RNode.cancelableTasks do
+					if not ctask.cleanable then
+						continue
+					end
+					ctask:cancel()
+				end
+
+				RNode.cancelableTasks = nil
+			end
 		end
 	end
 end
