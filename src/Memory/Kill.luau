@@ -5,11 +5,22 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local types = require(Package.types)
 
+local function cancelAllCTasks(RNode: types.RNode)
+	if RNode.cancelableTasks then
+		for _, ctask in RNode.cancelableTasks do
+			ctask:cancel()
+		end
+
+		RNode.cancelableTasks = nil
+	end
+end
+
 local function Kill(scope: types.Scope<{}>)
 	for _, object in scope :: any do
-		if object.type and object.value then
+		local objectType = type(object)
+		if objectType == "table" and object.type and object.value then
 			local _object = GetState(object)
-			_object.value.fn(_object.value.value)
+			cancelAllCTasks(_object.node)
 			-- the object and _object are both real states
 			if object == _object then
 				table.clear(_object)
@@ -18,6 +29,8 @@ local function Kill(scope: types.Scope<{}>)
 				table.clear(_object)
 				table.clear(object)
 			end
+		elseif objectType == "function" then
+			object()
 		else
 			Kill(object)
 		end

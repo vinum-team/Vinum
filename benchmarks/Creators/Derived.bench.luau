@@ -9,18 +9,18 @@ end
 
 local Scope = Vinum.Scoped()
 
-do TITLE "Compute" 
-    BENCH("Creating Computes", function()  
+do TITLE "Derived" 
+    BENCH("Creating Deriveds", function()  
         for i = 1, START(20_000) do
-            Scope:Compute(function(RNode)  
-                return Vinum.Borrowed(1)
+            Scope:Derived(function(RNode)  
+                return 1
             end)
         end
     end)
 
-    BENCH("Updating Computes", function()  
-        local v = Scope:Compute(function(RNode)  
-                return Vinum.Borrowed(1)
+    BENCH("Updating Deriveds", function()  
+        local v = Scope:Derived(function(RNode)  
+                return 1
         end)
 
         for i = 1, START(20_000) do

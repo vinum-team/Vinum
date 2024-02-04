@@ -11,11 +11,11 @@ local Scope = Vinum.Scoped()
 
 do TITLE "Map" 
     BENCH("Creating Maps", function()  
-        local dep = Scope:Value(1)
+        local dep = Scope:Source(1)
 
         local cases = {
             [1] = dep,
-            ["default"] = Scope:Value(1)
+            ["default"] = Scope:Source(1)
         }
 
         for i = 1, START(20_000) do
@@ -24,11 +24,11 @@ do TITLE "Map"
     end)
 
     BENCH("Updating Maps", function() 
-        local dep = Scope:Value(1)
+        local dep = Scope:Source(1)
 
         local state = Scope:Map(dep, {
             [1] = dep,
-            ["default"] = Scope:Value(1)
+            ["default"] = Scope:Source(1)
         })
 
         for i = 1, START(20_000) do

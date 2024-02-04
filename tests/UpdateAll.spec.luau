@@ -1,6 +1,7 @@
 --!strict
 local UpdateAll = require("../src/Internal/UpdateAll")
 local RNode = require("../src/Internal/RNode")
+local AddDependent = require("../src/Internal/AddDependent")
 
 local Owner = function(name, tracker)
     return {
@@ -16,7 +17,7 @@ return {
         local tracker = {}
         local root = RNode(Owner("root", tracker))
         local a = RNode(Owner("a", tracker))
-        root.dependents[a] = true 
+        AddDependent(root, a)
 
         UpdateAll(root)
 
@@ -29,9 +30,9 @@ return {
         local b = RNode(Owner("B", tracker))
         local c = RNode(Owner("C", tracker))
 
-        a.dependents[b] = true
-        a.dependents[c] = true 
-        b.dependents[c] = true
+        AddDependent(a, b)
+        AddDependent(a, c)
+        AddDependent(b, c)
         UpdateAll(a)
 
         expect(tracker[1]).to.equal("A")

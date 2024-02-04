@@ -1,14 +1,7 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
-
-local function cancelAllCTasks(RNode: types.RNode)
-	for _, ctask in RNode.cancelableTasks do
-		ctask:cancel()
-	end
-
-	RNode.cancelableTasks = {}
-end
+local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
 local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	local naiveDependentsQueue: { types.RNode }, naiveLength = { root }, 1
@@ -17,9 +10,11 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	-- first pass - We do a naive toposort where dependencies are placed before their dependents.
 	while naivePos <= naiveLength do
 		local myNext = naiveDependentsQueue[naivePos]
-		for dependent in myNext.dependents do
-			table.insert(naiveDependentsQueue, dependent)
-			naiveLength += 1
+		if myNext.dependents then
+			for dependent in myNext.dependents do
+				table.insert(naiveDependentsQueue, dependent)
+				naiveLength += 1
+			end
 		end
 		naivePos += 1
 	end
@@ -47,13 +42,36 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	-- tree hasn't changed since the last update.
 	for i = queueLength, 1, -1 do
 		local myRNode = queue[i]
-		cancelAllCTasks(myRNode)
+		if myRNode.cancelableTasks then
+			for _, ctask in myRNode.cancelableTasks do
+				ctask:cancel()
+			end
+
+			myRNode.cancelableTasks = nil
+		end
 
 		if not disableDependentClearing then
-			myRNode.dependents = {}
+			myRNode.dependents = nil
 		end
 		if myRNode.owner.onUpdate then
 			myRNode.owner.onUpdate(myRNode.owner)
+		end
+	end
+
+	for _, RNode in queue do
+		if not ShouldCacheValue(RNode) and RNode.owner.type ~= "Value" then
+			RNode.owner.value = nil
+
+			if RNode.cancelableTasks then
+				for _, ctask in RNode.cancelableTasks do
+					if not ctask.cleanable then
+						continue
+					end
+					ctask:cancel()
+				end
+
+				RNode.cancelableTasks = nil
+			end
 		end
 	end
 end

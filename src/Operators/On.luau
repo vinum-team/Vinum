@@ -20,6 +20,7 @@ local function On(state: types.EitherState<any>, listener: () -> ())
 		_connection = listener,
 		onUpdate = runnConnection,
 		_owner = _state,
+		type = "iListener",
 	}
 
 	listenerOwner.node = RNode(listenerOwner)

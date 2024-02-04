@@ -1,11 +1,9 @@
 --!strict
-export type Trait<T> = { value: T, fn: (T) -> (), type: "trait" }
-
 export type State<Value> = {
 	type: string,
-	value: Trait<Value>,
+	value: Value,
 	node: RNode,
-	scope: { [any]: any },
+	scope: any,
 }
 
 export type refState<Value> = {
@@ -15,26 +13,21 @@ export type refState<Value> = {
 
 export type EitherState<Value> = State<Value> | refState<Value>
 
-type MapStruct<K, V> = { [K]: V }
+export type MapStruct<K, V> = { [K]: V }
 
-export type Scope<Constructors> = { EitherState<any> | { EitherState<any> } } & Constructors
+export type Scope<Constructors> = { any } & Constructors
 
-export type CancelableTask = {
-	cancel: (self: CancelableTask) -> (),
-	[any]: any,
-}
+export type Computer<Value> = (RNode: RNode) -> Value
 
-export type Computer<Value> = (RNode: RNode) -> Trait<Value>
-
-export type Compute<Value> = State<Value> & {
+export type Derived<Value> = State<Value> & {
 	_computer: Computer<Value>,
-	onUpdate: (self: Compute<Value>) -> boolean,
+	onUpdate: (self: Derived<Value>) -> boolean,
 }
 
-export type SliceOf = State<any> & {
+export type Select = State<any> & {
 	_owner: State<{ [any]: any }>,
 	_key: any,
-	onUpdate: (self: SliceOf) -> boolean,
+	onUpdate: (self: Select) -> boolean,
 }
 
 export type CTask = {
@@ -49,8 +42,8 @@ export type Owner = {
 
 export type RNode = {
 	owner: Owner,
-	dependents: { [RNode]: boolean },
-	cancelableTasks: { CTask },
+	dependents: { [RNode]: boolean }?,
+	cancelableTasks: { CTask }?,
 	onDependentAdded: ((self: RNode, dependent: RNode) -> ())?,
 }
 return {}
