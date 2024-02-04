@@ -60,9 +60,10 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	end
 
 	for _, RNode in queue do
-		if ShouldCacheValue(RNode) or RNode.owner.type == "Value" then
+		if ShouldCacheValue(RNode) then
 			continue
 		end
+		
 		RNode.owner.value = nil
 
 		if not RNode.cancelableTasks then
