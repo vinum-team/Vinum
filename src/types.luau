@@ -3,7 +3,7 @@ export type State<Value> = {
 	type: string,
 	value: Value,
 	node: RNode,
-	scope: any
+	scope: any,
 }
 
 export type refState<Value> = {
@@ -13,7 +13,7 @@ export type refState<Value> = {
 
 export type EitherState<Value> = State<Value> | refState<Value>
 
-type MapStruct<K, V> = { [K]: V }
+export type MapStruct<K, V> = { [K]: V }
 
 export type Scope<Constructors> = { any } & Constructors
 
@@ -42,8 +42,8 @@ export type Owner = {
 
 export type RNode = {
 	owner: Owner,
-	dependents: { [RNode]: boolean },
-	cancelableTasks: { CTask },
+	dependents: { [RNode]: boolean }?,
+	cancelableTasks: { CTask }?,
 	onDependentAdded: ((self: RNode, dependent: RNode) -> ())?,
 }
 return {}

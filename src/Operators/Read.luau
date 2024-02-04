@@ -9,6 +9,9 @@ local GetState = require(Internal.GetState)
 local function Read<T>(object: types.EitherState<T>): T
 	local state = GetState(object)
 
+	if not state.value then
+		(state :: any):onUpdate()
+	end
 	return state.value
 end
 

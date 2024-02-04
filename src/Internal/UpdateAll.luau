@@ -1,13 +1,16 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
+local IsRnodePure = require(script.Parent.IsRNodePure)
 
 local function cancelAllCTasks(RNode: types.RNode)
-	for _, ctask in RNode.cancelableTasks do
-		ctask:cancel()
-	end
+	if RNode.cancelableTasks then
+		for _, ctask in RNode.cancelableTasks do
+			ctask:cancel()
+		end
 
-	RNode.cancelableTasks = {}
+		RNode.cancelableTasks = nil
+	end
 end
 
 local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
@@ -17,9 +20,11 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	-- first pass - We do a naive toposort where dependencies are placed before their dependents.
 	while naivePos <= naiveLength do
 		local myNext = naiveDependentsQueue[naivePos]
-		for dependent in myNext.dependents do
-			table.insert(naiveDependentsQueue, dependent)
-			naiveLength += 1
+		if myNext.dependents then
+			for dependent in myNext.dependents do
+				table.insert(naiveDependentsQueue, dependent)
+				naiveLength += 1
+			end
 		end
 		naivePos += 1
 	end
@@ -50,10 +55,16 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 		cancelAllCTasks(myRNode)
 
 		if not disableDependentClearing then
-			myRNode.dependents = {}
+			myRNode.dependents = nil
 		end
 		if myRNode.owner.onUpdate then
 			myRNode.owner.onUpdate(myRNode.owner)
+		end
+	end
+
+	for _, RNode in queue do
+		if not IsRnodePure(RNode) and RNode.owner.type ~= "Value" then
+			RNode.owner.value = nil
 		end
 	end
 end

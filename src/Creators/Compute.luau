@@ -6,6 +6,7 @@ local RNode = require(Internal.RNode)
 
 local function ComputeUpdater<T>(self: types.Compute<T>)
 	self.value = self._computer(self.node)
+
 	return true
 end
 
@@ -13,13 +14,13 @@ local function Compute<T, U>(scope: types.Scope<U>, computer: types.Computer<T>)
 	local self = {
 		type = "Compute",
 		value = 0 :: any,
-		onUpdate = ComputeUpdater,
+		onUpdate = ComputeUpdater :: any,
 		_computer = computer,
 		scope = scope,
-		node = 0 :: any
+		node = 0 :: any,
 	}
 
-	RNode(self :: any)
+	RNode(self)
 
 	table.insert(scope, self)
 	self.value = computer(self.node)

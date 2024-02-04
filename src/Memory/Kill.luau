@@ -6,16 +6,17 @@ local GetState = require(Internal.GetState)
 local types = require(Package.types)
 
 local function cancelAllCTasks(RNode: types.RNode)
-	for _, ctask in RNode.cancelableTasks do
-		ctask:cancel()
-	end
+	if RNode.cancelableTasks then
+		for _, ctask in RNode.cancelableTasks do
+			ctask:cancel()
+		end
 
-	RNode.cancelableTasks = {}
+		RNode.cancelableTasks = nil
+	end
 end
 
-
 local function Kill(scope: types.Scope<{}>)
-	for _, object in (scope :: any) do
+	for _, object in scope :: any do
 		local objectType = type(object)
 		if objectType == "table" and object.type and object.value then
 			local _object = GetState(object)

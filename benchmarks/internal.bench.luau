@@ -1,6 +1,7 @@
 --!strict
 local UpdateAll = require("../src/Internal/UpdateAll")
 local RNode = require("../src/Internal/RNode")
+local AddDependents = require("../src/Internal/AddDependent")
 
 local testkit = require("../.lune/luneVendor/ecrTestKit")
 local BENCH, START = testkit.benchmark()
@@ -16,8 +17,8 @@ do
 		local b = RNode({})
 		local root = RNode({})
 
-		root.dependents[a] = true
-		root.dependents[b] = true
+		AddDependents(root, a)
+		AddDependents(root, b)
 
 		BENCH("with direct dependents", function()
 			for i = 1, START(20_00) do
@@ -30,9 +31,9 @@ do
 	local b = RNode({})
 	local root = RNode({})
 
-	root.dependents[a] = true
-	root.dependents[b] = true
-	a.dependents[RNode({})] = true
+	AddDependents(root, a)
+	AddDependents(root, b)
+	AddDependents(a, RNode({}))
 	BENCH("with nested dependents", function()
 		for i = 1, START(20_00) do
 			UpdateAll(root, true)

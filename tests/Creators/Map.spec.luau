@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require("../../src")
 local Scoped = Vinum.Scoped
-
+local isNodePure = require("../..//src/Internal/IsRNodePure")
 local Read = Vinum.Read
 local Write = Vinum.Write
 
@@ -14,6 +14,7 @@ return {
 			["default"] = 0,
 		})
 
+		print(isNodePure(mapped.node))
 		Write(mapped, 0)
 		expect(Read(mapper)).to.equal(0)
 	end,

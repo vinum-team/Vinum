@@ -19,8 +19,8 @@ local scoped = scoper({
 	Value = Value,
 	Ref = Ref,
 	Map = Map,
-	InnerScope  = InnerScope,
-	Add = Add
+	InnerScope = InnerScope,
+	Add = Add,
 })
 
 local On = require(script.Operators.On)

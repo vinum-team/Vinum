@@ -22,13 +22,13 @@ type RNode = types.RNode
 		end
 ]]
 local function Map<T, U>(
-	scope: types.Scope<U>,
-	myState: types.EitherState<any>,
-	cases: { [any | "default"]: T | types.EitherState<T> }
+	scope: types.Scope<any>,
+	myState: types.EitherState<U>,
+	cases: { [U]: T | types.EitherState<T> }
 ): types.Compute<T>
 	return Compute(scope, function(Node: types.RNode)
 		local myValue = Use(Node, GetState(myState))
-		local chosenArm = cases[myValue] or cases["default"]
+		local chosenArm = cases[myValue] or cases["default" :: any]
 
 		if type(chosenArm) == "table" and chosenArm.type then
 			return Use(Node, GetState(chosenArm))

@@ -16,14 +16,14 @@ local function SliceOf(scope, state: types.EitherState<{ [any]: any }>, Key: any
 	local _state = GetState(state)
 	local self = {
 		type = "SliceOf",
-		value = {},
-		onUpdate = SliceOfUpdater,
+		value = 0 :: any,
+		onUpdate = SliceOfUpdater :: any,
 		_owner = _state,
 		_key = Key,
 		scope = scope,
 	}
 
-	self.node = RNode(self :: any)
+	self.node = RNode(self)
 	AddDependent(_state.node, self.node)
 
 	return self
