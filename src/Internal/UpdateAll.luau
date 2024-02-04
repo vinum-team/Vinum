@@ -3,7 +3,7 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
-local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number ,...: types.RNode)
+local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: types.RNode)
 	local naiveDependentsQueue: { types.RNode }, naiveLength = { ... }, numberOfRoots
 	local naivePos = 1
 
@@ -60,20 +60,25 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	end
 
 	for _, RNode in queue do
-		if not ShouldCacheValue(RNode) and RNode.owner.type ~= "Value" then
-			RNode.owner.value = nil
-
-			if RNode.cancelableTasks then
-				for _, ctask in RNode.cancelableTasks do
-					if not ctask.cleanable then
-						continue
-					end
-					ctask:cancel()
-				end
-
-				RNode.cancelableTasks = nil
-			end
+		if ShouldCacheValue(RNode) or RNode.owner.type == "Value" then
+			continue
 		end
+		RNode.owner.value = nil
+
+		if not RNode.cancelableTasks then
+			continue
+		end
+
+		local newCancelableTasks = table.create(#RNode.cancelableTasks)
+		for index, ctask in RNode.cancelableTasks do
+			if not ctask.cleanable then
+				table.insert(newCancelableTasks, ctask)
+				continue
+			end
+			ctask:cancel()
+		end
+
+		RNode.cancelableTasks = newCancelableTasks
 	end
 end
 
