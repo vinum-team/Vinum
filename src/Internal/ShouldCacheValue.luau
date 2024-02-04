@@ -2,7 +2,7 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 
-local function IsRNodePure(RNode: types.RNode)
+local function ShouldCacheValue(RNode: types.RNode)
 	if RNode.dependents then
 		local areAlliListeners = true
 		for dependent in RNode.dependents do
@@ -14,8 +14,8 @@ local function IsRNodePure(RNode: types.RNode)
 
 		return not areAlliListeners
 	else
-		return false
+		return true
 	end
 end
 
-return IsRNodePure
+return ShouldCacheValue

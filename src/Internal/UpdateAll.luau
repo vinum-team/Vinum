@@ -1,7 +1,7 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
-local IsRnodePure = require(script.Parent.IsRNodePure)
+local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
 local function cancelAllCTasks(RNode: types.RNode)
 	if RNode.cancelableTasks then
@@ -63,7 +63,7 @@ local function UpdateAll(root: types.RNode, disableDependentClearing: boolean?)
 	end
 
 	for _, RNode in queue do
-		if not IsRnodePure(RNode) and RNode.owner.type ~= "Value" then
+		if not ShouldCacheValue(RNode) and RNode.owner.type ~= "Value" then
 			RNode.owner.value = nil
 		end
 	end
