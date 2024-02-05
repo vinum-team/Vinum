@@ -20,7 +20,7 @@ Vinum code is generally safe, and and errors that often come from yielding and h
 One of Vinum's core goals is explicit syntax, since such syntax allows for no confusions to happen and often allows for greater performance gains.
 
 ### Memory Management Supercharged
-Vinum forces standard and *useful* manual memory tools to achieve predictability and eliminate most edge cases. 
+Vinum forces standard and *useful* manual memory tools to achieve predictability and eliminate most (if not all!) edge cases. 
 
 ### Dependencies Supercharged
 Vinum manages dependencies for you in a very optimized and stable way so that bugs that relate to dependencies are often non-existent.
