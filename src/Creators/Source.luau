@@ -4,7 +4,7 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local RNode = require(Internal.RNode)
 
-local function Value<T>(scope, value: T): types.State<T>
+local function Source<T>(scope: types.Scope<any>, value: T): types.State<T>
 	local self = {
 		type = "Source",
 		value = value,
@@ -12,8 +12,8 @@ local function Value<T>(scope, value: T): types.State<T>
 	}
 
 	table.insert(scope, self)
-	self.node = RNode(self)
+	RNode(self)
 	return self
 end
 
-return Value
+return Source

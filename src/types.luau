@@ -3,7 +3,7 @@ export type State<Value> = {
 	type: string,
 	value: Value,
 	node: RNode,
-	scope: any,
+	scope: Scope<any>,
 }
 
 export type refState<Value> = {
@@ -13,9 +13,7 @@ export type refState<Value> = {
 
 export type EitherState<Value> = State<Value> | refState<Value>
 
-export type MapStruct<K, V> = { [K]: V }
-
-export type Scope<Constructors> = { any } & Constructors
+export type Scope<T> = { [number]: any } & T
 
 export type Computer<Value> = (RNode: RNode) -> Value
 

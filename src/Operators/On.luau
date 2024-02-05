@@ -23,7 +23,7 @@ local function On(state: types.EitherState<any>, listener: () -> ())
 		type = "iListener",
 	}
 
-	listenerOwner.node = RNode(listenerOwner)
+	RNode(listenerOwner)
 	AddDependent(_state.node, listenerOwner.node)
 end
 

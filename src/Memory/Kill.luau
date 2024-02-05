@@ -15,26 +15,29 @@ local function cancelAllCTasks(RNode: types.RNode)
 	end
 end
 
-local function Kill(scope: types.Scope<{}>)
-	for _, object in scope :: any do
-		local objectType = type(object)
-		if objectType == "table" and object.type and object.value then
-			local _object = GetState(object)
-			cancelAllCTasks(_object.node)
-			-- the object and _object are both real states
-			if object == _object then
-				table.clear(_object)
-			else
-				--the object is a ref state while _object is the referenced state
-				table.clear(_object)
-				table.clear(object)
+local function Kill(scope: types.Scope<any>)
+	for key, value in scope :: any do
+		-- cases
+		-- case 1: Vinum Structs
+		local valueType = type(value)
+
+		if valueType == "table" and value.type then
+			local state = GetState(value)
+
+			cancelAllCTasks(state.node)
+			if state.scope ~= scope then
+				Kill(state.scope)
 			end
-		elseif objectType == "function" then
-			object()
-		else
-			Kill(object)
+			continue
+		end
+
+		-- case 2: functions
+		if valueType == "function" then
+			value()
+			continue
 		end
 	end
+
 	table.clear(scope)
 end
 

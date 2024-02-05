@@ -12,7 +12,7 @@ local function SelectUpdater(self: types.Select)
 	return true
 end
 
-local function Select(scope, state: types.EitherState<{ [any]: any }>, Key: any): types.Select
+local function Select(scope: types.Scope<any>, state: types.EitherState<{ [any]: any }>, Key: any): types.Select
 	local _state = GetState(state)
 	local self = {
 		type = "Select",
@@ -23,7 +23,7 @@ local function Select(scope, state: types.EitherState<{ [any]: any }>, Key: any)
 		scope = scope,
 	}
 
-	self.node = RNode(self)
+	RNode(self)
 	AddDependent(_state.node, self.node)
 
 	return self

@@ -54,8 +54,9 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 			myRNode.dependents = nil
 		end
 
-		if myRNode.owner.onUpdate then
-			myRNode.owner.onUpdate(myRNode.owner)
+		local rnodeOwner = myRNode.owner
+		if rnodeOwner.onUpdate then
+			rnodeOwner.onUpdate(rnodeOwner)
 		end
 	end
 
@@ -63,7 +64,7 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 		if ShouldCacheValue(RNode) then
 			continue
 		end
-		
+
 		RNode.owner.value = nil
 
 		if not RNode.cancelableTasks then

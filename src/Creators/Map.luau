@@ -10,17 +10,6 @@ local types = require(Package.types)
 
 type RNode = types.RNode
 
---[[
-			local myState = GetState(myState)
-		local myValue = Use(Node, myState)
-		local chosenArm = cases[myValue] or cases["default"]
-
-		if type(chosenArm) == "table" and chosenArm.type then
-			return Use(Node, GetState(chosenArm))
-		else
-			return chosenArm
-		end
-]]
 local function Map<T, U>(
 	scope: types.Scope<any>,
 	myState: types.EitherState<U>,
