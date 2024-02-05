@@ -1,6 +1,8 @@
 # Changelogs
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
+## V0.4
+* Changes are untracked until 1.0.0.
 ## V0.3
 * Everything is completely refined, and changed since the last version. Everything below is just a "summary" of the new major features.
 * Async Operations are now supported.
