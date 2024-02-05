@@ -2,6 +2,7 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
+local DebuggerHost = require(Package.DebuggerHost)
 
 local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: types.RNode)
 	local naiveDependentsQueue: { types.RNode }, naiveLength = { ... }, numberOfRoots
@@ -19,6 +20,8 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 		naivePos += 1
 	end
 
+	DebuggerHost.onFirstPass(naiveDependentsQueue, naiveLength)
+
 	-- second pass - We inversely read the result from the naive toposort
 	-- and record only the first occurrence of every RNode, and disregard
 	-- any other occurrence.
@@ -35,6 +38,8 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 		queueLength += 1
 		flags[myRNode] = true
 	end
+	DebuggerHost.onSecondPass(queue, queueLength)
+
 
 	-- third pass - We inversely read the queue resulted from the previous pass
 	-- and update the RNode relating to the current Index. In the future, it is

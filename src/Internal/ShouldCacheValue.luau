@@ -1,6 +1,7 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
+local DebuggerHost = require(Package.DebuggerHost)
 
 local function ShouldCacheValue(RNode: types.RNode)
 	if RNode.dependents then
@@ -12,8 +13,10 @@ local function ShouldCacheValue(RNode: types.RNode)
 			end
 		end
 
+		DebuggerHost.onShouldCacheValue(RNode, not areAlliListeners)
 		return not areAlliListeners
 	else
+		DebuggerHost.onShouldCacheValue(RNode, true)
 		return true
 	end
 end
