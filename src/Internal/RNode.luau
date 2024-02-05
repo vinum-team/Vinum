@@ -7,6 +7,7 @@ local function RNode(Owner: types.Owner, onDependentAdded): types.RNode
 	local myRNode = {
 		owner = Owner,
 		onDependentAdded = onDependentAdded,
+		numOfDependents = 0,
 	}
 	DebuggerHost.onRNode(myRNode)
 

@@ -43,5 +43,6 @@ export type RNode = {
 	dependents: { [RNode]: boolean }?,
 	cancelableTasks: { CTask }?,
 	onDependentAdded: ((self: RNode, dependent: RNode) -> ())?,
+	numOfDependents: number,
 }
 return {}

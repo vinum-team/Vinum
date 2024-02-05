@@ -10,6 +10,7 @@ local function AddDependent(dependency: types.RNode, dependent: types.RNode)
 	-- FIXME: Luau doesn't understand guard statements from a typechecking point of
 	-- view yet, as such, we resort to overriding the types to any.
 	(dependency :: any).dependents[dependent] = true
+	dependency.numOfDependents += 1
 
 	DebuggerHost.onAddDependent(dependency, dependent)
 	if dependency.onDependentAdded then

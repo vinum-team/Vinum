@@ -57,6 +57,7 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 
 		if not disableDependentClearing then
 			myRNode.dependents = nil
+			myRNode.numOfDependents = 0
 		end
 
 		local rnodeOwner = myRNode.owner
