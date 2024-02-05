@@ -40,7 +40,6 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	end
 	DebuggerHost.onSecondPass(queue, queueLength)
 
-
 	-- third pass - We inversely read the queue resulted from the previous pass
 	-- and update the RNode relating to the current Index. In the future, it is
 	-- possible to ditch the previous passes when we are sure that a dependency
@@ -90,7 +89,6 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	end
 
 	DebuggerHost.onThirdPass(queue, queueLength)
-
 end
 
 return UpdateAll

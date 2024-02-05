@@ -33,7 +33,7 @@ return {
 		local scope = Scoped()
 		local dep = scope:Source(100)
 		local destructed = false
-		
+
 		scope:Derived(function(Node)
 			Use(Node, dep)
 			return scope:InnerScope(Node):Add(function()
@@ -49,7 +49,7 @@ return {
 		local scope = Scoped()
 		local dep = scope:Source(100)
 		local destructed = 0
-		
+
 		local t = scope:Derived(function(Node)
 			Use(Node, dep)
 			return scope:InnerScope(Node):Add(function()
@@ -60,5 +60,5 @@ return {
 		On(t, returner :: any)
 		Write(dep, 50)
 		expect(destructed).to.equal(2)
-	end
+	end,
 }
