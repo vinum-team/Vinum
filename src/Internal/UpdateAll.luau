@@ -87,6 +87,9 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 
 		RNode.cancelableTasks = newCancelableTasks
 	end
+
+	DebuggerHost.onThirdPass(queue, queueLength)
+
 end
 
 return UpdateAll
