@@ -26,7 +26,7 @@ Vinum is designed with performance in mind, and it's API is oriented towards per
 ### Type Safety
 Vinum is 100% written with Luau's strict typing in consideration, and recommends the usage of strict mode when writing Vinum code.
 
-## Enforces Strict Code Conventions
+### Enforces Strict Code Conventions
 Vinum enforces certain code "rules" so that Vinum code is stable, such as the requirement for a data source to contain a value at all times during a computation.
 
 ### Explicit Syntax
