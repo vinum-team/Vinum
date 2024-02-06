@@ -1,6 +1,6 @@
 local fs = require("@lune/fs")
-local CrescTest = require("luneVendor/CrescTest")
-
+local testKit = require("luneVendor/ecrTestKit")
+local _, _, _, FINISH, _ = testKit.test()
 local scriptString = [[
 	local function PathHolder(currentPath)
 		return setmetatable({ path = currentPath }, {
@@ -76,10 +76,6 @@ transformSrc("procSrc")
 fs.copy("tests", "procTests")
 transformSrc("procTests")
 
-local ok, err = pcall(function()
-    CrescTest.runLune("procTests", CrescTest.expect)
-end)
-
 local function run(path)
 	for _, itemName in fs.readDir(path) do
 		local itemPath = `{path}/{itemName}`
@@ -94,10 +90,8 @@ end
 fs.copy("benchmarks", "proc-bench")
 transformSrc("proc-bench")
 run("proc-bench")
-
-if not ok then
-    warn(err)
-end
+run("procTests")
+FINISH()
 
 fs.removeDir("proc-bench")
 fs.removeDir("procSrc")

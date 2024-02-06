@@ -23,10 +23,19 @@ local function Kill(scope: types.Scope<any>)
 
 		if valueType == "table" and value.type then
 			local state = GetState(value)
-
 			cancelAllCTasks(state.node)
-			if state.scope ~= scope then
-				Kill(state.scope)
+			state.value = nil
+
+			if not state.node.dependents then
+				continue
+			end
+
+			for children in state.node.dependents do
+				local myChildState = children.owner
+
+				if myChildState.scope ~= scope then
+					Kill(myChildState.scope)
+				end
 			end
 			continue
 		end

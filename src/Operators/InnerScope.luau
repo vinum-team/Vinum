@@ -9,7 +9,7 @@ local DerivedScope = require(Memory.DerivedScope)
 local AddCTask = require(Internal.AddCTask)
 
 local function InnerScope<T, U>(scope: types.Scope<T>, Node: types.RNode, additionalConstructors: U?): types.Scope<T & U>
-	local myScope = DerivedScope(scope)
+	local myScope = DerivedScope(scope, additionalConstructors)
 
 	AddCTask(Node, {
 		cancel = function()
