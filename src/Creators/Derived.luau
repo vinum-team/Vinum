@@ -13,11 +13,11 @@ end
 local function Derived<T, U>(scope: types.Scope<U>, computer: types.Computer<T>): types.Derived<T>
 	local self = {
 		type = "Derived",
-		value = 0 :: any,
+		value = nil :: any,
 		onUpdate = DerivedUpdater :: any,
 		_computer = computer,
 		scope = scope,
-		node = 0 :: any,
+		node = nil :: any,
 	}
 
 	RNode(self)

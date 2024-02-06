@@ -1,6 +1,9 @@
 # Changelogs
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
+## V0.4.1
+* Fixed a bug in Select where it would not init its value until the next update.
+* Some internal changes in Derived.luau and Select.luau.
 ## V0.4
 * Changes are untracked until 1.0.0.
 ## V0.3

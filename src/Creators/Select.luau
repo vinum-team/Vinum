@@ -16,7 +16,6 @@ local function Select(scope: types.Scope<any>, state: types.EitherState<{ [any]:
 	local _state = GetState(state)
 	local self = {
 		type = "Select",
-		value = 0 :: any,
 		onUpdate = SelectUpdater :: any,
 		_owner = _state,
 		_key = Key,
@@ -24,7 +23,7 @@ local function Select(scope: types.Scope<any>, state: types.EitherState<{ [any]:
 	}
 
 	RNode(self)
-	AddDependent(_state.node, self.node)
+	SelectUpdater(self)
 
 	return self
 end
