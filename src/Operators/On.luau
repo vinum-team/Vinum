@@ -21,7 +21,7 @@ local function On(state: types.EitherState<any>, listener: () -> ())
 		onUpdate = runnConnection,
 		_owner = _state,
 		type = "iListener",
-		scope = _state.scope
+		scope = _state.scope,
 	}
 
 	table.insert(listenerOwner.scope, listenerOwner)

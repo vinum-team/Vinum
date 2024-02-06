@@ -5,13 +5,13 @@ local TEST, CASE, CHECK = testkit.test()
 
 local Scoped = Vinum.Scoped
 
-TEST("Operators/InnerScope", function() 
-    do 
-        CASE("should add a CTask with a cleanable field to X")
-        local scope = Scoped()
-        local source = scope:Source(10)
+TEST("Operators/InnerScope", function()
+	do
+		CASE("should add a CTask with a cleanable field to X")
+		local scope = Scoped()
+		local source = scope:Source(10)
 
-        scope:InnerScope(source.node)
-        CHECK(((source.node.cancelableTasks)::any)[1].cleanable == true)
-    end
+		scope:InnerScope(source.node)
+		CHECK(((source.node.cancelableTasks) :: any)[1].cleanable == true)
+	end
 end)
