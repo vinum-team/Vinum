@@ -6,6 +6,19 @@ _______
 Vinum is a declarative library that focuses on making describing relations between
 different data sources easy and scalable, and most importantly, fun!
 
+## Code Example
+```lua
+-- x = 2y/z
+local y = scope:Source(10)
+local z = scope:Source(2)
+
+local x = Scope:Derived(function(RNode)
+    return 2 * Use(RNode, y) / Use(RNode, z)
+end)
+
+print(Read(x)) --> 10
+```
+
 ## Features
 ### Performance Oriented 
 Vinum is designed with performance in mind, and it's API is oriented towards performance, so you will naturally find yourself writing efficient code with it.
@@ -13,8 +26,8 @@ Vinum is designed with performance in mind, and it's API is oriented towards per
 ### Type Safety
 Vinum is 100% written with Luau's strict typing in consideration, and recommends the usage of strict mode when writing Vinum code.
 
-### General Safety
-Vinum code is generally safe, and and errors that often come from yielding and having nillable datasources are minimized due to strict enforcing of certain code conventions.
+## Enforces Strict Code Conventions
+Vinum enforces certain code "rules" so that Vinum code is stable, such as the requirement for a data source to contain a value at all times during a computation.
 
 ### Explicit Syntax
 One of Vinum's core goals is explicit syntax, since such syntax allows for no confusions to happen and often allows for greater performance gains.
