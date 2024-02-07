@@ -29,6 +29,7 @@ local Read = require(script.Operators.Read)
 local Write = require(script.Operators.Write)
 local Batch = require(script.Operators.Batch)
 
+local DerivedScope = require(script.Memory.DerivedScope)
 local Kill = require(script.Memory.Kill)
 
 return {
@@ -39,4 +40,5 @@ return {
 	Write = Write,
 	Kill = Kill,
 	Batch = Batch,
+	DerivedScope = DerivedScope,
 }

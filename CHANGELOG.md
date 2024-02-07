@@ -1,6 +1,8 @@
 # Changelogs
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
+## V0.4.2
+* Exposes the `DerivedScope`.
 ## V0.4.1
 * Fixed a bug in Select where it would not init its value until the next update.
 * Some internal changes in Derived.luau and Select.luau.
