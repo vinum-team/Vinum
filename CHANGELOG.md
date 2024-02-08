@@ -1,6 +1,8 @@
 # Changelogs
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
+## Unreleased 
+* Minor improvement to UpdateAll
 ## V0.4.2
 * Exposes the `DerivedScope`.
 ## V0.4.1

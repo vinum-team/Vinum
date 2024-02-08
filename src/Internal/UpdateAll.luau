@@ -13,8 +13,8 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 		local myNext = naiveDependentsQueue[naivePos]
 		if myNext.dependents then
 			for dependent in myNext.dependents do
-				table.insert(naiveDependentsQueue, dependent)
 				naiveLength += 1
+				naiveDependentsQueue[naiveLength] = dependent
 			end
 		end
 		naivePos += 1
@@ -34,8 +34,8 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 			continue
 		end
 
-		table.insert(queue, myRNode)
 		queueLength += 1
+		queue[queueLength] = myRNode
 		flags[myRNode] = true
 	end
 	DebuggerHost.onSecondPass(queue, queueLength)
