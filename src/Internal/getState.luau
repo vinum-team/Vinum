@@ -2,7 +2,7 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 
-local function getState<T>(x: types.EitherState<T>): types.State<T>
+local function GetState<T>(x: types.EitherState<T>): types.State<T>
 	if x.type == "refState" then
 		return (x :: any).ref
 	else
@@ -10,4 +10,4 @@ local function getState<T>(x: types.EitherState<T>): types.State<T>
 	end
 end
 
-return getState
+return GetState
