@@ -2,6 +2,8 @@
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
 ## Unreleased 
+### Added
+* Added the ability for Deriveds to cache optional arguments supplied by the user. This helps with cases where building more complex state objects on top of Deriveds (such as Maps) requires caching some essential data to help Luau better optimise our code.
 ### Changed
 * Removed RNode and related types and instead implemented a generic `ReactiveObject` type that all state objects adhere to. This lowers the memory usage and generally decreases the processing time.
 * Simplified iListeners to simple functions.

@@ -1,10 +1,11 @@
 --!strict
 export type iListener = () -> ()
 
-export type ReactiveObject<Value> = {
-	dependents: { [ReactiveObject<Value> | iListener]: boolean }?,
+export type ReactiveObject<Value, additionalArg> = {
+	dependents: { [ReactiveObject<Value, additionalArg> | iListener]: boolean }?,
 	cTasks: { CTask }?,
-	_computer: ((RNode: ReactiveObject<Value>) -> Value)?,
+	_computer: ((RNode: ReactiveObject<Value, additionalArg>, arg: additionalArg) -> Value)?,
+	_arg: additionalArg?,
 	value: Value,
 	scope: any,
 	type: "reactiveState",
@@ -12,14 +13,14 @@ export type ReactiveObject<Value> = {
 
 export type refState<Value> = {
 	type: "refState",
-	ref: ReactiveObject<Value>,
+	ref: ReactiveObject<Value, any>,
 }
 
-export type EitherState<Value> = ReactiveObject<Value> | refState<Value>
+export type EitherState<Value> = ReactiveObject<Value, any> | refState<Value>
 
 export type Scope<T> = { [number]: any } & T
 
-export type Computer<Value> = (RNode: ReactiveObject<Value>) -> Value
+export type Computer<Value, arg> = (RNode: ReactiveObject<Value, arg>, arg: arg) -> Value
 
 export type CTask = {
 	cancel: (self: CTask) -> (),

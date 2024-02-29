@@ -2,12 +2,14 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 
-local function Source<T>(scope: types.Scope<any>, value: T): types.ReactiveObject<T>
+type ReactiveObject<T> = types.ReactiveObject<T, any>
+
+local function Source<T>(scope: types.Scope<any>, value: T): ReactiveObject<T>
 	local self = {
 		type = "reactiveState" :: any,
 		value = value,
 		scope = scope,
-	} :: types.ReactiveObject<T>
+	} :: ReactiveObject<T>
 
 	table.insert(scope, self)
 	return self

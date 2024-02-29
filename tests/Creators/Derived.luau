@@ -42,4 +42,17 @@ TEST("Creators/Derived", function()
 		-- get cancelled as well.
 		CHECK(runs == 2)
 	end
+
+	do
+		CASE("optional and additional args should work")
+		local scope = Scoped()
+		local out
+		
+		scope:Derived(function(RNode, argument)
+			out = argument
+			return 1
+		end, 100)
+
+		CHECK(out == 100)
+	end
 end)

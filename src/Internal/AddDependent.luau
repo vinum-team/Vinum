@@ -3,7 +3,9 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local DebuggerHost = require(Package.DebuggerHost)
 
-local function AddDependent(dependency: types.ReactiveObject<any>, dependent: types.ReactiveObject<any> | () -> ())
+type ReactiveObject = types.ReactiveObject<any, any>
+
+local function AddDependent(dependency: ReactiveObject, dependent: ReactiveObject | () -> ())
 	if not dependency.dependents then
 		dependency.dependents = {}
 	end

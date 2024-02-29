@@ -5,7 +5,9 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local types = require(Package.types)
 
-local function cancelAllCTasks(RNode: types.ReactiveObject<any>)
+type ReactiveObject = types.ReactiveObject<any, any>
+
+local function cancelAllCTasks(RNode: ReactiveObject)
 	if RNode.cTasks then
 		for _, ctask in RNode.cTasks do
 			ctask:cancel()

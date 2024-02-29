@@ -3,8 +3,10 @@ local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
-local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: types.ReactiveObject<any>)
-	local queue: { types.ReactiveObject<any> | () -> () } = { ... }
+type ReactiveObject = types.ReactiveObject<any, any>
+
+local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: ReactiveObject)
+	local queue: { ReactiveObject | () -> () } = { ... }
 	local length = numberOfRoots
 	local pos = 1
 	local lastOccurances = {}
@@ -45,7 +47,7 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 				object.dependents = nil
 			end
 			if object._computer then
-				object.value = object._computer(object)
+				object.value = object._computer(object, object._arg)
 				table.insert(toConditioanllyClean, object)
 			end
 		end
