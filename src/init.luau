@@ -39,4 +39,10 @@ return {
 	Kill = Kill,
 	Batch = Batch,
 	DerivedScope = DerivedScope,
+	Version = {
+		major = 0,
+		minor = 5,
+		patch = 0,
+		dev_mode = true
+	}
 }
