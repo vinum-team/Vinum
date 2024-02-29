@@ -16,7 +16,7 @@ TEST("Memory/DerivedScope", function()
 		local dScope = DerivedScope(myScope, {
 			hi = function(self)
 				flag = false
-			end
+			end,
 		})
 
 		dScope:add()

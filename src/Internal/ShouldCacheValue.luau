@@ -8,7 +8,7 @@ local function ShouldCacheValue(RNode: types.ReactiveObject<any>)
 		local areAlliListeners = true
 		for dependent in RNode.dependents do
 			if type(dependent) ~= "function" then
-				areAlliListeners = false 
+				areAlliListeners = false
 				break
 			end
 		end

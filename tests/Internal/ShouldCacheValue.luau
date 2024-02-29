@@ -10,8 +10,7 @@ local function RNode()
 		scope = {},
 		type = "reactiveState",
 	} :: any
-end 
-
+end
 
 TEST("Internal/ShouldCacheValue", function()
 	do

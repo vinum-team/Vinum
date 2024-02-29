@@ -9,8 +9,6 @@ local function Source<T>(scope: types.Scope<any>, value: T): types.ReactiveObjec
 		scope = scope,
 	} :: types.ReactiveObject<T>
 
-	
-
 	table.insert(scope, self)
 	return self
 end

@@ -4,14 +4,13 @@ local DebuggerHost = require("../../src/DebuggerHost")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
 local TEST, CASE, CHECK = testkit.test()
 
-
 local function RNode()
 	return {
 		value = 1,
 		scope = {},
 		type = "reactiveState",
 	} :: any
-end 
+end
 
 TEST("Internal/AddDependent", function()
 	do

@@ -8,7 +8,11 @@ local Kill = require(Memory.Kill)
 local DerivedScope = require(Memory.DerivedScope)
 local AddCTask = require(Internal.AddCTask)
 
-local function InnerScope<T, U>(scope: types.Scope<T>, Node: types.ReactiveObject<any>, additionalConstructors: U?): types.Scope<T & U>
+local function InnerScope<T, U>(
+	scope: types.Scope<T>,
+	Node: types.ReactiveObject<any>,
+	additionalConstructors: U?
+): types.Scope<T & U>
 	local myScope = DerivedScope(scope, additionalConstructors)
 
 	AddCTask(Node, {

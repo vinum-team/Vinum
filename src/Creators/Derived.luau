@@ -9,7 +9,6 @@ local function Derived<T, U>(scope: types.Scope<U>, computer: types.Computer<T>)
 		scope = scope,
 	}
 
-
 	table.insert(scope, self)
 	self.value = computer(self)
 	return self

@@ -14,7 +14,7 @@ local function RNode()
 		value = 1,
 		type = "reactiveState",
 	} :: any
-end 
+end
 
 do
 	TITLE("UpdateAll")

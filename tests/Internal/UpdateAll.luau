@@ -12,14 +12,14 @@ local function RNode()
 		scope = {},
 		type = "reactiveState",
 	} :: any
-end 
+end
 
 TEST("Internal/UpdateAll", function()
 	do
 		CASE("must update a list of trees")
 		local root = RNode()
 		local A = RNode()
-		local B = noop 
+		local B = noop
 
 		local runs = 0
 
@@ -27,7 +27,7 @@ TEST("Internal/UpdateAll", function()
 			runs += 1
 			return runs
 		end
-		
+
 		AddDependent(root, A)
 		AddDependent(root, B)
 

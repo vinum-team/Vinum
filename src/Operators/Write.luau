@@ -8,7 +8,6 @@ local Internal = Package.Internal
 local UpdateAll = require(Internal.UpdateAll)
 
 local function Write<T>(object: types.ReactiveObject<T>, newValue: T)
-
 	object.value = newValue
 	UpdateAll(false, 1, object)
 end
