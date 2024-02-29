@@ -12,8 +12,11 @@ local function InnerScope<T, U>(scope: types.Scope<T>, Node: types.ReactiveObjec
 	local myScope = DerivedScope(scope, additionalConstructors)
 
 	AddCTask(Node, {
-		cancel = function()
-			Kill(myScope)
+		cancel = function(self)
+			if self.cleanable then
+				Kill(myScope)
+				self.cleanable = false
+			end
 		end,
 		cleanable = true,
 	})

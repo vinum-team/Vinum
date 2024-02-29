@@ -12,11 +12,9 @@ end
 local function RNode()
 	return {
 		value = 1,
-		scope = {},
 		type = "reactiveState",
 	} :: any
 end 
-
 
 do
 	TITLE("UpdateAll")
@@ -29,7 +27,7 @@ do
 		AddDependents(root, b)
 
 		BENCH("with direct dependents", function()
-			for i = 1, START(20_00) do
+			for i = 1, START(20_000) do
 				UpdateAll(true, 1, root)
 			end
 		end)
@@ -43,7 +41,7 @@ do
 	AddDependents(root, b)
 	AddDependents(a, RNode())
 	BENCH("with nested dependents", function()
-		for i = 1, START(20_00) do
+		for i = 1, START(20_000) do
 			UpdateAll(true, 1, root)
 		end
 	end)
