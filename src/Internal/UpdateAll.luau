@@ -4,14 +4,14 @@ local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 local DebuggerHost = require(Package.DebuggerHost)
 
-local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: types.RNode)
-	local naiveDependentsQueue: { types.RNode }, naiveLength = { ... }, numberOfRoots
+local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: types.ReactiveObject<any>)
+	local naiveDependentsQueue: { types.ReactiveObject<any> | () -> () }, naiveLength = { ... }, numberOfRoots
 	local naivePos = 1
 
 	-- first pass - We do a naive toposort where dependencies are placed before their dependents.
 	while naivePos <= naiveLength do
 		local myNext = naiveDependentsQueue[naivePos]
-		if myNext.dependents then
+		if type(myNext) == "table" and myNext.dependents then
 			for dependent in myNext.dependents do
 				naiveLength += 1
 				naiveDependentsQueue[naiveLength] = dependent
@@ -46,38 +46,43 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	-- tree hasn't changed since the last update.
 	for i = queueLength, 1, -1 do
 		local myRNode = queue[i]
-		if myRNode.cancelableTasks then
-			for _, ctask in myRNode.cancelableTasks do
+		if type(myRNode) == "function" then
+			myRNode()
+			continue
+		end
+		if myRNode.cTasks then
+			for _, ctask in myRNode.cTasks do
 				ctask:cancel()
 			end
 
-			myRNode.cancelableTasks = nil
+			myRNode.cTasks = nil
 		end
 
 		if not disableDependentClearing then
 			myRNode.dependents = nil
-			myRNode.numOfDependents = 0
 		end
 
-		local rnodeOwner = myRNode.owner
-		if rnodeOwner.onUpdate then
-			rnodeOwner.onUpdate(rnodeOwner)
+		if myRNode._computer then
+			myRNode.value = myRNode._computer(myRNode)
 		end
 	end
 
 	for _, RNode in queue do
+		if type(RNode) == "function" then
+			continue
+		end
 		if ShouldCacheValue(RNode) then
 			continue
 		end
 
-		RNode.owner.value = nil
+		RNode.value = nil
 
-		if not RNode.cancelableTasks then
+		if not RNode.cTasks then
 			continue
 		end
 
-		local newCancelableTasks = table.create(#RNode.cancelableTasks)
-		for index, ctask in RNode.cancelableTasks do
+		local newCancelableTasks = table.create(#RNode.cTasks)
+		for index, ctask in RNode.cTasks do
 			if not ctask.cleanable then
 				table.insert(newCancelableTasks, ctask)
 				continue
@@ -85,7 +90,7 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 			ctask:cancel()
 		end
 
-		RNode.cancelableTasks = newCancelableTasks
+		RNode.cTasks = newCancelableTasks
 	end
 
 	DebuggerHost.onThirdPass(queue, queueLength)

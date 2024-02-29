@@ -29,7 +29,7 @@ TEST("Memory/Kill", function()
 
 		local x = scope:Source(10)
 		local flag = false
-		AddCTask(x.node, {
+		AddCTask(x, {
 			cancel = function(self)
 				flag = true
 			end,
@@ -37,7 +37,7 @@ TEST("Memory/Kill", function()
 
 		Kill(scope)
 		CHECK(x.value == nil)
-		CHECK(x.node.cancelableTasks == nil)
+		CHECK(x.cTasks == nil)
 		CHECK(flag == true)
 	end
 	do

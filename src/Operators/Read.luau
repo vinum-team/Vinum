@@ -9,7 +9,7 @@ local GetState = require(Internal.GetState)
 local function Read<T>(object: types.EitherState<T>): T
 	local state = GetState(object)
 	if state.value == nil then
-		state.value = (state :: any)._computer(state.node)
+		state.value = (state :: any)._computer(state)
 	end
 	return state.value
 end

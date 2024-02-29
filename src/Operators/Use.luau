@@ -9,11 +9,11 @@ local AddDependent = require(Internal.AddDependent)
 
 local Read = require(script.Parent.Read)
 
-type RNode = types.RNode
-local function Use<T>(dependent: RNode, dependency: types.EitherState<T>): T
+type ReactiveObject = types.ReactiveObject<any>
+local function Use<T>(dependent: ReactiveObject, dependency: types.EitherState<T>): T
 	local dependencyState = GetState(dependency)
 
-	AddDependent(dependencyState.node, dependent)
+	AddDependent(dependencyState, dependent)
 
 	return Read(dependencyState)
 end

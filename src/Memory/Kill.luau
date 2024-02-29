@@ -5,13 +5,13 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local types = require(Package.types)
 
-local function cancelAllCTasks(RNode: types.RNode)
-	if RNode.cancelableTasks then
-		for _, ctask in RNode.cancelableTasks do
+local function cancelAllCTasks(RNode: types.ReactiveObject<any>)
+	if RNode.cTasks then
+		for _, ctask in RNode.cTasks do
 			ctask:cancel()
 		end
 
-		RNode.cancelableTasks = nil
+		RNode.cTasks = nil
 	end
 end
 
@@ -23,18 +23,19 @@ local function Kill(scope: types.Scope<any>)
 
 		if valueType == "table" and value.type then
 			local state = GetState(value)
-			cancelAllCTasks(state.node)
+			cancelAllCTasks(state)
 			state.value = nil
 
-			if not state.node.dependents then
+			if not state.dependents then
 				continue
 			end
 
-			for children in state.node.dependents do
-				local myChildState = children.owner
-
-				if myChildState.scope ~= scope then
-					Kill(myChildState.scope)
+			for child in state.dependents do
+				if type(child) == "function" then
+					continue
+				end
+				if child.scope ~= scope then
+					Kill(child.scope)
 				end
 			end
 			continue

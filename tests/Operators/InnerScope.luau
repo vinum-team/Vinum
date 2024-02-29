@@ -11,7 +11,7 @@ TEST("Operators/InnerScope", function()
 		local scope = Scoped()
 		local source = scope:Source(10)
 
-		scope:InnerScope(source.node)
-		CHECK(((source.node.cancelableTasks) :: any)[1].cleanable == true)
+		scope:InnerScope(source)
+		CHECK(((source.cTasks) :: any)[1].cleanable == true)
 	end
 end)

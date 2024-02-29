@@ -17,18 +17,4 @@ TEST("Operators/Write", function()
 		Write(x, 20)
 		CHECK(Read(x) == 20)
 	end
-
-	do
-		CASE("should write data to Selects")
-		local scope = Scoped()
-		local x = scope:Source({
-			hi = 10,
-		})
-
-		local x_ = scope:Select(x, "hi")
-
-		Write(x_, 20)
-		CHECK(Read(x_) == Read(x).hi)
-		CHECK(Read(x_) == 20)
-	end
 end)

@@ -1,6 +1,5 @@
 --!strict
 local UpdateAll = require("../src/Internal/UpdateAll")
-local RNode = require("../src/Internal/RNode")
 local AddDependents = require("../src/Internal/AddDependent")
 
 local testkit = require("../.lune/luneVendor/ecrTestKit")
@@ -10,12 +9,21 @@ local function TITLE(name: string)
 	print(testkit.color.white(name))
 end
 
+local function RNode()
+	return {
+		value = 1,
+		scope = {},
+		type = "reactiveState",
+	} :: any
+end 
+
+
 do
 	TITLE("UpdateAll")
 	do
-		local a = RNode({})
-		local b = RNode({})
-		local root = RNode({})
+		local a = RNode()
+		local b = RNode()
+		local root = RNode()
 
 		AddDependents(root, a)
 		AddDependents(root, b)
@@ -27,13 +35,13 @@ do
 		end)
 	end
 
-	local a = RNode({})
-	local b = RNode({})
-	local root = RNode({})
+	local a = RNode()
+	local b = RNode()
+	local root = RNode()
 
 	AddDependents(root, a)
 	AddDependents(root, b)
-	AddDependents(a, RNode({}))
+	AddDependents(a, RNode())
 	BENCH("with nested dependents", function()
 		for i = 1, START(20_00) do
 			UpdateAll(true, 1, root)

@@ -1,5 +1,4 @@
 --!strict
-local RNode = require("../../src/Internal/RNode")
 local AddCTask = require("../../src/Internal/AddCTask")
 local AddDependent = require("../../src/Internal/AddDependent")
 local UpdateAll = require("../../src/Internal/UpdateAll")
@@ -8,15 +7,22 @@ local testkit = require("../../.lune/luneVendor/ecrTestKit")
 local TEST, CASE, CHECK = testkit.test()
 
 local function noop() end
+local function RNode()
+	return {
+		value = 1,
+		scope = {},
+		type = "reactiveState",
+	} :: any
+end 
 
 TEST("Internal/UpdateAll", function()
 	do
 		CASE("first pass should sort all dependencies before their dependents")
 		local flag = false
-		local root_1 = RNode({})
-		local a = RNode({})
-		local b = RNode({})
-		local c = RNode({})
+		local root_1 = RNode()
+		local a = RNode()
+		local b = RNode()
+		local c = RNode()
 
 		AddDependent(root_1, a)
 		AddDependent(root_1, b)
@@ -38,9 +44,9 @@ TEST("Internal/UpdateAll", function()
 
 	do
 		CASE("second pass should simplify the sorted array inversely")
-		local a = RNode({})
-		local b = RNode({})
-		local c = RNode({})
+		local a = RNode()
+		local b = RNode()
+		local c = RNode()
 
 		AddDependent(a, b)
 		AddDependent(a, c)
@@ -60,14 +66,13 @@ TEST("Internal/UpdateAll", function()
 	end
 
 	do
-		CASE("third pass must cancel all CTasks and run onUpdate if it exists")
+		CASE("third pass must cancel all CTasks and run _computer if it exists")
 		local flag = false
 		local secondFlag = false
-		local a = RNode({
-			onUpdate = function()
-				flag = true
-			end,
-		})
+		local a = RNode()
+		a._computer = function()
+			flag = true 
+		end
 
 		AddCTask(a, {
 			cancel = function()

@@ -1,22 +1,29 @@
 --!strict
-local RNode = require("../../src/Internal/RNode")
 local AddCTask = require("../../src/Internal/AddCTask")
 local DebuggerHost = require("../../src/DebuggerHost")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
 local TEST, CASE, CHECK = testkit.test()
 
+local function RNode()
+	return {
+		value = 1,
+		scope = {},
+		type = "reactiveState",
+	} :: any
+end 
+
 TEST("Internal/AddCTask", function()
 	do
 		CASE("must un-nilify cancelableTasks if its a nil")
-		local myRNode = RNode({})
+		local myRNode = RNode()
 
 		AddCTask(myRNode, {} :: any)
-		CHECK(myRNode.cancelableTasks ~= nil)
+		CHECK(myRNode.cTasks ~= nil)
 	end
 
 	do
 		CASE("must invoke DebuggerHost's onAddCTask")
-		local myRNode = RNode({})
+		local myRNode = RNode()
 
 		local pastCallback = DebuggerHost.onAddCTask
 		local flag = false

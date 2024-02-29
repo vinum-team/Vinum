@@ -25,7 +25,7 @@ do
 		end)
 
 		for i = 1, START(20_000) do
-			v.onUpdate(v)
+			(v :: any)._computer(v)
 		end
 	end)
 end

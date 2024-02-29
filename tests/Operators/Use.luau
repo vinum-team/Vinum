@@ -13,8 +13,8 @@ TEST("Operators/Use", function()
 
 		local x = scope:Source(10)
 		local y = scope:Source(0)
-		CHECK(Use(x.node, y) == 0)
-		CHECK((y :: any).node.dependents[x.node] == true)
+		CHECK(Use(x, y) == 0)
+		CHECK((y :: any).dependents[x] == true)
 	end
 
 	do
@@ -23,7 +23,7 @@ TEST("Operators/Use", function()
 
 		local x = scope:Source(10)
 		local y = scope:Source(0)
-		CHECK(Use(x.node, scope:Ref(y)) == 0)
-		CHECK((y :: any).node.dependents[x.node] == true)
+		CHECK(Use(x, scope:Ref(y)) == 0)
+		CHECK((y :: any).dependents[x] == true)
 	end
 end)

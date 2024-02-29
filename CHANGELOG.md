@@ -2,7 +2,12 @@
 
 Any changes that hold a value should be listed here under the Version that they will be released under.
 ## Unreleased 
-* Minor improvement to UpdateAll
+### Changed
+* Removed RNode and related types and instead implemented a generic `ReactiveObject` type that all state objects adhere to. This lowers the memory usage and generally decreases the processing time.
+* Simplified iListeners to simple functions.
+### Removed
+* Removed Selects (and additionally, the hardcoded support for it in all other places), in preparation for new tools to help with state centralization.
+
 ## V0.4.2
 * Exposes the `DerivedScope`.
 ## V0.4.1

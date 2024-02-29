@@ -1,48 +1,29 @@
 --!strict
-export type State<Value> = {
-	type: string,
+export type iListener = () -> ()
+
+export type ReactiveObject<Value> = {
+	dependents: { [ReactiveObject<Value> | iListener]: boolean }?,
+	cTasks: { CTask }?,
+	_computer: ((RNode: ReactiveObject<Value>) -> Value)?,
 	value: Value,
-	node: RNode,
-	scope: Scope<any>,
+	scope: any,
+	type: "reactiveState",
 }
 
 export type refState<Value> = {
 	type: "refState",
-	ref: State<Value>,
+	ref: ReactiveObject<Value>,
 }
 
-export type EitherState<Value> = State<Value> | refState<Value>
+export type EitherState<Value> = ReactiveObject<Value> | refState<Value>
 
 export type Scope<T> = { [number]: any } & T
 
-export type Computer<Value> = (RNode: RNode) -> Value
-
-export type Derived<Value> = State<Value> & {
-	_computer: Computer<Value>,
-	onUpdate: (self: Derived<Value>) -> boolean,
-}
-
-export type Select = State<any> & {
-	_owner: State<{ [any]: any }>,
-	_key: any,
-	onUpdate: (self: Select) -> boolean,
-}
+export type Computer<Value> = (RNode: ReactiveObject<Value>) -> Value
 
 export type CTask = {
 	cancel: (self: CTask) -> (),
 	[any]: any,
 }
 
-export type Owner = {
-	onUpdate: ((self: Owner) -> ())?,
-	[any]: any,
-}
-
-export type RNode = {
-	owner: Owner,
-	dependents: { [RNode]: boolean }?,
-	cancelableTasks: { CTask }?,
-	onDependentAdded: ((self: RNode, dependent: RNode) -> ())?,
-	numOfDependents: number,
-}
 return {}
