@@ -7,14 +7,18 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local AddDependent = require(Internal.AddDependent)
 
-local function On(state: types.EitherState<any>, listener: () -> ())
+local function Track(state: types.EitherState<any>, listener: () -> ())
 	local fn
-
+	local myState = GetState(state)
 	fn = function()
 		listener()
-		AddDependent(GetState(state), fn)
+		AddDependent(myState, fn)
 	end
-	AddDependent(GetState(state), fn)
+	AddDependent(myState, fn)
+
+	return function()
+		(myState :: any).dependents[fn] = nil
+	end
 end
 
-return On
+return Track

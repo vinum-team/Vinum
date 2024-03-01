@@ -21,7 +21,7 @@ local scoped = scoper({
 	Add = Add,
 })
 
-local On = require(script.Operators.On)
+local Track = require(script.Operators.Track)
 local Use = require(script.Operators.Use)
 local Read = require(script.Operators.Read)
 local Write = require(script.Operators.Write)
@@ -32,7 +32,7 @@ local Kill = require(script.Memory.Kill)
 
 return {
 	Scoped = scoped,
-	On = On,
+	Track = Track,
 	Use = Use,
 	Read = Read,
 	Write = Write,

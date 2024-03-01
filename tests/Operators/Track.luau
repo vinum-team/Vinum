@@ -4,17 +4,17 @@ local testkit = require("../../.lune/luneVendor/ecrTestKit")
 local TEST, CASE, CHECK = testkit.test()
 
 local Scoped = Vinum.Scoped
-local On = Vinum.On
+local Track = Vinum.Track
 local Write = Vinum.Write
 
-TEST("Operators/On", function()
+TEST("Operators/Track", function()
 	do
 		CASE("should run connection when dependency updates")
 		local scope = Scoped()
 
 		local x = scope:Source(10)
 		local flag = false
-		On(x, function()
+		Track(x, function()
 			flag = true
 		end)
 

@@ -7,7 +7,7 @@ local Scoped = Vinum.Scoped
 local Use = Vinum.Use
 local Write = Vinum.Write
 local Read = Vinum.Read
-local On = Vinum.On
+local Track = Vinum.Track
 
 TEST("Creators/Derived", function()
 	do
@@ -33,7 +33,7 @@ TEST("Creators/Derived", function()
 			end)
 			return Use(RNode, x)
 		end)
-		On(Derived, function() end)
+		Track(Derived, function() end)
 
 		Write(x, 0)
 		-- NOTE: It's two runs since after Write, all of CTasks are cancelled to
