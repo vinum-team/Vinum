@@ -7,6 +7,12 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local AddDependent = require(Internal.AddDependent)
 
+local function disconnecter(myState, listener)
+	return function()
+		myState.dependents[listener] = nil
+	end
+end
+
 local function Track(state: types.EitherState<any>, listener: () -> ())
 	local fn
 	local myState = GetState(state)
@@ -16,9 +22,7 @@ local function Track(state: types.EitherState<any>, listener: () -> ())
 	end
 	AddDependent(myState, fn)
 
-	return function()
-		(myState :: any).dependents[fn] = nil
-	end
+	return disconnecter(myState :: any, fn)
 end
 
 return Track

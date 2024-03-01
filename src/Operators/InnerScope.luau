@@ -10,20 +10,20 @@ local AddCTask = require(Internal.AddCTask)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
-local function InnerScope<T, U>(
-	scope: types.Scope<T>,
-	Node: ReactiveObject,
-	additionalConstructors: U?
-): types.Scope<T & U>
+local function cancel(myScope)
+	return function(self)
+		if self.cleanable then
+			Kill(myScope)
+			self.cleanable = false
+		end
+	end
+end
+
+local function InnerScope<T, U>(scope: types.Scope<T>, Node: ReactiveObject, additionalConstructors: U?): types.Scope<T & U>
 	local myScope = DerivedScope(scope, additionalConstructors)
 
 	AddCTask(Node, {
-		cancel = function(self)
-			if self.cleanable then
-				Kill(myScope)
-				self.cleanable = false
-			end
-		end,
+		cancel = cancel(myScope),
 		cleanable = true,
 	})
 
