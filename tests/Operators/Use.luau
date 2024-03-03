@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require("../../src")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local Scoped = Vinum.Scoped
 local Use = Vinum.Use
@@ -27,3 +27,5 @@ TEST("Operators/Use", function()
 		CHECK((y :: any).dependents[x] == true)
 	end
 end)
+
+FINISH()

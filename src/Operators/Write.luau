@@ -9,7 +9,7 @@ local UpdateAll = require(Internal.UpdateAll)
 
 local function Write<T>(object: types.ReactiveObject<T, any>, newValue: T)
 	object.value = newValue
-	UpdateAll(false, 1, object)
+	UpdateAll(false, false, 1, object)
 end
 
 return Write

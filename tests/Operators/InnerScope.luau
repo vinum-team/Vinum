@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require("../../src")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local Scoped = Vinum.Scoped
 
@@ -15,3 +15,5 @@ TEST("Operators/InnerScope", function()
 		CHECK(((source.cTasks) :: any)[1].cleanable == true)
 	end
 end)
+
+FINISH()

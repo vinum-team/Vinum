@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require("../../src")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local Scoped = Vinum.Scoped
 local Track = Vinum.Track
@@ -22,3 +22,5 @@ TEST("Operators/Track", function()
 		CHECK(flag == true)
 	end
 end)
+
+FINISH()

@@ -1,7 +1,7 @@
 --!strict
 local Scoper = require("../../src/Memory/Scoper")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 TEST("Memory/Scoper", function()
 	do
@@ -17,3 +17,5 @@ TEST("Memory/Scoper", function()
 		CHECK(flag == true)
 	end
 end)
+
+FINISH()

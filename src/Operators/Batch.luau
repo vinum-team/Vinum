@@ -17,7 +17,7 @@ local function Batch(...)
 		object.value = data
 	end
 
-	UpdateAll(false, rnodesLength, table.unpack(rnodes))
+	UpdateAll(false, true, rnodesLength, table.unpack(rnodes))
 end
 
 return Batch

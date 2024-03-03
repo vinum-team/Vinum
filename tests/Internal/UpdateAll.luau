@@ -1,9 +1,8 @@
 --!strict
-local AddCTask = require("../../src/Internal/AddCTask")
 local AddDependent = require("../../src/Internal/AddDependent")
 local UpdateAll = require("../../src/Internal/UpdateAll")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local function noop() end
 local function RNode()
@@ -31,8 +30,10 @@ TEST("Internal/UpdateAll", function()
 		AddDependent(root, A)
 		AddDependent(root, B)
 
-		UpdateAll(false, 1, root)
+		UpdateAll(false, true, 1, root)
 
 		CHECK(runs == 1)
 	end
 end)
+
+FINISH()

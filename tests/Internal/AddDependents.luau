@@ -2,7 +2,7 @@
 local AddDependent = require("../../src/Internal/AddDependent")
 local DebuggerHost = require("../../src/DebuggerHost")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local function RNode()
 	return {
@@ -40,3 +40,5 @@ TEST("Internal/AddDependent", function()
 		DebuggerHost.onAddDependent = pastCallback
 	end
 end)
+
+FINISH()

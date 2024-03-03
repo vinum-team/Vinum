@@ -2,7 +2,7 @@
 local Scoper = require("../../src/Memory/Scoper")
 local DerivedScope = require("../../src/Memory/DerivedScope")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 TEST("Memory/DerivedScope", function()
 	do
@@ -41,3 +41,5 @@ TEST("Memory/DerivedScope", function()
 		CHECK(derivedScope:subtract() == false)
 	end
 end)
+
+FINISH()

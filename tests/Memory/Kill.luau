@@ -2,7 +2,7 @@
 local Vinum = require("../../src")
 local AddCTask = require("../../src/Internal/AddCTask")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local Scoped = Vinum.Scoped
 local Kill = Vinum.Kill
@@ -54,3 +54,5 @@ TEST("Memory/Kill", function()
 		CHECK(y.value == nil)
 	end
 end)
+
+FINISH()

@@ -2,7 +2,7 @@
 local AddDependent = require("../../src/Internal/AddDependent")
 local ShouldCacheValue = require("../../src/Internal/ShouldCacheValue")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local function RNode()
 	return {
@@ -38,3 +38,5 @@ TEST("Internal/ShouldCacheValue", function()
 		CHECK(ShouldCacheValue(root) == true)
 	end
 end)
+
+FINISH()

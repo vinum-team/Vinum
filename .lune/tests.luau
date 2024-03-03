@@ -1,6 +1,4 @@
 local fs = require("@lune/fs")
-local testKit = require("luneVendor/ecrTestKit")
-local _, _, _, FINISH, _ = testKit.test()
 local scriptString = [[
 	local function PathHolder(currentPath)
 		return setmetatable({ path = currentPath }, {
@@ -89,9 +87,8 @@ end
 
 fs.copy("benchmarks", "proc-bench")
 transformSrc("proc-bench")
-run("proc-bench")
+--run("proc-bench")
 run("procTests")
-FINISH()
 
 fs.removeDir("proc-bench")
 fs.removeDir("procSrc")

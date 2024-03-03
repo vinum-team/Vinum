@@ -6,10 +6,12 @@ Any changes that hold a value should be listed here under the Version that they 
 * Added the ability for Deriveds to cache optional arguments supplied by the user. This helps with cases where building more complex state objects on top of Deriveds (such as Maps) requires caching some essential data to help Luau better optimise our code.
 * Re-added `Vinum.Version` table.
 * `Track` now returns an `untrack` function used for disconnecting functions.
+* Added `Async` operator responsible for spawning async operations.
 ### Changed
 * Removed RNode and related types and instead implemented a generic `ReactiveObject` type that all state objects adhere to. This lowers the memory usage and generally decreases the processing time.
 * Simplified iListeners to simple functions.
 * Renamed `On` operator to `Track`.
+* `Write` can now write to Deriveds and similar state objects.
 ### Removed
 * Removed Selects (and additionally, the hardcoded support for it in all other places), in preparation for new tools to help with state centralization.
 

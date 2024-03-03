@@ -5,11 +5,13 @@ local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
-local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: number, ...: ReactiveObject)
+local function UpdateAll(disableDependentClearing: boolean, updateRoot: boolean, numberOfRoots: number, ...: ReactiveObject)
 	local queue: { ReactiveObject | () -> () } = { ... }
 	local length = numberOfRoots
 	local pos = 1
 	local lastOccurances = {}
+
+	local rootLength = length
 
 	while pos <= length do
 		local currentObject = queue[pos]
@@ -27,6 +29,9 @@ local function UpdateAll(disableDependentClearing: boolean, numberOfRoots: numbe
 	local toConditioanllyClean = {}
 
 	for index, object in queue do
+		if index <= rootLength and not updateRoot then
+			continue
+		end
 		if lastOccurances[object :: any] ~= index then
 			continue
 		end

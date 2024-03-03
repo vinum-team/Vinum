@@ -1,7 +1,7 @@
 --!strict
 local Vinum = require("../../src")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
-local TEST, CASE, CHECK = testkit.test()
+local TEST, CASE, CHECK, FINISH = testkit.test()
 
 local Scoped = Vinum.Scoped
 local Use = Vinum.Use
@@ -10,6 +10,7 @@ local Read = Vinum.Read
 local Track = Vinum.Track
 
 TEST("Creators/Derived", function()
+	print("yes")
 	do
 		CASE("should recompute everytime a dependency updates")
 		local scope = Scoped()
@@ -56,3 +57,5 @@ TEST("Creators/Derived", function()
 		CHECK(out == 100)
 	end
 end)
+
+FINISH()
