@@ -47,7 +47,7 @@ function cancel(self)
     coroutine.close(self.co)
 end
 
-local function Async<T>(self: ReactiveObject<T>, fn: (become: (T) -> ()) -> ()) 
+local function Async<T>(self: ReactiveObject<T>, fn: () -> ()) 
     local co = get_free_coroutine()
 
     local CTask = {
