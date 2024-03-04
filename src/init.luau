@@ -45,6 +45,6 @@ return {
 		major = 0,
 		minor = 5,
 		patch = 0,
-		dev_mode = true
-	}
+		dev_mode = true,
+	},
 }

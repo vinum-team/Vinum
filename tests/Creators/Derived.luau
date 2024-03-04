@@ -48,7 +48,7 @@ TEST("Creators/Derived", function()
 		CASE("optional and additional args should work")
 		local scope = Scoped()
 		local out
-		
+
 		scope:Derived(function(RNode, argument)
 			out = argument
 			return 1

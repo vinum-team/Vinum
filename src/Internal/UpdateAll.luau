@@ -5,7 +5,12 @@ local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
-local function UpdateAll(disableDependentClearing: boolean, updateRoot: boolean, numberOfRoots: number, ...: ReactiveObject)
+local function UpdateAll(
+	disableDependentClearing: boolean,
+	updateRoot: boolean,
+	numberOfRoots: number,
+	...: ReactiveObject
+)
 	local queue: { ReactiveObject | () -> () } = { ... }
 	local length = numberOfRoots
 	local pos = 1

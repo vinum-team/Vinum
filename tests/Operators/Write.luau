@@ -18,12 +18,12 @@ TEST("Operators/Write", function()
 		CHECK(Read(x) == 20)
 	end
 
-	do 
+	do
 		CASE("should write data to Deriveds")
 		local scope = Scoped()
 
 		local x = scope:Derived(function(self)
-			return 1 
+			return 1
 		end)
 
 		Write(x, 10)

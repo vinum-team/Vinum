@@ -24,7 +24,7 @@ local function Map<T, U>(
 		else
 			return chosenArm :: T
 		end
-	end, {cases = cases, myState = GetState(myState)})
+	end, { cases = cases, myState = GetState(myState) })
 end
 
 return Map

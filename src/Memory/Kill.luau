@@ -32,7 +32,7 @@ local function Kill(scope: types.Scope<any>)
 				continue
 			end
 
-			for child in state.dependents do
+			for child in (state :: any).dependents do
 				if type(child) == "function" then
 					continue
 				end

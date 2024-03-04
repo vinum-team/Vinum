@@ -6,17 +6,13 @@ local types = require(Package.types)
 
 type ReactiveObject<T> = types.ReactiveObject<T, any>
 
-
 local coroutine_pool: { [number]: thread } = {}
-
-local function run_callback(callback, thread, argument)
-	callback(argument)
-	table.insert(coroutine_pool, thread)
-end
 
 local function yielder()
 	while true do
-		run_callback(coroutine.yield())
+		local callback, thread = coroutine.yield()
+		callback()
+		table.insert(coroutine_pool, thread)
 	end
 end
 
@@ -41,23 +37,23 @@ local function run_coroutine(my_coroutine, callback, argument: any)
 end
 
 function cancel(self)
-    if coroutine.status(self.co) == "dead" then 
-        return 
-    end
-    coroutine.close(self.co)
+	if coroutine.status(self.co) == "dead" then
+		return
+	end
+	coroutine.close(self.co)
 end
 
-local function Async<T>(self: ReactiveObject<T>, fn: () -> ()) 
-    local co = get_free_coroutine()
+local function Async<T>(self: ReactiveObject<T>, fn: () -> ())
+	local co = get_free_coroutine()
 
-    local CTask = {
-        cancel = cancel,
-        co = co
-    }
+	local CTask = {
+		cancel = cancel,
+		co = co,
+	}
 
-    AddCTask(self, CTask :: any)
-    run_coroutine(co, fn)
-    return CTask
+	AddCTask(self, CTask :: any)
+	run_coroutine(co, fn)
+	return CTask
 end
 
 return Async

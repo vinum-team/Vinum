@@ -7,7 +7,7 @@ local function Derived<T, U, D>(scope: types.Scope<U>, computer: types.Computer<
 		type = "reactiveState" :: any,
 		_computer = computer,
 		scope = scope,
-		_arg = arg
+		_arg = arg,
 	}
 
 	table.insert(scope, self)
