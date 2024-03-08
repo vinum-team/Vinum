@@ -31,6 +31,7 @@ local Async = require(script.Operators.Async)
 local DerivedScope = require(script.Memory.DerivedScope)
 local Kill = require(script.Memory.Kill)
 
+local BulkCreate = require(script.Utility.BulkCreate)
 return {
 	Scoped = scoped,
 	Track = Track,
@@ -41,6 +42,7 @@ return {
 	Batch = Batch,
 	Async = Async,
 	DerivedScope = DerivedScope,
+	BulkCreate = BulkCreate,
 	Version = {
 		major = 0,
 		minor = 5,
