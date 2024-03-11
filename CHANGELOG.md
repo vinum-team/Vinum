@@ -7,6 +7,7 @@ Any changes that hold a value should be listed here under the Version that they 
 * Re-added `Vinum.Version` table.
 * `Track` now returns an `untrack` function used for disconnecting functions.
 * Added `Async` operator responsible for spawning async operations.
+* Added `UseMiddleware` to register middleware for operations such as `read`ing, `write`ing.
 ### Changed
 * Removed RNode and related types and instead implemented a generic `ReactiveObject` type that all state objects adhere to. This lowers the memory usage and generally decreases the processing time.
 * Simplified iListeners to simple functions.
