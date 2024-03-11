@@ -1,4 +1,4 @@
-[![|1000x496, 50%](upload://snX4D8fAt2I0ypflbUk8vhtjuXR.svg)](https://github.com/vinum-team/Vinum/blob/master/gh-assets/Banner.svg)
+<img align = "center" width="400" src="gh-assets/Banner.svg">
 
 # What is Vinum?
 
