@@ -1,39 +1,26 @@
-<img align = "center" width="400" src="gh-assets/Banner.svg">
-
-_______
+[![|1000x496, 50%](upload://snX4D8fAt2I0ypflbUk8vhtjuXR.svg)](https://github.com/vinum-team/Vinum/blob/master/gh-assets/Banner.svg)
 
 # What is Vinum?
-Vinum is a declarative library that focuses on making describing relations between
-different data sources easy and scalable, and most importantly, fun!
 
-## Code Example
-```lua
--- x = 2y/z
-local y = scope:Source(10)
-local z = scope:Source(2)
-
-local x = Scope:Derived(function(RNode)
-    return 2 * Use(RNode, y) / Use(RNode, z)
-end)
-
-print(Read(x)) --> 10
-```
+Vinum is a declarative library that focuses on making state management both truly reactive and scalable.
 
 ## Features
-### Performance Oriented 
+
+### :zap: Performance Oriented
+
 Vinum is designed with performance in mind, and it's API is oriented towards performance, so you will naturally find yourself writing efficient code with it.
 
-### Type Safety
-Vinum is 100% written with Luau's strict typing in consideration, and recommends the usage of strict mode when writing Vinum code.
+### :lock:  Type Safety
+Vinum is completely written with Luau's strict type system in mind, so you can get full autocomplete and linting in your editor. Additionally, this means that Luau will be able to catch some errors before running which can decrease development time.
 
-### Enforces Strict Code Conventions
-Vinum enforces certain code "rules" so that Vinum code is stable, such as the requirement for a data source to contain a value at all times during a computation.
 
-### Explicit Syntax
-One of Vinum's core goals is explicit syntax, since such syntax allows for no confusions to happen and often allows for greater performance gains.
+### :bangbang: Built-in Memory Management
 
-### Memory Management Supercharged
-Vinum forces standard and *useful* manual memory tools to achieve predictability and eliminate most (if not all!) edge cases. 
+Vinum forces standard and *useful* manual memory tools to achieve predictability and eliminate most (if not all!) edge cases.
 
-### Dependencies Supercharged
+### :chains: Dependencies Supercharged
+
 Vinum manages dependencies for you in a very optimized and stable way so that bugs that relate to dependencies are often non-existent.
+
+## Contributing
+If you ever want to contribute for the Vinum project, please refer to [this](https://github.com/vinum-team/Vinum/blob/master/CONTRIBUTING.MD)
