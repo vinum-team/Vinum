@@ -31,7 +31,8 @@ TEST("Operators/Write", function()
 		CHECK(Read(x) == 10)
 	end
 
-	do CASE("should fail when middleware decides so")
+	do
+		CASE("should fail when middleware decides so")
 		local scope = Scoped()
 
 		local handdle = UseMiddleware("write", function(data)

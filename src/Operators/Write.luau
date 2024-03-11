@@ -11,7 +11,7 @@ local GlobalMiddleware = require(Package.Utility.GlobalMiddleware)
 
 local function Write<T>(object: types.ReactiveObject<T, any>, newValue: T)
 	if not MiddlewareUtils.execute(GlobalMiddleware["write"], newValue) then
-		return 
+		return
 	end
 	object.value = newValue
 	UpdateAll(false, false, 1, object)

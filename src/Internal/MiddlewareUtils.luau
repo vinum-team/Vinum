@@ -8,7 +8,7 @@ end
 local function appendMiddlewareTo(parent: Middleware, fn): Middleware
 	local myMiddleware = { prev = parent, fn = fn }
 	parent.next = myMiddleware
-    return myMiddleware
+	return myMiddleware
 end
 
 local function removeMiddleware(middleware: Middleware)
@@ -34,12 +34,12 @@ local function execute(startingNode: Middleware?, ...)
 
 		currentMiddleware = currentMiddleware.next
 	end
-    return true
+	return true
 end
 
 return {
-    createStartingMiddleware = createStartingMiddleware,
-    appendMiddlewareTo = appendMiddlewareTo,
-    removeMiddleware = removeMiddleware,
-    execute = execute,
+	createStartingMiddleware = createStartingMiddleware,
+	appendMiddlewareTo = appendMiddlewareTo,
+	removeMiddleware = removeMiddleware,
+	execute = execute,
 }

@@ -32,7 +32,7 @@ local function BulkCreate<T>(fn: (T & { [any]: types.ReactiveObject<unknown, any
 
 	fn(results :: any, scope)
 
-    return results :: any, scope
+	return results :: any, scope
 end
 
 return BulkCreate

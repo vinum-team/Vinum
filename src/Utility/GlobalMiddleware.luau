@@ -1,5 +1,3 @@
 --!strict
 
-return {
-    
-}
+return {}
