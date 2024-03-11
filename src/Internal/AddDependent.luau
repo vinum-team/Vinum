@@ -1,7 +1,6 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
-local DebuggerHost = require(Package.DebuggerHost)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
@@ -12,8 +11,6 @@ local function AddDependent(dependency: ReactiveObject, dependent: ReactiveObjec
 	-- FIXME: Luau doesn't understand guard statements from a typechecking point of
 	-- view yet, as such, we resort to overriding the types to any.
 	(dependency :: any).dependents[dependent] = true
-
-	DebuggerHost.onAddDependent(dependency, dependent)
 end
 
 return AddDependent

@@ -1,6 +1,5 @@
 --!strict
 local AddCTask = require("../../src/Internal/AddCTask")
-local DebuggerHost = require("../../src/DebuggerHost")
 local testkit = require("../../.lune/luneVendor/ecrTestKit")
 local TEST, CASE, CHECK, FINISH = testkit.test()
 
@@ -19,23 +18,6 @@ TEST("Internal/AddCTask", function()
 
 		AddCTask(myRNode, {} :: any)
 		CHECK(myRNode.cTasks ~= nil)
-	end
-
-	do
-		CASE("must invoke DebuggerHost's onAddCTask")
-		local myRNode = RNode()
-
-		local pastCallback = DebuggerHost.onAddCTask
-		local flag = false
-
-		DebuggerHost.onAddCTask = function()
-			flag = true
-		end
-
-		AddCTask(myRNode, {} :: any)
-		CHECK(flag == true)
-
-		DebuggerHost.onAddCTask = pastCallback
 	end
 end)
 

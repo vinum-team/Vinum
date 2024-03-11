@@ -18,7 +18,7 @@ local function cancelAllCTasks(RNode: ReactiveObject)
 end
 
 local function Kill(scope: types.Scope<any>)
-	for key, value in scope :: any do
+	for _, value in scope :: any do
 		-- cases
 		-- case 1: Vinum Structs
 		local valueType = type(value)

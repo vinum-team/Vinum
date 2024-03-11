@@ -1,7 +1,6 @@
 --!strict
 local Package = script.Parent.Parent
 local types = require(Package.types)
-local DebuggerHost = require(Package.DebuggerHost)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
@@ -15,10 +14,8 @@ local function ShouldCacheValue(RNode: ReactiveObject)
 			end
 		end
 
-		DebuggerHost.onShouldCacheValue(RNode, not areAlliListeners)
 		return not areAlliListeners
 	else
-		DebuggerHost.onShouldCacheValue(RNode, true)
 		return true
 	end
 end
