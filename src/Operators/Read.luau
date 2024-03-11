@@ -6,12 +6,19 @@ local types = require(Package.types)
 local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 
+local MiddlewareUtils = require(Internal.MiddlewareUtils)
+local GlobalMiddleware = require(Package.Utility.GlobalMiddleware)
+
 local function Read<T>(object: types.EitherState<T>): T
 	local state = GetState(object)
 	if state.value == nil then
 		state.value = (state :: any)._computer(state)
 	end
-	return state.value
+	local value = state.value
+
+	MiddlewareUtils.execute(GlobalMiddleware["write"], value)
+
+	return value
 end
 
 return Read

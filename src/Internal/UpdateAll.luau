@@ -2,6 +2,8 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
+local MiddlewareUtils = require(script.Parent.MiddlewareUtils)
+local GlobalMiddleware = require(Package.Utility.GlobalMiddleware)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
@@ -57,7 +59,10 @@ local function UpdateAll(
 				object.dependents = nil
 			end
 			if object._computer then
+				local oldValue = object.value
 				object.value = object._computer(object, object._arg)
+				--TODO: Make Middleware able to drop subsections of graph
+				MiddlewareUtils.execute(GlobalMiddleware["recompute"], oldValue, object.value)
 				table.insert(toConditioanllyClean, object)
 			end
 		end
