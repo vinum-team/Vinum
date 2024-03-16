@@ -46,9 +46,12 @@ local function UpdateAll(
 		if type(object) == "function" then
 			object()
 		else
-			if object.cTasks then
-				for _, cTask in object.cTasks do
-					if cTask.cleanable == false then
+			local prevTable = object.cTasks
+			object.cTasks = nil
+
+			if prevTable then
+				for _, cTask in prevTable do
+					if cTask.cleanable ~= nil then
 						continue
 					end
 					cTask:cancel()
@@ -63,6 +66,12 @@ local function UpdateAll(
 				object.value = object._computer(object, object._arg)
 				--TODO: Make Middleware able to drop subsections of graph
 				MiddlewareUtils.execute(GlobalMiddleware["recompute"], oldValue, object.value)
+				if prevTable then
+					for _, cTask in prevTable do
+						cTask:cancel()
+					end
+				end
+				
 				table.insert(toConditioanllyClean, object)
 			end
 		end
