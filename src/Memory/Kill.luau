@@ -47,7 +47,6 @@ local function Kill(scope: types.Scope<any>)
 		if valueType == "table" and value.type then
 			local state = GetState(value)
 			cancelAllCTasks(state)
-			doCleanup(state.value)
 			state.value = nil
 
 			if not state.dependents then
