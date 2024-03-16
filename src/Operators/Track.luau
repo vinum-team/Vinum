@@ -7,9 +7,11 @@ local Internal = Package.Internal
 local GetState = require(Internal.GetState)
 local AddDependent = require(Internal.AddDependent)
 
-local function disconnecter(myState, listener)
+local function disconnecter(myState: types.ReactiveObject<any, any>, listener)
 	return function()
-		myState.dependents[listener] = nil
+		if myState.dependents then
+			myState.dependents[listener] = nil
+		end
 	end
 end
 
