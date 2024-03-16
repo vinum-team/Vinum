@@ -17,6 +17,27 @@ local function cancelAllCTasks(RNode: ReactiveObject)
 	end
 end
 
+local function doCleanup(task)
+	local taskType = typeof(task)
+	if taskType == "Instance" then
+		task:Destroy()
+	elseif taskType == "RBXScriptConnection" then
+		task:Disconnect()
+	elseif taskType == "function" then
+		(task :: any)()
+	elseif taskType == "table" then
+		if typeof(task.destroy) == "function" then
+			task:destroy()
+		elseif typeof(task.Destroy) == "function" then
+			task:Destroy()
+		elseif task[1] ~= nil then
+			for _, subtask in task do
+				doCleanup(subtask)
+			end
+		end
+	end
+end
+
 local function Kill(scope: types.Scope<any>)
 	for _, value in scope :: any do
 		-- cases
@@ -26,13 +47,14 @@ local function Kill(scope: types.Scope<any>)
 		if valueType == "table" and value.type then
 			local state = GetState(value)
 			cancelAllCTasks(state)
+			doCleanup(state.value)
 			state.value = nil
 
 			if not state.dependents then
 				continue
 			end
 
-			for child in (state :: any).dependents do
+			for child: types.ReactiveObject<any, any> in (state :: any).dependents do
 				if type(child) == "function" then
 					continue
 				end
@@ -42,12 +64,8 @@ local function Kill(scope: types.Scope<any>)
 			end
 			continue
 		end
-
-		-- case 2: functions
-		if valueType == "function" then
-			value()
-			continue
-		end
+		
+		doCleanup(value)
 	end
 
 	table.clear(scope)

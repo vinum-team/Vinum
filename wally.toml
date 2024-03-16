@@ -1,6 +1,6 @@
 [package]
 name = "plothan/vinum"
-version = "0.4.2"
+version = "0.5.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A declarative library focusing on making relations between data easy."
