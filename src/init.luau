@@ -32,7 +32,6 @@ local DerivedScope = require(script.Memory.DerivedScope)
 local Kill = require(script.Memory.Kill)
 
 local BulkCreate = require(script.Utility.BulkCreate)
-local UseMiddleware = require(script.Utility.UseMiddleware)
 return {
 	Scoped = scoped,
 	Track = Track,
@@ -44,7 +43,6 @@ return {
 	Async = Async,
 	DerivedScope = DerivedScope,
 	BulkCreate = BulkCreate,
-	UseMiddleware = UseMiddleware,
 	Version = {
 		major = 0,
 		minor = 5,

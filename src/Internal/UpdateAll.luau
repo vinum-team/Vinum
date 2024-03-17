@@ -2,8 +2,6 @@
 local Package = script.Parent.Parent
 local types = require(Package.types)
 local ShouldCacheValue = require(script.Parent.ShouldCacheValue)
-local MiddlewareUtils = require(script.Parent.MiddlewareUtils)
-local GlobalMiddleware = require(Package.Utility.GlobalMiddleware)
 
 type ReactiveObject = types.ReactiveObject<any, any>
 
@@ -46,15 +44,9 @@ local function UpdateAll(
 		if type(object) == "function" then
 			object()
 		else
-			local prevTable = object.cTasks
-			object.cTasks = nil
-
-			if prevTable then
-				for _, cTask in prevTable do
-					if cTask.cleanable ~= nil then
-						continue
-					end
-					cTask:cancel()
+			if object.cTasks then
+				for _, ctask in object.cTasks do
+					ctask:cancel()
 				end
 			end
 
@@ -62,16 +54,7 @@ local function UpdateAll(
 				object.dependents = nil
 			end
 			if object._computer then
-				local oldValue = object.value
 				object.value = object._computer(object, object._arg)
-				--TODO: Make Middleware able to drop subsections of graph
-				MiddlewareUtils.execute(GlobalMiddleware["recompute"], oldValue, object.value)
-				if prevTable then
-					for _, cTask in prevTable do
-						cTask:cancel()
-					end
-				end
-				
 				table.insert(toConditioanllyClean, object)
 			end
 		end
