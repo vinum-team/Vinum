@@ -87,7 +87,7 @@ end
 
 fs.copy("benchmarks", "proc-bench")
 transformSrc("proc-bench")
---run("proc-bench")
+run("proc-bench")
 run("procTests")
 
 fs.removeDir("proc-bench")

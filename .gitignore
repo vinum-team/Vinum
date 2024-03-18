@@ -8,6 +8,8 @@ Vunion
 build
 Packages
 node_modules
+docs/.vitepress/dist
+docs/.vitepress/cache
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
